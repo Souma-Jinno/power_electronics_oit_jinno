@@ -379,20 +379,13 @@ KCLは、\textbf{電荷保存則}の帰結です。
 
 \textbf{具体例：}
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) node[circ](A){};
-\draw (A) -- ++(-1,1) node[left]{$I_1=3$ A};
-\draw (A) -- ++(-1,-1) node[left]{$I_2=2$ A};
-\draw (A) -- ++(1,0.5) node[right]{$I_3=?$};
-\draw (A) -- ++(1,-0.5) node[right]{$I_4=1$ A};
-\node at (0,-1.5) {流入：$I_1 + I_2 = 5$ A};
-\node at (0,-2) {流出：$I_3 + I_4$};
-\node at (0,-2.5) {$\rightarrow I_3 = 5 - 1 = 4$ A};
-\end{circuitikz}
-\caption{KCLの例：ノードでの電荷保存}
-\end{figure}
+ノードに$I_1=3$ A、$I_2=2$ Aが流入し、$I_4=1$ Aが流出する場合、$I_3$を求めると：
+
+流入：$I_1 + I_2 = 5$ A
+
+流出：$I_3 + I_4$
+
+$\rightarrow I_3 = 5 - 1 = 4$ A
 
 \textbf{2. キルヒホッフの電圧則（KVL）← エネルギー保存則}
 
@@ -412,18 +405,11 @@ KVLは、\textbf{エネルギー保存則}の帰結です。
 
 \textbf{具体例：}
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) to[battery1, v={$V_s=12$ V}] (0,3)
-      to[R, l=$R_1$, v={$V_1=5$ V}] (3,3)
-      to[R, l=$R_2$, v={$V_2{=}$?}] (3,0)
-      -- (0,0);
-\node at (5,1.5) {KVL: $V_s - V_1 - V_2 = 0$};
-\node at (5,0.5) {$\rightarrow V_2 = V_s - V_1 = 12 - 5 = 7$ V};
-\end{circuitikz}
-\caption{KVLの例：閉回路でのエネルギー保存}
-\end{figure}
+電池（$V_s=12$ V）、抵抗$R_1$（$V_1=5$ V）、抵抗$R_2$（$V_2=$?）の直列回路において：
+
+KVL: $V_s - V_1 - V_2 = 0$
+
+$\rightarrow V_2 = V_s - V_1 = 12 - 5 = 7$ V
 
 \begin{screen}
 \textbf{エネルギーの観点から：}
@@ -499,20 +485,9 @@ V = RI
 
 可変抵抗による電力変換の問題を、エネルギーの流れから詳しく見てみましょう。
 
-\textbf{回路構成：}
+\textbf{回路構成：}電池$V_s$、可変抵抗$R_v$（電圧降下$V_r$）、負荷抵抗$R_L$（電圧降下$V_L$）の直列回路
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) to[battery1, v=$V_s$] (0,3)
-      to[R, l=$R_v$（可変抵抗）, v=$V_r$] (3,3)
-      to[R, l=$R_L$（負荷）, v=$V_L$] (3,0)
-      -- (0,0);
-\draw[->, thick, red] (4,2.5) -- (5,2.5) node[right]{熱};
-\draw[->, thick, blue] (4,0.5) -- (5,0.5) node[right]{有効出力};
-\end{circuitikz}
-\caption{可変抵抗による電圧制御}
-\end{figure}
+\textbf{エネルギーの流れ：}可変抵抗で消費されるエネルギーは\textcolor{red}{熱}として廃棄され、負荷で消費されるエネルギーのみが\textcolor{blue}{有効出力}となる。
 
 \textbf{エネルギー収支の計算：}
 
@@ -754,59 +729,30 @@ OFF（遮断） & $V \neq 0$ & $I = 0$ & $P = VI = 0$ & $R = \infty$ \\
 
 \textbf{1. 可変抵抗方式}
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) to[battery1, v={$12$ V}] (0,2)
-      to[R, l={$R_v=14\,\Omega$}] (3,2)
-      to[R, l={$R_L=10\,\Omega$}, i={$0.5$ A}] (3,0)
-      -- (0,0);
-\node at (5,1.5) {$V_r = 7$ V, $I = 0.5$ A};
-\node at (5,1) {$P_{\text{loss}} = 7 \times 0.5 = 3.5$ W};
-\node at (5,0.5) {効率 $= 5/12 = 41.7\%$};
-\end{circuitikz}
-\caption{可変抵抗方式：常に損失が発生}
-\end{figure}
+電池12V、可変抵抗$R_v=14\,\Omega$、負荷抵抗$R_L=10\,\Omega$（電流0.5A）の場合：
+
+$V_r = 7$ V, $I = 0.5$ A → $P_{\text{loss}} = 7 \times 0.5 = 3.5$ W
+
+効率 $= 5/12 = 41.7\%$（常に損失が発生）
 
 \textbf{2. スイッチング方式（理想的な場合）}
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) to[battery1, v={$12$ V}] (0,2)
-      to[nos] (3,2) node[above]{SW}
-      to[R, l={$R_L=10\,\Omega$}] (3,0)
-      -- (0,0);
-\node at (5,1.5) {ON時：$V_{\text{sw}}=0$, $P=0$};
-\node at (5,1) {OFF時：$I_{\text{sw}}=0$, $P=0$};
-\node at (5,0.5) {効率 $\approx 100\%$};
-\end{circuitikz}
-\caption{スイッチング方式：ON/OFFのどちらでも損失ゼロ}
-\end{figure}
+電池12V、スイッチSW、負荷抵抗$R_L=10\,\Omega$の場合：
+
+ON時：$V_{\text{sw}}=0$, $P=0$
+
+OFF時：$I_{\text{sw}}=0$, $P=0$
+
+効率 $\approx 100\%$（ON/OFFのどちらでも損失ゼロ）
 
 \subsubsection{平均化による電圧制御}
 
 スイッチングで電圧を制御できる理由は、\textbf{時間平均}にあります。
 
 \begin{screen}
-\textbf{スイッチング波形：}
+\textbf{スイッチング波形の時間平均：}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\draw[->] (0,0) -- (8,0) node[right]{時間 $t$};
-\draw[->] (0,0) -- (0,3) node[above]{電圧 $v(t)$};
-\draw[thick, blue] (0,0) -- (0,2) -- (2,2) -- (2,0) -- (4,0) -- (4,2) -- (6,2) -- (6,0) -- (8,0);
-\draw[dashed, red] (0,0.83) -- (8,0.83) node[right]{平均値 $\bar{V}$};
-\node at (1,2.3) {$V_s=12$V};
-\draw[<->] (0,-0.5) -- (2,-0.5) node[midway, below]{$T_{\text{on}}$};
-\draw[<->] (2,-0.5) -- (4,-0.5) node[midway, below]{$T_{\text{off}}$};
-\draw[<->] (0,-1) -- (4,-1) node[midway, below]{$T$（周期）};
-\end{tikzpicture}
-\caption{スイッチング電圧波形とその平均値}
-\end{figure}
-
-平均電圧は以下のように計算されます：
+スイッチング電圧$v(t)$は、ON時に$V_s$、OFF時に0の矩形波となります。周期$T$の中で、ON時間を$T_{\text{on}}$、OFF時間を$T_{\text{off}}$とすると、平均電圧は以下のように計算されます：
 
 \begin{equation}
 \bar{V} = \frac{1}{T} \int_0^T v(t) \, dt = \frac{1}{T} (V_s \cdot T_{\text{on}} + 0 \cdot T_{\text{off}}) = V_s \cdot \frac{T_{\text{on}}}{T}
@@ -831,19 +777,7 @@ D = \frac{\bar{V}}{V_s} = \frac{5}{12} \approx 0.417 = 41.7\%
 
 実際の回路では、スイッチングによるパルス状の電圧を平滑化するために、\textbf{フィルタ（コイルとコンデンサ）}を使用します。
 
-\begin{figure}[H]
-\centering
-\begin{circuitikz}
-\draw (0,0) to[battery1, v=$V_s$] (0,2)
-      to[nos] (2,2) node[above]{SW}
-      to[L, l=$L$] (4,2)
-      to[C, l=$C$] (4,0)
-      (4,2) to[short] (6,2)
-      to[R, l=$R_L$, v=$V_{\text{out}}$] (6,0)
-      -- (0,0);
-\end{circuitikz}
-\caption{LC フィルタを用いたDC-DCコンバータ（降圧チョッパ）}
-\end{figure}
+\textcolor{red}{※ここにLCフィルタを用いたDC-DCコンバータ（降圧チョッパ）の回路図が必要}
 
 \begin{screen}
 \textbf{フィルタの働き：}
@@ -976,45 +910,7 @@ V_{\text{out}} = D \cdot V_{\text{in}}
 
 \textbf{ターンオン（Turn-on）過程}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.8]
-% 電圧波形
-\begin{scope}
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電圧};
-\draw[thick, blue] (0,3.5) -- (1,3.5) -- (3,0.2) -- (6,0.2);
-\node at (0.5,4) {$V_{\text{off}}$};
-\node at (5,0.8) {$V_{\text{on}} \approx 0$};
-\draw[dashed] (1,0) -- (1,3.5);
-\draw[dashed] (3,0) -- (3,3.5);
-\node at (2,-0.5) {$t_{\text{rv}}$（電圧降下時間）};
-\end{scope}
-
-% 電流波形
-\begin{scope}[yshift=-5cm]
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電流};
-\draw[thick, red] (0,0.2) -- (1,0.2) -- (3,3.5) -- (6,3.5);
-\node at (0.5,1) {$I_{\text{off}} \approx 0$};
-\node at (5,4) {$I_{\text{on}}$};
-\draw[dashed] (1,0) -- (1,3.5);
-\draw[dashed] (3,0) -- (3,3.5);
-\node at (2,-0.5) {$t_{\text{ri}}$（電流立ち上がり時間）};
-\end{scope}
-
-% 電力波形
-\begin{scope}[yshift=-10cm]
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電力 $P=VI$};
-\draw[thick, magenta] (0,0.1) -- (1,0.1) -- (2,3) -- (3,0.1) -- (6,0.1);
-\fill[magenta, opacity=0.3] (1,0.1) -- (2,3) -- (3,0.1) -- cycle;
-\node at (2,1.5) {損失};
-\draw[<->] (1,-0.5) -- (3,-0.5) node[midway, below]{$t_{\text{on}}$（ターンオン時間）};
-\end{scope}
-\end{tikzpicture}
-\caption{ターンオン時の電圧・電流・電力波形}
-\end{figure}
+\textcolor{red}{※ここにターンオン時の電圧・電流・電力波形図が必要}
 
 \begin{screen}
 \textbf{ターンオン損失の発生メカニズム：}
@@ -1041,45 +937,7 @@ E_{\text{on}} = \int_0^{t_{\text{on}}} v(t) \cdot i(t) \, dt \approx \frac{1}{6}
 
 \textbf{ターンオフ（Turn-off）過程}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.8]
-% 電圧波形
-\begin{scope}
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電圧};
-\draw[thick, blue] (0,0.2) -- (1,0.2) -- (3,3.5) -- (6,3.5);
-\node at (0.5,1) {$V_{\text{on}} \approx 0$};
-\node at (5,4) {$V_{\text{off}}$};
-\draw[dashed] (1,0) -- (1,3.5);
-\draw[dashed] (3,0) -- (3,3.5);
-\node at (2,-0.5) {$t_{\text{fv}}$（電圧上昇時間）};
-\end{scope}
-
-% 電流波形
-\begin{scope}[yshift=-5cm]
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電流};
-\draw[thick, red] (0,3.5) -- (1,3.5) -- (3,0.2) -- (6,0.2);
-\node at (0.5,4) {$I_{\text{on}}$};
-\node at (5,0.8) {$I_{\text{off}} \approx 0$};
-\draw[dashed] (1,0) -- (1,3.5);
-\draw[dashed] (3,0) -- (3,3.5);
-\node at (2,-0.5) {$t_{\text{fi}}$（電流降下時間）};
-\end{scope}
-
-% 電力波形
-\begin{scope}[yshift=-10cm]
-\draw[->] (0,0) -- (6,0) node[right]{時間};
-\draw[->] (0,0) -- (0,4) node[above]{電力 $P=VI$};
-\draw[thick, magenta] (0,0.1) -- (1,0.1) -- (2,3) -- (3,0.1) -- (6,0.1);
-\fill[magenta, opacity=0.3] (1,0.1) -- (2,3) -- (3,0.1) -- cycle;
-\node at (2,1.5) {損失};
-\draw[<->] (1,-0.5) -- (3,-0.5) node[midway, below]{$t_{\text{off}}$（ターンオフ時間）};
-\end{scope}
-\end{tikzpicture}
-\caption{ターンオフ時の電圧・電流・電力波形}
-\end{figure}
+\textcolor{red}{※ここにターンオフ時の電圧・電流・電力波形図が必要}
 
 \begin{screen}
 \textbf{ターンオフ損失の発生メカニズム：}
@@ -1514,32 +1372,7 @@ P_{\text{in}} = P_{\text{out}} + P_{\text{total}} = 120 + 1.06 = 121.06 \text{ W
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=12cm, height=8cm,
-    xlabel={スイッチング周波数 [kHz]},
-    ylabel={損失 [W]},
-    xmin=0, xmax=1000,
-    ymin=0, ymax=7,
-    grid=both,
-    legend pos=north west,
-]
-\addplot[blue, thick, mark=square] coordinates {
-    (10,0.5) (50,0.5) (100,0.5) (200,0.5) (500,0.5) (1000,0.5)
-};
-\addplot[red, thick, mark=triangle] coordinates {
-    (10,0.056) (50,0.28) (100,0.56) (200,1.12) (500,2.8) (1000,5.6)
-};
-\addplot[black, thick, mark=o] coordinates {
-    (10,0.556) (50,0.78) (100,1.06) (200,1.62) (500,3.3) (1000,6.1)
-};
-\legend{導通損失, スイッチング損失, 総損失}
-\end{axis}
-\end{tikzpicture}
-\caption{スイッチング周波数と損失の関係}
-\end{figure}
+\textcolor{red}{※ここにスイッチング周波数と損失の関係グラフが必要（導通損失・スイッチング損失・総損失を表示）}
 
 \begin{screen}
 \textbf{重要な観察：}
