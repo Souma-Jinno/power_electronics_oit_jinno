@@ -1,0 +1,28 @@
+# LaTeX build files
+*.aux
+*.log
+*.dvi
+*.toc
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.xbb
+*.bak
+
+# Images (generated from slides)
+**/images/
+
+# Keynote slides (keep only PDFs)
+*.key
+
+# macOS
+.DS_Store
+
+# Backup files
+*~
+*.swp
+*.swo
+
+# PDF output (comment out if you want to track PDFs)
+# lecture_notes/main.pdf

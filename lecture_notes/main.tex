@@ -1,0 +1,125 @@
+% パワーエレクトロニクス教科書 メインファイル
+% 大阪工業大学 工学部 電気電子システム工学科
+% 2025年度 後期
+
+\documentclass[a4paper,11pt]{jsbook}
+
+%========================================
+% パッケージの読み込み
+%========================================
+\usepackage[dvipdfmx]{graphicx}      % 画像の挿入
+\graphicspath{{./}{chapters/chapter01/images/}{chapters/chapter02/images/}{chapters/chapter03/images/}}  % 画像検索パス
+\usepackage{amsmath,amssymb}         % 数式
+\usepackage{bm}                       % 太字ベクトル
+\usepackage{fancyhdr}                 % ヘッダー・フッター
+\usepackage[top=25mm,bottom=25mm,left=25mm,right=25mm]{geometry}  % 余白設定
+\usepackage{here}                     % 図の位置指定
+\usepackage{url}                      % URL
+\usepackage{ascmac}                   % 枠囲み
+\usepackage{color}                    % 色
+\usepackage{listings}                 % ソースコード（将来使用する可能性）
+
+%========================================
+% ヘッダーとフッターの設定
+%========================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\footskip}{15mm}
+
+%========================================
+% タイトル情報
+%========================================
+\title{%
+  \Huge パワーエレクトロニクス\\[10mm]
+  \LARGE 講義教科書
+}
+\author{%
+  大阪工業大学\\
+  工学部\\
+  電気電子システム工学科
+}
+\date{2025年度 後期}
+
+%========================================
+% 本文開始
+%========================================
+\begin{document}
+
+%========================================
+% 前付け
+%========================================
+\frontmatter
+
+% 表紙
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+% まえがき（オプション）
+\chapter*{まえがき}
+\addcontentsline{toc}{chapter}{まえがき}
+
+本教科書は、大阪工業大学工学部電気電子システム工学科の「パワーエレクトロニクス」講義のために作成されました。
+
+パワーエレクトロニクスは、電力を効率的に制御・変換する技術であり、現代社会において極めて重要な役割を果たしています。電気自動車、再生可能エネルギーシステム、産業用モータ制御、家電製品など、私たちの身の回りには数多くのパワーエレクトロニクス機器が存在しています。
+
+本教科書では、パワーエレクトロニクスの基礎となる半導体物理から始まり、各種パワー半導体素子の動作原理、電力変換回路の設計、制御技術に至るまで、体系的に学習します。
+
+各章は、講義1回分に対応しています。図や数式を用いて丁寧に解説し、理解を深めるための演習問題も用意しました。初学者でも無理なく理解できるよう、基礎から段階的に説明しています。
+
+本教科書が、皆さんのパワーエレクトロニクスの学習に役立つことを願っています。
+
+\vspace{5mm}
+\hfill 2025年10月
+
+\clearpage
+
+% 目次
+\tableofcontents
+\clearpage
+
+%========================================
+% 本文
+%========================================
+\mainmatter
+
+%========================================
+% 各章の読み込み
+%========================================
+
+% 第1章：パワーエレクトロニクスの概要
+\include{chapters/chapter01/chapter01}
+
+% 第2章：半導体の物理
+\include{chapters/chapter02/chapter02}
+
+% 第3章：パワー半導体の動作原理
+\include{chapters/chapter03/chapter03}
+
+% 第4章以降（将来追加予定）
+% \include{chapters/chapter04/chapter04}
+% \include{chapters/chapter05/chapter05}
+% ...
+
+%========================================
+% 後付け
+%========================================
+\backmatter
+
+% 付録（必要に応じて追加）
+% \appendix
+% \include{appendix/appendixA}
+
+% 参考文献（必要に応じて追加）
+% \begin{thebibliography}{99}
+% \bibitem{ref1} 著者名, ``書籍名'', 出版社, 発行年.
+% \end{thebibliography}
+
+% 索引（必要に応じて追加）
+% \printindex
+
+\end{document}

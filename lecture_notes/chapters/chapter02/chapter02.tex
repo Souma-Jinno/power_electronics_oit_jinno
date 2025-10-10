@@ -1,0 +1,1173 @@
+% 第2章：半導体の物理
+\chapter{半導体の物理}
+
+\section{はじめに}
+
+\subsection{本章の目的と学習目標}
+
+パワーエレクトロニクスは、電力を効率的に制御・変換する技術であり、現代社会において欠かせない重要な技術分野です。電気自動車、太陽光発電システム、産業用モータ制御、スマートフォンの充電器など、私たちの身の回りには数多くのパワーエレクトロニクス機器が存在しています。
+
+この技術の中心には「半導体素子」があります。半導体素子は、電力を高効率で制御するスイッチとして機能し、パワーエレクトロニクスの性能を大きく左右します。本章では、これらの半導体素子がどのような物理原理で動作しているのかを、基礎から丁寧に学んでいきます。
+
+\textbf{学習目標：}
+\begin{itemize}
+\item スイッチング素子である半導体の物理を理解する
+\item 半導体の基本であるバンド理論について理解する
+\item pn接合で起こる物理現象を理解する
+\item 金属-半導体接合で起こる物理現象を理解する
+\item 電磁気学の観点からバンドが描ける
+\end{itemize}
+
+\subsection{パワーエレクトロニクスと半導体素子}
+
+パワーエレクトロニクスで使用される半導体素子は、主に「スイッチ」として機能します。理想的なスイッチは、以下の特性を持ちます。
+
+\begin{itemize}
+\item \textbf{オン状態}：電気抵抗がゼロで、大電流を流すことができる
+\item \textbf{オフ状態}：電気抵抗が無限大で、電流を完全に遮断できる
+\item \textbf{高速動作}：オンとオフを高速に切り替えられる
+\item \textbf{低損失}：スイッチング時のエネルギー損失が小さい
+\end{itemize}
+
+実際の半導体素子は理想スイッチには及びませんが、機械式のスイッチに比べて圧倒的に高速で、しかも摩耗することなく動作できるという大きな利点があります。
+
+\subsection{パワーエレクトロニクスで用いる半導体素子}
+
+パワーエレクトロニクスで使用される主な半導体素子を図\ref{fig:devices}に示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-03.pdf}}
+\caption{パワーエレクトロニクスで用いる半導体素子と回路記号}
+\label{fig:devices}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{ダイオード}：p型半導体とn型半導体を接合した最もシンプルな素子。一方向にのみ電流を流す整流作用を持つ。構造は「pn接合」。
+
+\item \textbf{トランジスタ}：3層構造（npn型またはpnp型）を持ち、ベース電流により大きなコレクタ電流を制御できる増幅・スイッチング素子。
+
+\item \textbf{サイリスタ}：4層構造（pnpn）を持ち、ゲート信号によりオン状態にできる素子。大電力用途に適している。
+
+\item \textbf{MOSFET（Metal-Oxide-Semiconductor Field-Effect Transistor）}：金属・絶縁体・半導体の積層構造を持ち、ゲート電圧により電流を制御する。高速スイッチングが可能。
+
+\item \textbf{IGBT（Insulated Gate Bipolar Transistor）}：MOSFETとトランジスタの長所を組み合わせた素子。高電圧・大電流用途に適している。
+\end{itemize}
+
+図\ref{fig:mosfet_igbt}に、MOSFETとIGBTの内部構造を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-04.pdf}}
+\caption{MOSFETとIGBTの構造（pn接合+絶縁体+導体の組み合わせ）}
+\label{fig:mosfet_igbt}
+\end{figure}
+
+これらの素子は、すべて半導体の\textbf{pn接合}を基本として動作しています。また、MOSFETやIGBTでは、半導体と金属、絶縁体を組み合わせた複雑な構造が使われています。したがって、pn接合および金属-半導体接合の物理を理解することが、これらの素子を理解する上で不可欠です。
+
+
+\section{半導体とは何か}
+
+\subsection{導体・半導体・絶縁体の違い}
+
+物質は電気の流れやすさによって、大きく3つに分類されます。
+
+\begin{itemize}
+\item \textbf{導体（金属）}：電流が非常に流れやすい物質。銅、アルミニウム、金、銀など。
+\item \textbf{絶縁体}：電流がほとんど流れない物質。ガラス、ゴム、プラスチックなど。
+\item \textbf{半導体}：導体と絶縁体の中間的な性質を持つ物質。シリコン、ゲルマニウム、ガリウムヒ素など。
+\end{itemize}
+
+半導体の最大の特徴は、「電流を流したり、流さなかったりすることができる」ことです（図\ref{fig:what_is_semiconductor}）。つまり、外部条件（温度、不純物、電圧など）によって電気伝導性を制御できるのです。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-05.pdf}}
+\caption{半導体とは？電流を流したり流さなかったりできる物質}
+\label{fig:what_is_semiconductor}
+\end{figure}
+
+\subsection{電流と電荷の移動}
+
+電流とは何でしょうか？電流は、\textbf{電荷（電子や正孔）が移動すること}で生じる現象です。
+
+電流$I$は、単位時間あたりに流れる電荷$Q$の量として定義されます。
+\begin{equation}
+I = \frac{dQ}{dt}
+\end{equation}
+
+電子は負の電荷を持ち、電荷量は$-e = -1.602 \times 10^{-19}$ C（クーロン）です。正孔は正の電荷を持ち、電荷量は$+e$です。
+
+したがって、導体・半導体・絶縁体の違いは、\textbf{電子（または正孔）の移動のしやすさ}によって決まります。
+
+\begin{screen}
+\textbf{重要な問い：}\\
+電子の移動のしやすさは何によって決まるのでしょうか？
+\end{screen}
+
+この問いに答えるために、まず「電子がどこに存在しているか」を理解する必要があります。
+
+
+\section{原子構造と電子配置}
+
+\subsection{原子の構造}
+
+すべての物質は原子から構成されています。原子は、中心にある\textbf{原子核}と、その周りを取り巻く\textbf{電子}から成り立っています。
+
+\begin{itemize}
+\item \textbf{原子核}：正電荷を持つ陽子と、電荷を持たない中性子から構成される
+\item \textbf{電子}：負電荷を持ち、原子核の周りの特定の軌道上に存在する
+\end{itemize}
+
+原子核は非常に小さく（直径約$10^{-15}$ m）、原子全体のサイズ（直径約$10^{-10}$ m）に比べて10万分の1程度です。したがって、原子の大部分は空間であり、電子が原子核の周りを「雲」のように存在しています。
+
+\subsection{電子殻と軌道}
+
+電子は原子核の周りの\textbf{軌道}上に存在します（図\ref{fig:electron_orbit}）。これらの軌道は「電子殻」と呼ばれ、内側から順にK殻、L殻、M殻...と名付けられています。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-06.pdf}}
+\caption{電子の軌道とエネルギー準位（ボーアの原子模型）}
+\label{fig:electron_orbit}
+\end{figure}
+
+各電子殻は、さらに細かい軌道（s軌道、p軌道、d軌道など）に分かれています。
+
+\begin{itemize}
+\item \textbf{K殻（n=1）}：1s軌道のみ。最大2個の電子を収容。
+\item \textbf{L殻（n=2）}：2s軌道と2p軌道。最大8個の電子を収容（2s: 2個、2p: 6個）。
+\item \textbf{M殻（n=3）}：3s軌道、3p軌道、3d軌道。最大18個の電子を収容（3s: 2個、3p: 6個、3d: 10個）。
+\end{itemize}
+
+各軌道には、\textbf{パウリの排他原理}により、スピンが逆向きの電子が最大2個まで入ることができます。
+
+\subsection{エネルギー準位}
+
+重要なことは、各軌道が\textbf{固有のエネルギー}を持つということです（図\ref{fig:energy_level}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-07.pdf}}
+\caption{軌道のエネルギー準位（低い方から順に占有される）}
+\label{fig:energy_level}
+\end{figure}
+
+電子は、エネルギーの低い軌道から順番に占有されていきます。これは、自然界では系のエネルギーが最小になる状態が最も安定だからです。
+
+最も外側の殻にある電子を\textbf{価電子}と呼び、この価電子が化学結合や電気伝導に重要な役割を果たします。
+
+\subsection{シリコン原子の電子配置}
+
+パワーエレクトロニクスで最も広く使われる半導体はシリコン（Si）です。シリコンは原子番号14の元素で、14個の電子を持ちます。
+
+シリコン原子の電子配置は以下のようになります。
+\begin{equation}
+\text{Si: } 1s^2 \, 2s^2 \, 2p^6 \, 3s^2 \, 3p^2
+\end{equation}
+
+最も外側のM殻（n=3）には4個の電子があり、これが価電子です。シリコンは\textbf{4価の元素}と呼ばれます。
+
+この4個の価電子が、シリコンの化学結合や電気的性質を決定します。
+
+
+\section{バンド理論}
+
+\subsection{孤立原子からバンドへ}
+
+1個の原子では、電子はとびとびのエネルギー準位（1s, 2s, 2p, ...）を持ちます。しかし、原子が2個、3個と集まってくると、電子同士の相互作用により、状況が変わってきます。
+
+原子が近づくと、各原子の電子軌道が重なり合い、電子は複数の原子にまたがって存在できるようになります。このとき、エネルギー準位が分裂し始めます。
+
+固体のように原子の数が非常に多い場合（シリコンでは約$5 \times 10^{22}$個/cm$^3$）、エネルギー準位は無数に分裂し、事実上\textbf{連続したバンド（帯）}とみなすことができます（図\ref{fig:band_concept}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-08.pdf}}
+\caption{バンド理論の概念（原子が集まるとエネルギー準位がバンドになる）}
+\label{fig:band_concept}
+\end{figure}
+
+\textbf{バンドとは、電子が存在できるエネルギー準位の集まり}です。固体中の電子のエネルギー状態は、このバンドで説明されます。これが「バンド理論」の基本的な考え方です。
+
+\subsection{価電子帯と伝導帯}
+
+固体のバンド構造では、主に以下の2つのバンドが重要です。
+
+\begin{itemize}
+\item \textbf{価電子帯（Valence Band）}：価電子が占めるバンド。通常、電子で完全に満たされている。
+\item \textbf{伝導帯（Conduction Band）}：電子が自由に移動できる空のバンド。
+\end{itemize}
+
+この2つのバンドの間には、電子が存在できないエネルギー領域があり、これを\textbf{バンドギャップ}（$E_g$）と呼びます。
+
+バンドギャップのエネルギーは物質によって異なります。
+\begin{itemize}
+\item シリコン（Si）: $E_g \approx 1.1$ eV
+\item ゲルマニウム（Ge）: $E_g \approx 0.67$ eV
+\item 炭化シリコン（SiC）: $E_g \approx 3.3$ eV
+\item 窒化ガリウム（GaN）: $E_g \approx 3.4$ eV
+\item ダイヤモンド（C）: $E_g \approx 5.5$ eV
+\end{itemize}
+
+\subsection{導体・半導体・絶縁体のバンド図}
+
+物質の電気的性質は、バンドギャップの大きさと伝導帯に電子が存在するかどうかによって決まります（図\ref{fig:band_materials}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-10.pdf}}
+\caption{バンド図と物質の特徴（導体・半導体・絶縁体）}
+\label{fig:band_materials}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{導体（金属）}：
+\begin{itemize}
+\item 伝導帯に電子が存在している
+\item バンドギャップがほぼゼロか、価電子帯と伝導帯が重なっている
+\item 室温で多数の自由電子が存在し、電流が非常に流れやすい
+\item 代表例：銅、アルミニウム、金
+\end{itemize}
+
+\item \textbf{絶縁体}：
+\begin{itemize}
+\item バンドギャップが比較的大きい（通常5 eV以上）
+\item 室温では熱エネルギー（約0.026 eV）では電子が伝導帯に励起されない
+\item 電流がほとんど流れない
+\item 代表例：酸化シリコン（SiO$_2$）、ガラス、プラスチック
+\end{itemize}
+
+\item \textbf{半導体}：
+\begin{itemize}
+\item バンドギャップが比較的小さい（通常0.5〜3 eV程度）
+\item 室温でも熱エネルギーにより、わずかに電子が伝導帯に励起される
+\item 外部からエネルギー（光、熱、電圧など）を加えることで電気伝導性を制御できる
+\item 代表例：シリコン、ゲルマニウム、ガリウムヒ素
+\end{itemize}
+\end{itemize}
+
+\subsection{フェルミエネルギーとフェルミ準位}
+
+電子がどのエネルギー準位を占有しているかを表すために、\textbf{フェルミエネルギー}（または\textbf{フェルミ準位}）$E_F$という概念を導入します。
+
+フェルミエネルギー$E_F$は、「電子が存在する確率が50\%となるエネルギー準位」と定義されます。
+
+\begin{itemize}
+\item 絶対零度（0 K）では、$E_F$より低いエネルギー準位はすべて電子で満たされ、$E_F$より高いエネルギー準位は空である
+\item 有限温度では、熱エネルギーにより、$E_F$付近のエネルギー分布がなだらかになる
+\end{itemize}
+
+真性半導体（不純物を含まない純粋な半導体）では、フェルミ準位はバンドギャップのほぼ中央に位置します。
+
+\subsection{フェルミ・ディラック分布}
+
+実際の物質では、電子を一つ一つ数えるのではなく、\textbf{統計的}に扱います（図\ref{fig:fermi_dirac}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-15.pdf}}
+\caption{バンド理論における電子の統計的な取り扱い（フェルミ・ディラック分布）}
+\label{fig:fermi_dirac}
+\end{figure}
+
+あるエネルギー$E$の状態に電子が存在する確率$f(E)$は、\textbf{フェルミ・ディラック分布}で表されます。
+
+\begin{equation}
+f(E) = \frac{1}{1 + \exp\left(\frac{E - E_F}{kT}\right)}
+\end{equation}
+
+ここで、
+\begin{itemize}
+\item $E$：電子のエネルギー [eV]
+\item $E_F$：フェルミエネルギー [eV]
+\item $k = 8.617 \times 10^{-5}$ eV/K：ボルツマン定数
+\item $T$：絶対温度 [K]
+\end{itemize}
+
+この式の意味を考えてみましょう。
+
+\begin{itemize}
+\item $E = E_F$のとき、$f(E_F) = 1/(1+1) = 0.5$（50\%の確率）
+\item $E \ll E_F$のとき、$f(E) \approx 1$（ほぼ100\%の確率で電子が存在）
+\item $E \gg E_F$のとき、$f(E) \approx 0$（ほぼ0\%の確率、つまり電子がほとんど存在しない）
+\end{itemize}
+
+室温（$T = 300$ K）では、$kT \approx 0.026$ eV（約26 meV）となります。この熱エネルギーにより、一部の電子が価電子帯から伝導帯へ励起（遷移）されます。
+
+これにより、以下の現象が起こります。
+\begin{itemize}
+\item 伝導帯に電子が存在する確率が有限になる（わずかだが電子が存在する）
+\item 価電子帯には電子が抜けた穴（\textbf{正孔}）が残る
+\end{itemize}
+
+正孔は、あたかも正の電荷を持つ粒子のように振る舞い、電流を運ぶキャリアとなります。
+
+\subsection{正孔の概念}
+
+正孔（ホール）とは、価電子帯で電子が欠けた状態のことです。
+
+価電子帯が完全に電子で満たされている場合、電子は移動することができません（隣の席もすべて埋まっている状態）。しかし、1つの電子が抜けて正孔ができると、隣の電子がその正孔に移動できるようになります。
+
+このとき、電子が正孔に移動すると、元の位置に新たな正孔ができます。これは、正孔が電子とは逆方向に移動したように見えます。
+
+正孔を1つの粒子として扱うと、以下の性質を持ちます。
+\begin{itemize}
+\item 電荷：$+e$（正の電荷）
+\item 有効質量：正の値（電子とは異なる）
+\item 移動方向：電場と同じ向き（電子とは逆）
+\end{itemize}
+
+
+\section{真性半導体と不純物半導体}
+
+\subsection{真性半導体}
+
+純粋な半導体を\textbf{真性半導体}（intrinsic semiconductor）と呼びます。真性半導体では、伝導帯の電子と価電子帯の正孔の数が等しくなります。
+
+真性半導体中のキャリア濃度は、温度とバンドギャップに依存します。室温でのシリコンの真性キャリア濃度は約$n_i \approx 1.5 \times 10^{10}$ 個/cm$^3$です。
+
+これは、シリコンの原子密度$5 \times 10^{22}$ 個/cm$^3$に比べて非常に小さい値です。つまり、真性半導体では、ほとんどの電子は価電子帯に留まっており、わずかな電子のみが伝導帯に励起されています。
+
+\subsection{半導体の純度}
+
+半導体素子を製造するには、極めて高純度のシリコンが必要です（図\ref{fig:impurity}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-20.pdf}}
+\caption{半導体の不純物濃度とその純度}
+\label{fig:impurity}
+\end{figure}
+
+シリコンの純度は99.999999999\%（イレブンナイン、11N）にも達します。これは、1兆個の原子のうち、不純物原子がわずか1個という驚異的な純度です。
+
+シリコンの原子密度は約$5 \times 10^{22}$個/cm$^3$です。これに対して、制御して添加する不純物濃度は、$10^{13}$個/cm$^3$から$10^{20}$個/cm$^3$程度まで変化させることができます。
+
+具体的な割合を計算してみましょう。
+
+\begin{itemize}
+\item 不純物濃度が$10^{13}$個/cm$^3$の場合：
+\begin{equation}
+\frac{10^{13}}{5 \times 10^{22}} = 2 \times 10^{-10} = 0.00000002\%
+\end{equation}
+
+\item 不純物濃度が$10^{20}$個/cm$^3$の場合：
+\begin{equation}
+\frac{10^{20}}{5 \times 10^{22}} = 0.002 = 0.2\%
+\end{equation}
+\end{itemize}
+
+このように、ごくわずかな不純物でも、半導体の電気的性質は大きく変化します。これが半導体の特徴であり、電気伝導性を精密に制御できる理由です。
+
+\subsection{ドーピングとは}
+
+半導体に不純物を意図的に添加することを\textbf{ドーピング}（doping）と呼びます。ドーピングにより、半導体のキャリア濃度と電気伝導性を自在に制御することができます。
+
+ドーピングに使われる不純物には、以下の2種類があります。
+
+\begin{itemize}
+\item \textbf{ドナー（Donor）}：電子を供給する不純物（5価元素）
+\item \textbf{アクセプタ（Acceptor）}：正孔を供給する不純物（3価元素）
+\end{itemize}
+
+\subsection{n型半導体}
+
+シリコン（4価）に対して、5価の元素（リン：P、ヒ素：As、アンチモン：Sbなど）を添加すると、\textbf{n型半導体}ができます。
+
+5価元素は、シリコン結晶中で4つの電子を共有結合に使い、1つの電子が余ります。この余った電子は、容易に伝導帯に励起されます。
+
+ドナーのイオン化エネルギーは非常に小さい（シリコン中のリンで約45 meV）ため、室温ではほとんどのドナー原子がイオン化し、電子を供給します。
+
+n型半導体では、以下の関係が成り立ちます。
+\begin{itemize}
+\item \textbf{多数キャリア}：電子（濃度：$n$）
+\item \textbf{少数キャリア}：正孔（濃度：$p$）
+\item $n \gg p$
+\item $n \approx N_d$（$N_d$：ドナー濃度）
+\end{itemize}
+
+\subsection{p型半導体}
+
+シリコン（4価）に対して、3価の元素（ホウ素：B、ガリウム：Ga、インジウム：Inなど）を添加すると、\textbf{p型半導体}ができます。
+
+3価元素は、シリコン結晶中で4つの結合を作ろうとしますが、電子が1つ不足します。この不足した電子の位置は正孔となり、価電子帯に正孔を供給します。
+
+p型半導体では、以下の関係が成り立ちます。
+\begin{itemize}
+\item \textbf{多数キャリア}：正孔（濃度：$p$）
+\item \textbf{少数キャリア}：電子（濃度：$n$）
+\item $p \gg n$
+\item $p \approx N_a$（$N_a$：アクセプタ濃度）
+\end{itemize}
+
+\subsection{キャリア濃度の積}
+
+n型半導体でもp型半導体でも、電子と正孔の濃度の積は一定です。この関係を\textbf{質量作用の法則}といいます。
+
+\begin{equation}
+n \cdot p = n_i^2
+\end{equation}
+
+ここで、$n_i$は真性キャリア濃度です。室温のシリコンでは、$n_i \approx 1.5 \times 10^{10}$ 個/cm$^3$です。
+
+例えば、n型半導体で$N_d = 10^{16}$ 個/cm$^3$の場合、
+\begin{align}
+n &\approx N_d = 10^{16} \text{ 個/cm}^3 \\
+p &= \frac{n_i^2}{n} = \frac{(1.5 \times 10^{10})^2}{10^{16}} \approx 2.25 \times 10^{4} \text{ 個/cm}^3
+\end{align}
+
+このように、多数キャリアの濃度は不純物濃度とほぼ等しく、少数キャリアの濃度は非常に小さくなります。
+
+
+\section{pn接合の物理}
+
+\subsection{pn接合とは}
+
+p型半導体とn型半導体を接合したものを\textbf{pn接合}と呼びます。pn接合は、ダイオードの基本構造であり、すべての半導体素子の基礎となる重要な構造です。
+
+pn接合では、接合部で特徴的な現象が起こります。これを理解することが、半導体素子の動作を理解する鍵となります。
+
+\subsection{キャリアの拡散}
+
+p型半導体とn型半導体を接合すると、接合部でキャリアの濃度差が生じます。
+
+\begin{itemize}
+\item p型領域：正孔が多数、電子が少数
+\item n型領域：電子が多数、正孔が少数
+\end{itemize}
+
+濃度差があると、\textbf{拡散}が発生します。拡散とは、濃度の高い場所から低い場所へ粒子が移動する現象です（インクを水に垂らすと広がるのと同じ原理）。
+
+したがって、以下の拡散が起こります。
+\begin{itemize}
+\item n型領域の電子がp型領域へ拡散する
+\item p型領域の正孔がn型領域へ拡散する
+\end{itemize}
+
+\subsection{空乏層の形成}
+
+拡散により、接合部では以下の現象が起こります（図\ref{fig:pn_junction_mechanism}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-30.pdf}}
+\caption{pn接合のバンドが曲がるメカニズム}
+\label{fig:pn_junction_mechanism}
+\end{figure}
+
+\begin{enumerate}
+\item \textbf{キャリアの拡散}：n型領域の電子がp型領域へ拡散し、p型領域の正孔と再結合して消滅します。同様に、p型領域の正孔がn型領域へ拡散し、n型領域の電子と再結合して消滅します。
+
+\item \textbf{固定電荷の出現}：キャリアが拡散すると、以下の固定電荷（イオン）が残ります。
+\begin{itemize}
+\item n型領域：ドナーイオン（$+$）が残る
+\item p型領域：アクセプタイオン（$-$）が残る
+\end{itemize}
+この領域を\textbf{空乏層}（depletion layer）と呼びます。空乏層では、移動可能なキャリア（電子や正孔）がほとんど存在しません。
+
+\item \textbf{電場の発生}：固定電荷の分布により、空乏層内に電場が発生します。電場の向きは、n型からp型へ向かいます（正電荷から負電荷へ）。
+
+\item \textbf{電位差の発生}：電場があると、空乏層内に電位差が生じます。この電位差を\textbf{拡散電位}（または\textbf{ビルトイン電位}）$V_{bi}$と呼びます。
+
+\item \textbf{バンドの傾き}：電位差により、空乏層内で電子のポテンシャルエネルギーが変化します。これがバンド図では「バンドの傾き（曲がり）」として表現されます。
+\end{enumerate}
+
+\textbf{重要なポイント：}
+\begin{itemize}
+\item バンドを曲げる向きには注意が必要です
+\item 電場の向きとバンドが曲がる向きは対応しています
+\item n型側のバンドが上がり、p型側のバンドが下がります
+\end{itemize}
+
+\subsection{平衡状態のpn接合}
+
+図\ref{fig:pn_junction_initial}に、pn接合を接続した直後（平衡状態）のバンド図を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-35.pdf}}
+\caption{pn接合（接続直後の平衡状態）}
+\label{fig:pn_junction_initial}
+\end{figure}
+
+平衡状態では、以下の2つの電流が釣り合っています。
+
+\begin{itemize}
+\item \textbf{拡散電流}：濃度勾配によってキャリアが移動する電流
+\begin{itemize}
+\item 電子の拡散電流：n型からp型へ（図のマゼンタの矢印）
+\item 正孔の拡散電流：p型からn型へ（図のマゼンタの矢印）
+\end{itemize}
+
+\item \textbf{ドリフト電流}：電場によってキャリアが移動する電流
+\begin{itemize}
+\item 電子のドリフト電流：p型からn型へ（図のグレーの矢印）
+\item 正孔のドリフト電流：n型からp型へ（図のグレーの矢印）
+\end{itemize}
+\end{itemize}
+
+平衡状態では、拡散電流とドリフト電流が完全に釣り合い、正味の電流はゼロになります。
+
+\begin{equation}
+I_{\text{拡散}} + I_{\text{ドリフト}} = 0
+\end{equation}
+
+このとき、少数キャリアの拡散が電気伝導現象の主要な原因となります。これは、pn接合に電圧を印加したときの動作を理解する上で重要なポイントです。
+
+\subsection{拡散電位}
+
+pn接合の拡散電位$V_{bi}$は、以下の式で表されます。
+
+\begin{equation}
+V_{bi} = \frac{kT}{e} \ln\left(\frac{N_a N_d}{n_i^2}\right)
+\end{equation}
+
+ここで、
+\begin{itemize}
+\item $k$：ボルツマン定数（$8.617 \times 10^{-5}$ eV/K）
+\item $T$：絶対温度 [K]
+\item $e$：電気素量（$1.602 \times 10^{-19}$ C）
+\item $N_a$：アクセプタ濃度 [個/cm$^3$]
+\item $N_d$：ドナー濃度 [個/cm$^3$]
+\item $n_i$：真性キャリア濃度 [個/cm$^3$]
+\end{itemize}
+
+室温（$T = 300$ K）のシリコンで、$N_a = N_d = 10^{16}$ 個/cm$^3$の場合、
+\begin{align}
+V_{bi} &= \frac{0.026 \text{ V}}{1} \ln\left(\frac{10^{16} \times 10^{16}}{(1.5 \times 10^{10})^2}\right) \\
+&= 0.026 \times \ln(4.44 \times 10^{11}) \\
+&\approx 0.026 \times 27 \\
+&\approx 0.7 \text{ V}
+\end{align}
+
+シリコンのpn接合の拡散電位は、通常0.6〜0.7 V程度です。
+
+\subsection{空乏層幅}
+
+空乏層の幅$d$は、不純物濃度に依存します（図\ref{fig:depletion_width}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-40.pdf}}
+\caption{不純物濃度と空乏層幅の関係}
+\label{fig:depletion_width}
+\end{figure}
+
+空乏層幅は、以下の式で表されます（演習問題で導出します）。
+
+\begin{equation}
+d = \sqrt{\frac{2\varepsilon V_{bi}}{e}\left(\frac{1}{N_a} + \frac{1}{N_d}\right)}
+\end{equation}
+
+ここで、
+\begin{itemize}
+\item $\varepsilon$：半導体の誘電率（シリコン：$\varepsilon = 11.7 \varepsilon_0 \approx 1.04 \times 10^{-12}$ F/cm）
+\item $V_{bi}$：拡散電位 [V]
+\item $e$：電気素量（$1.602 \times 10^{-19}$ C）
+\item $N_d$：ドナー濃度 [個/cm$^3$]
+\item $N_a$：アクセプタ濃度 [個/cm$^3$]
+\end{itemize}
+
+\textbf{重要な性質：}
+\begin{itemize}
+\item 空乏層幅は、不純物濃度の平方根に反比例する
+\item 不純物濃度が高いほど、空乏層幅は狭くなる
+\item 空乏層は、不純物濃度の低い側により広く伸びる
+\end{itemize}
+
+例えば、$N_a = 10^{18}$ 個/cm$^3$、$N_d = 10^{16}$ 個/cm$^3$の場合、p型側の空乏層幅は、n型側の空乏層幅の約$\sqrt{10^{18}/10^{16}} = 10$倍小さくなります。
+
+\subsection{バンド図におけるエネルギー関係}
+
+バンド図を描く際、以下の関係を覚えておくと便利です（図\ref{fig:band_energy}）。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-25.pdf}}
+\caption{バンド理論におけるエネルギーの関係}
+\label{fig:band_energy}
+\end{figure}
+
+\begin{itemize}
+\item 電子のエネルギーは、バンド図で上に行くほど高い
+\item 電場の向きは、バンドが上がる向き（正電荷から負電荷へ）
+\item 電位は、バンドが下がる方が高い（電子にとってのポテンシャルエネルギーが低い＝電位が高い）
+\item フェルミ準位は、平衡状態では全体で一定
+\end{itemize}
+
+
+\section{金属-半導体接合}
+
+半導体素子では、必ず金属と半導体が接合しています（図\ref{fig:metal_semiconductor_necessity}）。金属は電極として、外部回路との電気的接続を提供します。したがって、金属-半導体接合の理解は、実際のデバイスの動作を理解する上で不可欠です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-42.pdf}}
+\caption{金属と半導体の接合（回路素子では必ず金属と半導体が接合している）}
+\label{fig:metal_semiconductor_necessity}
+\end{figure}
+
+金属-半導体接合には、主に2つのタイプがあります：
+\begin{enumerate}
+\item \textbf{整流性接触}：一方向にのみ電流を流す性質を持つ接合（ショットキー接合）
+\item \textbf{抵抗性接触}：低抵抗で双方向に電流を流す接合（オーミック接合）
+\end{enumerate}
+
+半導体素子の配線には抵抗性接触（オーミック接合）が用いられています。
+
+\subsection{金属と半導体のバンド構造の違い}
+
+金属-半導体接合を理解するために、まず金属と半導体のバンド構造の違いを理解する必要があります。図\ref{fig:metal_semiconductor_band}に、金属、n型半導体、p型半導体を接合する前の独立した状態におけるバンド図を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-43.pdf}}
+\caption{金属と半導体の接合前のバンド図（接合前の独立した平衡状態）}
+\label{fig:metal_semiconductor_band}
+\end{figure}
+
+この図は、金属、n型半導体、p型半導体がそれぞれ独立して存在している状態を示しています。\textbf{接合前の状態では、各物質はそれぞれ独自のフェルミ準位を持っています}。ただし、真空準位$E_{\text{vacuum}}$は、全ての物質で共通の基準として定義されます。
+
+\subsubsection{接合前の金属のバンド構造}
+
+図\ref{fig:metal_semiconductor_band}の左側に示す金属のバンド構造には、以下の特徴があります：
+
+\begin{itemize}
+\item \textbf{価電子帯と伝導帯が重なっている}：金属では、価電子帯の上端と伝導帯の下端が重なっているか、または伝導帯に電子が部分的に満たされています
+
+\item \textbf{フェルミ準位が伝導帯内にある}：金属のフェルミ準位$E_F$は、電子で満たされた領域の上端に位置します（図の黒い点で示された領域）。これは、室温でも多数の自由電子が存在することを意味します
+
+\item \textbf{バンドギャップがない}：金属には半導体のようなバンドギャップ$E_g$が存在しません。そのため、電子は容易に移動でき、高い電気伝導性を持ちます
+
+\item \textbf{多数の自由電子}：金属中の自由電子密度は非常に高く（約$10^{22}$〜$10^{23}$ 個/cm$^3$）、半導体の真性キャリア濃度（約$10^{10}$ 個/cm$^3$）と比べて10兆倍以上も多い
+
+\item \textbf{仕事関数$\phi_m$}：金属から電子を取り出すために必要なエネルギーは、真空準位$E_{\text{vacuum}}$からフェルミ準位$E_F$までのエネルギー差として定義されます（図の青字で説明されている「物質の束縛から完全に解放するためのエネルギー」）
+\end{itemize}
+
+\subsubsection{接合前のn型半導体のバンド構造}
+
+図\ref{fig:metal_semiconductor_band}の中央に示すn型半導体のバンド構造には、以下の特徴があります：
+
+\begin{itemize}
+\item \textbf{バンドギャップ$E_g$が存在}：伝導帯下端$E_c$と価電子帯上端$E_v$の間にバンドギャップが存在します（黄色の領域が伝導帯、オレンジ色の領域が価電子帯）
+
+\item \textbf{フェルミ準位$E_F$は伝導帯$E_c$に近い}：n型半導体では、ドーピングによりフェルミ準位が伝導帯側に移動しています。これは、多数キャリアが電子であることを意味します
+
+\item \textbf{電子親和力$\chi_s$}：真空準位$E_{\text{vacuum}}$から伝導帯下端$E_c$までのエネルギー差として定義されます。電子親和力は、半導体の種類（例：シリコン）で決まる固有の値であり、ドーピングには依存しません
+
+\item \textbf{仕事関数$\phi_s$}：真空準位$E_{\text{vacuum}}$からフェルミ準位$E_F$までのエネルギー差として定義されます。仕事関数は、ドーピング濃度によって変化します
+\end{itemize}
+
+\subsubsection{接合前のp型半導体のバンド構造}
+
+図\ref{fig:metal_semiconductor_band}の右側に示すp型半導体のバンド構造には、以下の特徴があります：
+
+\begin{itemize}
+\item \textbf{バンドギャップ$E_g$が存在}：n型半導体と同様に、伝導帯と価電子帯の間にバンドギャップが存在します
+
+\item \textbf{フェルミ準位$E_F$は価電子帯$E_v$に近い}：p型半導体では、ドーピングによりフェルミ準位が価電子帯側に移動しています。これは、多数キャリアが正孔であることを意味します
+
+\item \textbf{電子親和力$\chi_s$はn型と同じ}：同じ材料（例：シリコン）であれば、電子親和力は不純物の種類によらず一定です
+
+\item \textbf{仕事関数$\phi_s$はn型と異なる}：フェルミ準位の位置が異なるため、p型半導体の仕事関数はn型半導体より大きくなります
+\end{itemize}
+
+\subsubsection{接合前の状態における重要なポイント}
+
+接合する前の状態では、以下のことが重要です：
+
+\begin{enumerate}
+\item \textbf{真空準位は全ての物質で共通}：真空準位$E_{\text{vacuum}}$は、全ての物質に共通の基準エネルギーです
+
+\item \textbf{フェルミ準位は物質ごとに異なる}：金属、n型半導体、p型半導体では、それぞれ異なるフェルミ準位を持っています
+
+\item \textbf{電子親和力は材料固有の値}：同じ半導体材料（例：シリコン）であれば、n型でもp型でも電子親和力$\chi_s$は同じです
+
+\item \textbf{仕事関数はフェルミ準位の位置で決まる}：仕事関数$\phi$は、真空準位からフェルミ準位までのエネルギー差なので、フェルミ準位の位置によって変わります
+\begin{itemize}
+\item n型半導体：$\phi_s = \chi_s + (E_c - E_F)$（小さい）
+\item p型半導体：$\phi_s = \chi_s + E_g - (E_F - E_v)$（大きい）
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{接合によって起こること：フェルミ準位はどのように一致するのか？}
+
+これらの異なるフェルミ準位を持つ物質を接合すると、熱平衡状態において系全体でフェルミ準位が一致します。しかし、\textbf{「フェルミ準位が一致する」とは、どういうメカニズムで起こるのでしょうか？}
+
+\textbf{重要な誤解を避けるために：}
+
+「フェルミ準位を一致させるために電子が移動する」という表現は、結果としては正しいのですが、\textbf{フェルミ準位自体が移動するわけではありません}。正確には、以下のプロセスが起こります。
+
+\textbf{ステップ1：電子の移動}
+
+接合直後、金属と半導体のフェルミ準位が異なる場合、電子はエネルギーの高い方から低い方へ移動しようとします。
+
+例：金属の仕事関数$\phi_m$がn型半導体の仕事関数$\phi_s$より大きい場合（$\phi_m > \phi_s$）
+\begin{itemize}
+\item 金属のフェルミ準位は半導体のフェルミ準位より\textbf{低い}位置にある（仕事関数が大きい＝フェルミ準位が低い）
+\item エネルギーの高い半導体の電子が、エネルギーの低い金属へ移動する
+\item つまり、\textbf{n型半導体から金属へ電子が移動}する
+\end{itemize}
+
+\textbf{ステップ2：界面への電荷の蓄積}
+
+電子が移動すると、界面付近に電荷が蓄積されます。
+\begin{itemize}
+\item n型半導体側：電子が抜けた後、ドナーイオン（正の固定電荷）が残る
+\item 金属側：電子が蓄積され、負に帯電する
+\end{itemize}
+
+\textbf{ステップ3：電場の発生}
+
+界面に電荷が蓄積されると、正電荷から負電荷へ向かう電場$\vec{E}$が発生します。この電場は、さらなる電子の移動を妨げる向きに作用します。
+
+\textbf{ステップ4：バンドが曲がる}
+
+電場が存在すると、電子のポテンシャルエネルギーが空間的に変化します。バンド図では、これが\textbf{「バンドが曲がる」}として表現されます。
+
+\begin{itemize}
+\item 電場の向き：n型半導体→金属（正電荷から負電荷へ）
+\item 電子にとってのポテンシャルエネルギー：電場と逆向きに高くなる
+\item したがって、n型半導体の界面付近でバンドが\textbf{上方に曲がる}
+\end{itemize}
+
+電位差$V$と電場$E$の関係は：
+\begin{equation}
+E = -\frac{dV}{dx}
+\end{equation}
+
+電子のポテンシャルエネルギー$U$は、電位$V$と電気素量$e$を用いて：
+\begin{equation}
+U = -eV
+\end{equation}
+
+バンド図における伝導帯下端$E_c$のエネルギーは、電子のポテンシャルエネルギーに対応するため、電位が高い場所ほどバンドは\textbf{下に}位置します（電子にとってエネルギーが低い＝安定）。
+
+\textbf{ステップ5：フェルミ準位が一致する}
+
+バンドが曲がり続けると、ある時点で電子の移動が停止します。これは、バンドの曲がりによって生じたポテンシャル障壁が、フェルミ準位の差を相殺するからです。
+
+熱平衡状態では、\textbf{系全体でフェルミ準位が一定}となります。これは、バンドが曲がることで実現されます。
+
+\textbf{金属と半導体のどちらのフェルミ準位が変化するのか？}
+
+ここで重要な質問は、「金属のフェルミ準位が変化するのか？半導体のフェルミ準位が変化するのか？」です。
+
+答えは：\textbf{どちらも変化しますが、変化量が大きく異なります}
+
+\begin{itemize}
+\item \textbf{金属のフェルミ準位}：
+\begin{itemize}
+\item 金属中の自由電子密度は非常に高い（$\sim 10^{22}$〜$10^{23}$ 個/cm$^3$）
+\item わずかな電子の出入りでは、フェルミ準位はほとんど変化しない
+\item 金属内部では、フェルミ準位は接合前とほぼ同じ位置にある
+\end{itemize}
+
+\item \textbf{半導体のフェルミ準位}：
+\begin{itemize}
+\item 半導体中のキャリア密度は比較的低い（$\sim 10^{10}$〜$10^{16}$ 個/cm$^3$）
+\item 電子の出入りにより、\textbf{界面付近でバンド全体が曲がる}
+\item 半導体の内部（バルク）では、フェルミ準位は接合前と同じ位置にある
+\item しかし、界面付近ではバンドが曲がっているため、見かけ上「フェルミ準位が変化した」ように見える
+\end{itemize}
+\end{itemize}
+
+\textbf{正確な表現：}
+
+したがって、より正確には：
+\begin{itemize}
+\item \textbf{フェルミ準位自体は移動しない}（各物質の内部では接合前と同じ）
+\item \textbf{電子が移動する}（高エネルギー側から低エネルギー側へ）
+\item \textbf{界面に電荷が蓄積される}
+\item \textbf{電場が発生する}
+\item \textbf{半導体側のバンドが曲がる}（金属側はほとんど変化しない）
+\item \textbf{バンドが曲がった結果、熱平衡状態では系全体でフェルミ準位が一定になる}
+\end{itemize}
+
+これが、次節以降で詳しく説明する金属-半導体接合の形成メカニズムです。図2.16〜2.19で示されるバンド図は、このメカニズムによってバンドが曲がった後の平衡状態を表しています。
+
+\subsection{仕事関数}
+
+金属や半導体から電子を取り出すために必要なエネルギーを\textbf{仕事関数}（work function）$\phi$と呼びます。仕事関数は、真空準位からフェルミ準位までのエネルギー差として定義されます。
+
+\begin{equation}
+\phi = E_{\text{vacuum}} - E_F
+\end{equation}
+
+図\ref{fig:metal_semiconductor_band}の左側の注釈に示されているように、仕事関数は「物質の束縛から完全に解放するためのエネルギー」です。
+
+代表的な物質の仕事関数を以下に示します。
+\begin{itemize}
+\item 金（Au）: $\phi_m \approx 5.1$ eV
+\item アルミニウム（Al）: $\phi_m \approx 4.3$ eV
+\item タングステン（W）: $\phi_m \approx 4.5$ eV
+\item n型シリコン（Si）: $\phi_s \approx 4.0$ eV（ドーピング濃度に依存）
+\item p型シリコン（Si）: $\phi_s \approx 5.0$ eV（ドーピング濃度に依存）
+\end{itemize}
+
+\textbf{電子親和力：}
+
+半導体には、仕事関数の他に\textbf{電子親和力}（electron affinity）$\chi_s$という重要なパラメータがあります。電子親和力は、真空準位から伝導帯下端までのエネルギー差として定義されます：
+
+\begin{equation}
+\chi_s = E_{\text{vacuum}} - E_c
+\end{equation}
+
+シリコンの場合、$\chi_s \approx 4.05$ eVです。電子親和力は、半導体の種類で決まる固有の値であり、ドーピングには依存しません。
+
+仕事関数と電子親和力の関係は、以下のようになります：
+
+\begin{itemize}
+\item n型半導体: $\phi_s = \chi_s + (E_c - E_F)$
+\item p型半導体: $\phi_s = \chi_s + E_g - (E_F - E_v)$
+\end{itemize}
+
+ドーピング濃度によってフェルミ準位$E_F$が変化するため、半導体の仕事関数$\phi_s$もドーピング濃度に依存します。
+
+\subsection{金属-半導体接合の形成}
+
+金属と半導体を接合すると、それぞれの仕事関数の違いにより、電子が移動します。接合後は、フェルミ準位が一致します（熱平衡状態）。
+
+\textbf{重要な原理：}
+
+熱平衡状態では、系全体でフェルミ準位$E_F$が一定となります。これは、pn接合と同じ原理です。フェルミ準位を一致させるために、電子が移動し、界面に電荷が蓄積され、バンドが曲がります。
+
+\textbf{金属-半導体接合の形成過程：}
+
+\begin{enumerate}
+\item 接合前：金属と半導体はそれぞれ独立した系で、異なるフェルミ準位を持つ
+\item 接合時：電子が移動し、界面に電荷が蓄積される
+\item 接合後（平衡状態）：フェルミ準位が一致し、電子の移動が停止する
+\end{enumerate}
+
+接合のタイプ（整流性かオーム性か）は、\textbf{金属の仕事関数$\phi_m$と半導体の仕事関数$\phi_s$の大小関係}、および\textbf{半導体の型（n型かp型か）}によって決まります。
+
+\subsubsection{金属とn型半導体の接合}
+
+図\ref{fig:metal_n_before}に、金属とn型半導体を接合する前の状態を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-44.pdf}}
+\caption{金属とn型半導体の接合前のバンド図（フェルミエネルギーの大小関係で接合タイプが変わる）}
+\label{fig:metal_n_before}
+\end{figure}
+
+接合前の状態では、左側にn型半導体（$\phi_m < \phi_s$）、中央に金属、右側にn型半導体（$\phi_m > \phi_s$）が独立して存在しています。それぞれのフェルミ準位は異なる位置にあります。
+
+図\ref{fig:metal_n_after}に、金属とn型半導体を接合した後の状態を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-45.pdf}}
+\caption{金属とn型半導体の接合後のバンド図（フェルミ準位が一致する）}
+\label{fig:metal_n_after}
+\end{figure}
+
+\textbf{ケース1：$\phi_m > \phi_s$の場合（右側）：整流性接触}
+
+\begin{enumerate}
+\item \textbf{接合前}：金属のフェルミ準位が半導体のフェルミ準位より低い位置にある
+
+\item \textbf{電子の移動}：接合すると、エネルギーの高い位置（半導体のフェルミ準位）から低い位置（金属のフェルミ準位）へ電子が移動しようとする。つまり、n型半導体から金属へ電子が移動する
+
+\item \textbf{界面の電荷分布}：
+\begin{itemize}
+\item n型半導体側：電子が抜けた後に、ドナーイオン（$+$）が残る
+\item 金属側：移動してきた電子により、負に帯電する
+\end{itemize}
+
+\item \textbf{空乏層の形成}：n型半導体の界面付近に、キャリアがほとんど存在しない空乏層が形成される。空乏層内には正の固定電荷（ドナーイオン）が存在する
+
+\item \textbf{電場の発生}：正電荷（半導体側）から負電荷（金属側）へ向かう電場$F$が発生する
+
+\item \textbf{バンドの曲がり}：電場により、n型半導体のバンドが界面で上方に曲がる（図\ref{fig:metal_n_after}右側）
+
+\item \textbf{エネルギー障壁の形成}：界面にエネルギー障壁が形成され、電子が半導体から金属へ移動するのを妨げる。この障壁により、\textbf{整流性（一方向のみ電流を流す性質）}が生じる
+\end{enumerate}
+
+\textbf{ケース2：$\phi_m < \phi_s$の場合（左側）：オーム性接触}
+
+\begin{enumerate}
+\item \textbf{接合前}：金属のフェルミ準位が半導体のフェルミ準位より高い位置にある
+
+\item \textbf{電子の移動}：接合すると、エネルギーの高い位置（金属のフェルミ準位）から低い位置（半導体のフェルミ準位）へ電子が移動しようとする。つまり、金属からn型半導体へ電子が移動する
+
+\item \textbf{界面の電荷分布}：
+\begin{itemize}
+\item n型半導体側：金属から移動してきた電子が蓄積され、負に帯電する
+\item 金属側：電子が抜けた後、正に帯電する
+\end{itemize}
+
+\item \textbf{電場の発生}：正電荷（金属側）から負電荷（半導体側）へ向かう電場$F$が発生する
+
+\item \textbf{バンドの曲がり}：電場により、n型半導体のバンドが界面で下方に曲がる（図\ref{fig:metal_n_after}左側）
+
+\item \textbf{低抵抗接触}：界面にエネルギー障壁がほとんど存在しないか、非常に薄いため、電子が容易に通過できる。これにより、\textbf{オーム性接触（低抵抗の双方向接触）}となる
+\end{enumerate}
+
+\subsubsection{金属とp型半導体の接合}
+
+次に、金属とp型半導体の接合について見ていきます。図\ref{fig:metal_p_before}に、金属とp型半導体を接合する前の状態を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-46.pdf}}
+\caption{金属とp型半導体の接合前のバンド図（フェルミエネルギーの大小関係で接合タイプが変わる）}
+\label{fig:metal_p_before}
+\end{figure}
+
+図\ref{fig:metal_p_after}に、金属とp型半導体を接合した後の状態を示します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter02/images/page-47.pdf}}
+\caption{金属とp型半導体の接合後のバンド図（フェルミ準位が一致する）}
+\label{fig:metal_p_after}
+\end{figure}
+
+\textbf{ケース3：$\phi_m > \phi_s$の場合（左側）：オーム性接触}
+
+\begin{enumerate}
+\item \textbf{接合前}：金属のフェルミ準位がp型半導体のフェルミ準位より低い位置にある
+
+\item \textbf{電子の移動}：接合すると、エネルギーの高い位置（p型半導体のフェルミ準位）から低い位置（金属のフェルミ準位）へ電子が移動する。つまり、p型半導体から金属へ電子が移動する
+
+\item \textbf{界面の電荷分布}：
+\begin{itemize}
+\item p型半導体側：電子が抜けることは、正孔が増えることと等価である。つまり、p型半導体の界面付近に正孔が蓄積される（正に帯電する）
+\item 金属側：移動してきた電子により、負に帯電する
+\end{itemize}
+
+\item \textbf{電場の発生}：正電荷（半導体側）から負電荷（金属側）へ向かう電場$F$が発生する
+
+\item \textbf{バンドの曲がり}：電場により、p型半導体のバンドが界面で下方に曲がる（図\ref{fig:metal_p_after}左側）
+
+\item \textbf{低抵抗接触}：p型半導体では、多数キャリアは正孔である。界面に正孔が蓄積されるため、電流が流れやすい\textbf{オーム性接触}となる
+\end{enumerate}
+
+\textbf{ケース4：$\phi_m < \phi_s$の場合（右側）：整流性接触}
+
+\begin{enumerate}
+\item \textbf{接合前}：金属のフェルミ準位がp型半導体のフェルミ準位より高い位置にある
+
+\item \textbf{電子の移動}：接合すると、エネルギーの高い位置（金属のフェルミ準位）から低い位置（p型半導体のフェルミ準位）へ電子が移動する。つまり、金属からp型半導体へ電子が移動する
+
+\item \textbf{界面の電荷分布}：
+\begin{itemize}
+\item p型半導体側：金属から電子が注入されることは、正孔が減少することと等価である。界面付近の正孔が電子と再結合して消滅し、アクセプタイオン（$-$）が残る（負に帯電する）
+\item 金属側：電子が抜けた後、正に帯電する
+\end{itemize}
+
+\item \textbf{空乏層の形成}：p型半導体の界面付近に、キャリア（正孔）がほとんど存在しない空乏層が形成される
+
+\item \textbf{電場の発生}：正電荷（金属側）から負電荷（半導体側）へ向かう電場$F$が発生する
+
+\item \textbf{バンドの曲がり}：電場により、p型半導体のバンドが界面で上方に曲がる（図\ref{fig:metal_p_after}右側）
+
+\item \textbf{エネルギー障壁の形成}：界面にエネルギー障壁が形成され、正孔が半導体から金属へ移動するのを妨げる。この障壁により、\textbf{整流性}が生じる
+\end{enumerate}
+
+\subsubsection{n型半導体とp型半導体での接合タイプの違い}
+
+ここで重要なポイントは、\textbf{同じ仕事関数の大小関係でも、n型半導体とp型半導体では接合タイプが逆になる}ということです。
+
+\begin{table}[H]
+\centering
+\caption{金属-半導体接合のタイプ（仕事関数の大小関係による分類）}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{仕事関数の関係} & \textbf{n型半導体との接合} & \textbf{p型半導体との接合} \\
+\hline
+$\phi_m > \phi_s$ & 整流性接触 & オーム性接触 \\
+\hline
+$\phi_m < \phi_s$ & オーム性接触 & 整流性接触 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{この違いが生じる理由：}
+
+\begin{itemize}
+\item \textbf{n型半導体}では、多数キャリアは電子である。$\phi_m > \phi_s$の場合、電子がn型半導体から金属へ移動し、界面に空乏層（正の固定電荷）が形成され、エネルギー障壁ができる（整流性）。
+
+\item \textbf{p型半導体}では、多数キャリアは正孔である。$\phi_m > \phi_s$の場合、電子がp型半導体から金属へ移動するが、これは正孔が蓄積されることを意味する。正孔は多数キャリアなので、電流が流れやすくなる（オーム性）。
+
+\item つまり、同じ$\phi_m > \phi_s$でも、n型では多数キャリア（電子）が減少して空乏層ができるのに対し、p型では多数キャリア（正孔）が増加して低抵抗接触となる。
+\end{itemize}
+
+\textbf{実際のデバイスへの応用：}
+
+\begin{itemize}
+\item 半導体素子の電極（配線接続部）には、オーム性接触が必要である
+\item n型半導体の電極には、$\phi_m < \phi_s$となる金属を選ぶか、半導体表面を高濃度にドーピングする
+\item p型半導体の電極には、$\phi_m > \phi_s$となる金属を選ぶか、半導体表面を高濃度にドーピングする
+\item 高濃度ドーピング（$> 10^{19}$ 個/cm$^3$）により空乏層幅を極めて薄くし、トンネル効果で電子が通過できるようにすることで、仕事関数の関係によらずオーム性接触を実現できる
+\end{itemize}
+
+\subsection{ショットキー接合}
+
+前節で説明したように、金属とn型半導体を接合する際、$\phi_m > \phi_s$の場合に整流性接触（ショットキー接合）が形成されます。この接合は\textbf{ショットキー接合}と呼ばれ、pn接合と同様に整流性（一方向のみ電流を流す性質）を持ちます。
+
+\textbf{ショットキー障壁：}
+
+ショットキー接合では、界面にエネルギー障壁が形成されます。このエネルギー障壁の高さ$\phi_B$を\textbf{ショットキー障壁}と呼び、以下の式で表されます。
+\begin{equation}
+\phi_B = \phi_m - \chi_s
+\end{equation}
+
+ここで、$\chi_s$は半導体の電子親和力（真空準位から伝導帯下端までのエネルギー差）です。
+
+\textbf{ショットキー接合の特徴と応用：}
+
+\begin{itemize}
+\item \textbf{順方向電圧降下が小さい}：pn接合のダイオードでは順方向電圧降下が約0.7 V（シリコンの場合）であるのに対し、ショットキーバリアダイオードでは約0.3〜0.4 Vと小さい。これにより、導通損失を低減できる
+
+\item \textbf{高速スイッチング}：pn接合では少数キャリアの蓄積効果（リカバリ時間）があるが、ショットキー接合では多数キャリアのみが関与するため、高速スイッチングが可能
+
+\item \textbf{逆方向耐圧が比較的低い}：ショットキー接合の逆方向耐圧は、pn接合に比べて低い（通常100 V以下）。これは、空乏層内の電場集中が大きいためである
+
+\item \textbf{温度特性}：ショットキー障壁は温度に依存し、高温では逆方向漏れ電流が増加する
+
+\item \textbf{主な応用例}：
+\begin{itemize}
+\item ショットキーバリアダイオード（SBD）：低電圧・高速スイッチング用途
+\item 整流回路：AC-DC変換器の二次側整流
+\item フリーホイールダイオード：インバータ回路の環流ダイオード
+\end{itemize}
+\end{itemize}
+
+\subsection{オーミック接合}
+
+前節で説明したように、金属と半導体を接合する際、以下の条件でオーム性接触（オーミック接合）が形成されます：
+\begin{itemize}
+\item n型半導体との接合：$\phi_m < \phi_s$
+\item p型半導体との接合：$\phi_m > \phi_s$
+\end{itemize}
+
+オーミック接合は低抵抗の接触となり、整流性を持ちません。半導体素子の電極として不可欠です。
+
+\textbf{オーミック接合の特徴：}
+
+\begin{itemize}
+\item \textbf{線形な電流-電圧特性}：電流$I$と電圧$V$の関係がオームの法則$V = IR$に従う（線形）
+
+\item \textbf{接触抵抗が非常に小さい}：接触抵抗$R_c$は、通常$10^{-6}$〜$10^{-8}$ $\Omega \cdot$cm$^2$と非常に小さい
+
+\item \textbf{双方向に電流が流れる}：整流性がないため、正負両方向に電流が流れる
+
+\item \textbf{温度安定性が良い}：ショットキー接合に比べて、温度による特性変化が小さい
+\end{itemize}
+
+\textbf{オーミック接合の実現方法：}
+
+実際のデバイスでは、以下の方法でオーミック接合を実現します。
+
+\begin{enumerate}
+\item \textbf{適切な金属の選択}：
+\begin{itemize}
+\item n型半導体：仕事関数の小さい金属（例：アルミニウム、チタン）
+\item p型半導体：仕事関数の大きい金属（例：金、白金）
+\end{itemize}
+
+\item \textbf{高濃度ドーピング}：半導体表面を高濃度にドーピング（$> 10^{19}$ 個/cm$^3$）することで、空乏層幅を極めて薄くする（数nm以下）。これにより、電子が\textbf{トンネル効果}で障壁を通過できるようになり、仕事関数の関係によらずオーム性接触を実現できる
+
+\item \textbf{合金化処理}：金属と半導体を高温で熱処理し、界面に金属シリサイド層を形成することで、低抵抗接触を実現する
+\end{enumerate}
+
+\textbf{主な応用例：}
+\begin{itemize}
+\item 半導体素子の電極（ソース、ドレイン、エミッタ、コレクタ電極）
+\item 配線接続部
+\item ボンディングパッド
+\end{itemize}
+
+金属-半導体接合の理解は、実際のパワー半導体デバイスを設計・製造する上で不可欠です。次章では、これらの接合を利用したダイオード、トランジスタ、MOSFETなどの動作原理を学びます。
+
+
+\section{まとめ}
+
+本章では、パワーエレクトロニクスで使用される半導体素子を理解するために必要な半導体の物理について学びました。
+
+\subsection{重要なポイント}
+
+\begin{enumerate}
+\item \textbf{半導体の定義}：
+\begin{itemize}
+\item 半導体は、電流を流したり流さなかったりすることができる物質
+\item 導体と絶縁体の中間的な性質を持つ
+\item 外部条件によって電気伝導性を制御できる
+\end{itemize}
+
+\item \textbf{原子と電子}：
+\begin{itemize}
+\item 電子は原子核の周りの軌道上に存在する
+\item 各軌道は固有のエネルギーを持つ
+\item エネルギーの低い軌道から電子が詰まる
+\end{itemize}
+
+\item \textbf{バンド理論}：
+\begin{itemize}
+\item 固体では、多数の原子が集まることでエネルギー準位がバンドを形成する
+\item 価電子帯（電子で満たされている）と伝導帯（電子が移動できる）がある
+\item バンドギャップの大きさにより、導体・半導体・絶縁体が決まる
+\end{itemize}
+
+\item \textbf{フェルミ・ディラック分布}：
+\begin{itemize}
+\item 電子がどのエネルギー準位に存在するかを統計的に扱う
+\item フェルミエネルギーは、電子が存在する確率が50\%となるエネルギー
+\item 室温では熱エネルギーにより、わずかに電子が伝導帯に励起される
+\end{itemize}
+
+\item \textbf{ドーピング}：
+\begin{itemize}
+\item n型半導体：5価元素を添加し、電子が多数キャリア
+\item p型半導体：3価元素を添加し、正孔が多数キャリア
+\item わずかな不純物でも電気伝導性が大きく変化する
+\end{itemize}
+
+\item \textbf{pn接合}：
+\begin{itemize}
+\item キャリアの拡散により空乏層が形成される
+\item 空乏層内に電場が発生し、バンドが曲げられる
+\item 拡散電流とドリフト電流が釣り合い、平衡状態となる
+\item 空乏層幅は不純物濃度の平方根に反比例する
+\end{itemize}
+
+\item \textbf{金属-半導体接合}：
+\begin{itemize}
+\item 仕事関数の違いにより、ショットキー接合またはオーミック接合が形成される
+\item ショットキー接合は整流性を持つ
+\item オーミック接合は低抵抗接続となり、電極として使用される
+\end{itemize}
+\end{enumerate}
+
+\subsection{次回の予告}
+
+次回以降の講義では、以下の内容について学びます。
+
+\begin{itemize}
+\item pn接合に電圧を印加したときの動作（順バイアス・逆バイアス）
+\item ダイオードの電流-電圧特性
+\item トランジスタの動作原理
+\item MOSFET、IGBTなどのパワー半導体素子の動作原理
+\item 半導体素子の特性と応用
+\end{itemize}
+
+本章で学んだ内容は、これらの素子を理解するための基礎となります。特に、バンド図の描き方、空乏層の形成メカニズム、キャリアの拡散とドリフトの概念は重要です。しっかりと復習しておきましょう。
+
+\subsection{演習問題}
+
+\begin{enumerate}
+\item シリコンのバンドギャップが1.1 eVであることを使って、室温（300 K）で価電子帯から伝導帯に励起される電子の割合を概算せよ。（ヒント：フェルミ・ディラック分布を使用）
+
+\item n型シリコンで、ドナー濃度が$N_d = 10^{17}$ 個/cm$^3$のとき、少数キャリア（正孔）の濃度を求めよ。真性キャリア濃度は$n_i = 1.5 \times 10^{10}$ 個/cm$^3$とする。
+
+\item pn接合の空乏層幅の式を、ポアソン方程式を使って導出せよ。（ヒント：空乏層内の電荷密度から電場、電位を求め、境界条件を適用する）
+
+\item 金（$\phi_m = 5.1$ eV）とn型シリコン（$\phi_s = 4.0$ eV）の接合は、ショットキー接合かオーミック接合か答えよ。また、その理由を説明せよ。
+
+\item パワーエレクトロニクスで炭化シリコン（SiC）や窒化ガリウム（GaN）などのワイドバンドギャップ半導体が注目される理由を、バンドギャップの大きさと半導体の性質の関係から説明せよ。
+\end{enumerate}

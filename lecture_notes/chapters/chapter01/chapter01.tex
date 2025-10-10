@@ -1,0 +1,447 @@
+\chapter{パワーエレクトロニクスの概要}
+
+\section{はじめに}
+
+\subsection{講義の進め方}
+
+本講義では、パワーエレクトロニクスの基礎から応用までを体系的に学習する。資料などの共有事項は専用のwebページに掲載されており、主にスライドを使って説明を行う。板書は補足で説明するときに利用し、講義の後に演習問題を出す。演習課題を解いて復習することが重要である。わからない点があれば質問してほしい。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-02.pdf}}
+\caption{講義の進め方}
+\label{fig:lecture_method}
+\end{figure}
+
+\subsection{本講義の目標}
+
+本講義では、以下の4つの目標を達成することを目指す：
+
+\begin{itemize}
+\item パワーエレクトロニクスの概要を理解する
+\item 可変抵抗を用いた電力変換を理解する
+\item 理想的なスイッチと現実との違いを理解する
+\item 電力損失の計算を理解する
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-03.pdf}}
+\caption{本講義の目標}
+\label{fig:objectives}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-04.pdf}}
+\caption{本日の目標}
+\label{fig:todays_objectives}
+\end{figure}
+
+\section{パワーエレクトロニクスとは}
+
+\subsection{パワーエレクトロニクスの定義}
+
+パワーエレクトロニクスとは、「パワー」と「エレクトロニクス」を組み合わせた学問分野である。
+
+\begin{itemize}
+\item パワー：電力・エネルギー
+\item エレクトロニクス：半導体
+\end{itemize}
+
+つまり、\textbf{半導体を使って電力を変換・制御する工学}であり、全ては\textbf{エネルギーを効率よく使うため}の技術である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-05.pdf}}
+\caption{パワーエレクトロニクスとは？}
+\label{fig:what_is_pe}
+\end{figure}
+
+\subsection{電力変換の例}
+
+電力変換の代表的な例として、交流から直流への変換がある。例えば、コンセントから得られる100Vの交流電圧を、ノートパソコンなどで使用する15Vの直流電圧に変換する。この変換を実現するために、以下の3つの主要な素子が用いられる：
+
+\begin{enumerate}
+\item キャパシタ（コンデンサ）：電荷を蓄える
+\item インダクタ（コイル）：磁気エネルギーを蓄える
+\item スイッチング素子（半導体）：電流のオン・オフを制御
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-06.pdf}}
+\caption{電力変換の例（AC-DC変換）}
+\label{fig:ac_dc_conversion}
+\end{figure}
+
+\subsection{身の回りの電力変換}
+
+現代社会では、あらゆる場所で電力変換が行われている。スマートフォンの充電器、ノートパソコンのACアダプタ、電気自動車の充電システム、太陽光発電システムなど、私たちの生活は電力変換技術なしには成り立たない。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-07.pdf}}
+\caption{身の回りの電力変換}
+\label{fig:power_conversion_examples}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-08.pdf}}
+\caption{電力変換の応用例}
+\label{fig:applications}
+\end{figure}
+
+\subsection{電力変換の種類}
+
+電力変換には、以下の4つの基本的な種類がある：
+
+\begin{enumerate}
+\item \textbf{AC-DC変換（整流）}：交流を直流に変換（例：スマホ充電器）
+\item \textbf{DC-AC変換（インバータ）}：直流を交流に変換（例：太陽光発電）
+\item \textbf{DC-DC変換（チョッパ）}：直流電圧を昇圧・降圧（例：USB充電）
+\item \textbf{AC-AC変換（サイクロコンバータ）}：交流の周波数や電圧を変換
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-09.pdf}}
+\caption{電力変換の種類}
+\label{fig:conversion_types}
+\end{figure}
+
+\section{パワーエレクトロニクスで扱う3つの要素}
+
+パワーエレクトロニクスは、以下の3つの要素の組み合わせで構成される：
+
+\begin{enumerate}
+\item \textbf{スイッチングデバイス（半導体）}：電力の流れを制御
+\item \textbf{電気・電子回路}：回路の設計と解析
+\item \textbf{制御}：スイッチングのタイミングと方法
+\end{enumerate}
+
+これらの要素は、電子物性論、電子デバイス工学、電気電子材料、電子回路工学、電磁気学、電磁界理論、電気回路、ディジタル電子回路、制御工学などの基礎知識の組み合わせで成り立っている。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-10.pdf}}
+\caption{パワーエレクトロニクスで扱う3つの要素}
+\label{fig:three_elements}
+\end{figure}
+
+\section{電気回路の基礎}
+
+\subsection{回路解析の基本法則}
+
+パワーエレクトロニクス回路を理解するためには、電気回路の基本法則を理解することが不可欠である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-11.pdf}}
+\caption{電気回路の基礎}
+\label{fig:circuit_basics}
+\end{figure}
+
+\subsection{キルヒホッフの法則}
+
+電気回路の解析には、キルヒホッフの2つの法則が基本となる：
+
+\subsubsection{キルヒホッフの電圧則（KVL: Kirchhoff's Voltage Law）}
+
+閉回路における電圧の総和はゼロである。
+
+\begin{equation}
+\sum V = 0
+\end{equation}
+
+\subsubsection{キルヒホッフの電流則（KCL: Kirchhoff's Current Law）}
+
+ノード（接続点）に流入する電流の総和と流出する電流の総和は等しい。
+
+\begin{equation}
+\sum I_{\text{in}} = \sum I_{\text{out}}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-12.pdf}}
+\caption{キルヒホッフの法則}
+\label{fig:kirchhoff}
+\end{figure}
+
+\subsection{オームの法則}
+
+抵抗$R$に流れる電流$I$と電圧$V$の関係は、オームの法則で表される：
+
+\begin{equation}
+V = RI
+\end{equation}
+
+この法則は、パワーエレクトロニクス回路の解析において最も基本的な関係式である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-13.pdf}}
+\caption{オームの法則}
+\label{fig:ohms_law}
+\end{figure}
+
+\subsection{回路問題の定式化}
+
+回路問題を解く際には、KVL（キルヒホッフの電圧則）とKCL（キルヒホッフの電流則）、そして枝構成式（オームの法則など）を全て書き出すことで、どんな回路の問題も解くことができる。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-14.pdf}}
+\caption{回路問題の解法}
+\label{fig:circuit_solution}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-15.pdf}}
+\caption{回路問題の定式化}
+\label{fig:circuit_formulation}
+\end{figure}
+
+\section{可変抵抗を用いた電力変換}
+
+\subsection{可変抵抗による電圧制御}
+
+最も単純な電力変換の方法は、可変抵抗を用いた電圧制御である。抵抗値を変化させることで、負荷に加わる電圧を調整することができる。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-16.pdf}}
+\caption{可変抵抗を用いた電力変換}
+\label{fig:variable_resistor}
+\end{figure}
+
+\subsection{可変抵抗の問題点}
+
+可変抵抗を用いた電力変換には、重大な問題点がある。それは、\textbf{効率が非常に悪い}ことである。可変抵抗で電圧を下げる際、余分なエネルギーは熱として失われてしまう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-17.pdf}}
+\caption{可変抵抗の問題点}
+\label{fig:resistor_problem}
+\end{figure}
+
+\subsection{電力変換の効率}
+
+電力変換の効率$\eta$は、出力電力$P_{\text{out}}$と入力電力$P_{\text{in}}$の比で定義される：
+
+\begin{equation}
+\eta = \frac{P_{\text{out}}}{P_{\text{in}}}
+\end{equation}
+
+ここで、電力$P$は電圧$V$と電流$I$の積である：
+
+\begin{equation}
+P = VI
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-18.pdf}}
+\caption{電力変換の効率}
+\label{fig:efficiency}
+\end{figure}
+
+\subsection{効率計算の例}
+
+例えば、12Vから5Vに電圧を変換する場合を考える。負荷電流が0.5Aのとき、可変抵抗を用いた変換では：
+
+\begin{itemize}
+\item 入力電力：$P_{\text{in}} = 12 \times 0.5 = 6$ W
+\item 出力電力：$P_{\text{out}} = 5 \times 0.5 = 2.5$ W
+\item 効率：$\eta = 2.5/6 = 41.7$\%
+\end{itemize}
+
+このように、可変抵抗を用いた電力変換では、半分以上のエネルギーが無駄になってしまう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-19.pdf}}
+\caption{効率計算の具体例}
+\label{fig:efficiency_calculation}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-20.pdf}}
+\caption{可変抵抗の電力変換の効率は？}
+\label{fig:resistor_efficiency}
+\end{figure}
+
+\section{スイッチングによる高効率電力変換}
+
+\subsection{スイッチングの原理}
+
+可変抵抗の問題を解決するために、スイッチングという手法が用いられる。抵抗値を連続的に変化させるのではなく、スイッチのオン・オフを高速で切り替えることで、効率的な電力変換を実現する。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-21.pdf}}
+\caption{スイッチングによる電力変換}
+\label{fig:switching}
+\end{figure}
+
+\subsection{デューティ比}
+
+スイッチングにおいて重要な概念が\textbf{デューティ比（Duty ratio）}$D$である。これは、スイッチがオンになっている時間の割合を表す：
+
+\begin{equation}
+D = \frac{T_{\text{on}}}{T_{\text{on}} + T_{\text{off}}} = \frac{T_{\text{on}}}{T}
+\end{equation}
+
+ここで、$T$は周期、$T_{\text{on}}$はオン時間、$T_{\text{off}}$はオフ時間である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-22.pdf}}
+\caption{デューティ比}
+\label{fig:duty_ratio}
+\end{figure}
+
+\subsection{スイッチングによる電圧制御}
+
+スイッチングを用いることで、平均電圧を制御できる。デューティ比$D$を調整することで、出力電圧$V_{\text{out}}$を入力電圧$V_{\text{in}}$に対して以下のように制御できる：
+
+\begin{equation}
+V_{\text{out}} = D \cdot V_{\text{in}}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-23.pdf}}
+\caption{スイッチングによる電圧制御}
+\label{fig:switching_control}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-24.pdf}}
+\caption{スイッチングの効果}
+\label{fig:switching_effect}
+\end{figure}
+
+\section{理想的なスイッチと実際のスイッチ}
+
+\subsection{理想的なスイッチの性質}
+
+理想的なスイッチは、以下の3つの性質を持つ：
+
+\begin{enumerate}
+\item 0秒でスイッチをon・offできる（瞬間的な切り替え）
+\item スイッチoff時は電流は流れない（完全な遮断）
+\item スイッチon時は電圧降下はない（完全な導通）
+\end{enumerate}
+
+理想的なスイッチでは、電力損失$P_{\text{loss}} = V \times I = 0$となる。これは、off時は$I = 0$、on時は$V = 0$であるためである。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-25.pdf}}
+\caption{理想的なスイッチの性質}
+\label{fig:ideal_switch}
+\end{figure}
+
+\subsection{実際のスイッチング素子}
+
+実際の半導体スイッチング素子（MOSFET、IGBT、ダイオードなど）は、理想的なスイッチとは異なる特性を持つ：
+
+\begin{enumerate}
+\item スイッチングに有限の時間がかかる（スイッチング損失）
+\item on状態でも電圧降下が存在する（導通損失）
+\item off状態でもわずかな漏れ電流が流れる
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-26.pdf}}
+\caption{実際のスイッチング素子}
+\label{fig:real_switch}
+\end{figure}
+
+\subsection{スイッチング損失}
+
+実際のスイッチング素子では、on・off切り替え時に電圧と電流が同時に存在する期間があり、この間に電力損失が発生する。これを\textbf{スイッチング損失}と呼ぶ。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-27.pdf}}
+\caption{スイッチング損失}
+\label{fig:switching_loss}
+\end{figure}
+
+\subsection{導通損失}
+
+スイッチがon状態のとき、理想的にはゼロであるべき電圧降下が実際には存在する。この電圧降下によって発生する損失を\textbf{導通損失}と呼ぶ。
+
+\begin{equation}
+P_{\text{conduction}} = V_{\text{on}} \cdot I
+\end{equation}
+
+ここで、$V_{\text{on}}$はon時の電圧降下である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-28.pdf}}
+\caption{導通損失}
+\label{fig:conduction_loss}
+\end{figure}
+
+\subsection{トータル損失}
+
+パワー半導体素子の全体的な損失は、スイッチング損失と導通損失の和として表される：
+
+\begin{equation}
+P_{\text{total}} = P_{\text{switching}} + P_{\text{conduction}}
+\end{equation}
+
+高効率な電力変換を実現するためには、これらの損失を最小化することが重要である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-29.pdf}}
+\caption{トータル損失}
+\label{fig:total_loss}
+\end{figure}
+
+\section{まとめ}
+
+本章では、パワーエレクトロニクスの概要について学習した。主な内容は以下の通りである：
+
+\begin{itemize}
+\item 電力変換の意味と日常生活での応用例
+\item 可変抵抗を用いた電力変換（効率が悪い）
+\item 効率の良い電力変換の方法→スイッチング
+\item 実際のスイッチング素子（半導体）の損失
+\end{itemize}
+
+パワーエレクトロニクスは、半導体を使って電力を効率よく変換・制御する工学である。可変抵抗を用いた方法では効率が悪いため、スイッチングという手法を用いることで高効率な電力変換が実現できる。しかし、実際のスイッチング素子には、スイッチング損失と導通損失が存在し、これらを考慮した設計が必要である。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-30.pdf}}
+\caption{まとめ}
+\label{fig:summary}
+\end{figure}
+
+\subsection{次回の予告}
+
+次回は、半導体の物理について学習する。パワーエレクトロニクスで用いられる半導体素子の動作原理を理解するために、半導体の基礎的な物理現象について詳しく説明する。
+
+\subsection{演習問題}
+
+\begin{enumerate}
+\item パワーエレクトロニクスの定義を説明せよ。
+\item AC-DC変換、DC-AC変換、DC-DC変換、AC-AC変換のそれぞれについて、具体的な応用例を挙げよ。
+\item 可変抵抗を用いた電力変換の問題点を説明せよ。
+\item 電源電圧が20V、負荷電圧が8V、負荷電流が2Aの場合、可変抵抗を用いた電力変換の効率を計算せよ。
+\item スイッチングによる電力変換が高効率である理由を、理想的なスイッチの性質を用いて説明せよ。
+\item 実際のスイッチング素子で発生する2種類の損失について説明せよ。
+\end{enumerate}
