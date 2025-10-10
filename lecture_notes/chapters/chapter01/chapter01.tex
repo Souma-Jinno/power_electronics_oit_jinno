@@ -324,13 +324,6 @@ $\rightarrow$ \textbf{電圧を100倍にすると、損失は1万分の1にな�
 
 パワーエレクトロニクス回路を理解するためには、電気回路の基本法則を理解することが不可欠である。
 
-\begin{figure}[H]
-\centering
-\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-11.pdf}}
-\caption{電気回路の基礎}
-\label{fig:circuit_basics}
-\end{figure}
-
 \subsection{キルヒホッフの法則}
 
 電気回路の解析には、キルヒホッフの2つの法則が基本となる：
@@ -353,9 +346,9 @@ $\rightarrow$ \textbf{電圧を100倍にすると、損失は1万分の1にな�
 
 \begin{figure}[H]
 \centering
-\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-12.pdf}}
-\caption{キルヒホッフの法則}
-\label{fig:kirchhoff}
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-13.pdf}}
+\caption{回路理論の復習（KVL、KCL、枝構成式）}
+\label{fig:circuit_basics}
 \end{figure}
 
 \subsubsection{キルヒホッフの法則の物理的意味}
@@ -467,13 +460,6 @@ V = RI
 
 この法則は、パワーエレクトロニクス回路の解析において最も基本的な関係式である。
 
-\begin{figure}[H]
-\centering
-\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-13.pdf}}
-\caption{オームの法則}
-\label{fig:ohms_law}
-\end{figure}
-
 \subsection{回路問題の定式化}
 
 回路問題を解く際には、KVL（キルヒホッフの電圧則）とKCL（キルヒホッフの電流則）、そして枝構成式（オームの法則など）を全て書き出すことで、どんな回路の問題も解くことができる。
@@ -500,7 +486,7 @@ V = RI
 
 \begin{figure}[H]
 \centering
-\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-16.pdf}}
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-11.pdf}}
 \caption{可変抵抗を用いた電力変換}
 \label{fig:variable_resistor}
 \end{figure}
@@ -508,13 +494,6 @@ V = RI
 \subsection{可変抵抗の問題点}
 
 可変抵抗を用いた電力変換には、重大な問題点がある。それは、\textbf{効率が非常に悪い}ことである。可変抵抗で電圧を下げる際、余分なエネルギーは熱として失われてしまう。
-
-\begin{figure}[H]
-\centering
-\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-17.pdf}}
-\caption{可変抵抗の問題点}
-\label{fig:resistor_problem}
-\end{figure}
 
 \subsubsection{エネルギーはどこへ行くのか}
 
@@ -686,6 +665,27 @@ P = VI
 \end{itemize}
 
 このように、可変抵抗を用いた電力変換では、半分以上のエネルギーが無駄になってしまう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-12.pdf}}
+\caption{可変抵抗を用いた電力変換の問題（Quiz）}
+\label{fig:resistor_quiz}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-16.pdf}}
+\caption{可変抵抗Quiz：KVL・KCLによる解法}
+\label{fig:resistor_quiz_solution}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-17.pdf}}
+\caption{可変抵抗Quiz：計算過程の詳細}
+\label{fig:resistor_calculation}
+\end{figure}
 
 \begin{figure}[H]
 \centering
