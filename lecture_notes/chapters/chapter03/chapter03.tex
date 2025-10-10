@@ -347,6 +347,89 @@ I_E = I_C + I_B
 
 これがBJTにおいてベース電流が必要不可欠である理由です。
 
+\subsubsection{ベース電流と正孔補充のメカニズム}
+
+ベース電流の役割をより深く理解するために、\textbf{キャリア補充の観点}から詳しく見ていきましょう。
+
+\textbf{ステップ1：電子の注入と再結合}
+
+エミッタ-ベース接合に順バイアスを印加すると：
+
+\begin{enumerate}
+\item エミッタ（n$^+$型）から大量の電子がベース（p型）へ注入される
+\item ベース領域に注入された電子の挙動：
+\begin{itemize}
+\item \textbf{大部分（約99\%）}：ベースを通過してコレクタへ到達
+\item \textbf{一部（約1\%）}：ベース領域の正孔と再結合して消滅
+\end{itemize}
+\end{enumerate}
+
+\textbf{ステップ2：正孔の消費}
+
+再結合により、ベース領域の正孔が\textbf{消費}されます：
+
+\begin{itemize}
+\item 電子（●） + 正孔（○） → 消滅
+\item ベース領域の正孔濃度が減少する傾向
+\end{itemize}
+
+\textbf{ステップ3：ベース電流による正孔補充}
+
+もし外部からベース端子を通じて正孔を補給しなければ：
+
+\begin{enumerate}
+\item ベース領域の正孔濃度が減少し続ける
+\item 正孔濃度が減少すると、エミッタ-ベース接合の\textbf{順バイアス状態が維持できなくなる}
+\item エミッタからの電子注入が停止する
+\item \textbf{トランジスタ動作が停止}する
+\end{enumerate}
+
+したがって、\textbf{ベース電流$I_B$は、再結合により消費された正孔を補充し、トランジスタ動作を持続させるために必要}です。
+
+\textbf{電流の収支バランス：}
+
+\begin{itemize}
+\item \textbf{エミッタ電流} $I_E$：エミッタから注入される電子の流れ（最大）
+\item \textbf{コレクタ電流} $I_C$：ベースを通過してコレクタに到達した電子の流れ（$I_E$の約99\%）
+\item \textbf{ベース電流} $I_B$：ベースで再結合した電子を補うために、ベース端子から供給される正孔の流れ（$I_E$の約1\%）
+\end{itemize}
+
+キルヒホッフの電流則により：
+\begin{equation}
+I_E = I_C + I_B
+\end{equation}
+
+\textbf{具体例：}
+
+100 mAのエミッタ電流が流れている場合（電流増幅率$\beta = 99$として）：
+
+\begin{itemize}
+\item 99 mAの電子がコレクタに到達 → $I_C = 99$ mA
+\item 1 mAの電子がベースで再結合 → この再結合を補うために $I_B = 1$ mA の正孔をベース端子から供給
+\item $I_E = I_C + I_B = 99 + 1 = 100$ mA
+\end{itemize}
+
+\textbf{なぜベース電流が小さいのか：}
+
+ベース電流が小さい（$I_B \ll I_C$）のは、以下の設計によります：
+
+\begin{enumerate}
+\item \textbf{ベースを薄くする}：電子がベース領域を通過する時間が短い（典型的には数ps〜数十ps）
+\item \textbf{ベースの正孔濃度を低くする}：電子が正孔と遭遇する確率が低い（$N_a \approx 10^{16}$ cm$^{-3}$）
+\item \textbf{エミッタの電子濃度を高くする}：大量の電子が注入される（$N_d \approx 10^{19}$ cm$^{-3}$）
+\end{enumerate}
+
+その結果、エミッタから注入された電子のうち、\textbf{大部分（例えば99\%以上）がベース領域を通過してコレクタに到達}し、\textbf{ごく一部（例えば1\%未満）だけがベース領域で再結合}します。
+
+\textbf{重要なまとめ：}
+
+\begin{itemize}
+\item ベース電流は、ベース領域で消費された正孔を補充するために必要
+\item ベース電流がないと、正孔が枯渇してトランジスタ動作が停止する
+\item ベース電流を制御することで、エミッタからの電子注入量を制御でき、結果としてコレクタ電流を制御できる
+\item この仕組みにより、小さなベース電流で大きなコレクタ電流を制御する\textbf{電流増幅}が実現される
+\end{itemize}
+
 \subsection{BJTのバイアス条件}
 
 BJTをスイッチング素子として動作させるためには、適切なバイアス条件が必要です。図\ref{fig:bjt_bias}に、順バイアスと逆バイアスの状態を示します。
@@ -533,6 +616,109 @@ IGBTの最大の特徴は、\textbf{MOSFETの入力特性}と\textbf{BJTの出�
 
 図の下部のバンド図を見ると、n-p-n-pの4層構造が明確に示されています。ゲート電圧によって形成されたチャネルを通じて電子が流れ（ピンクの矢印）、同時に正孔も注入されることで（青い矢印）、全体として大きな電流を流すことができます。
 
+\subsubsection{IGBTの動作メカニズムの詳細}
+
+IGBTの最大の特徴である\textbf{伝導度変調（conductivity modulation）}について、詳しく見ていきましょう。
+
+\textbf{ステップ1：MOSFET部分の動作（電子の流れ開始）}
+
+\begin{enumerate}
+\item ゲート電圧$V_G$を印加すると、p型領域表面に反転層（nチャネル）が形成される
+\item エミッタのn$^+$領域から、この反転層を通じて電子（●）がn$^-$ドリフト領域へ流入する
+\item この段階では、MOSFETと同様のユニポーラ動作（電子のみの流れ）
+\end{enumerate}
+
+\textbf{ステップ2：正孔の注入（バイポーラ動作の開始）}
+
+\begin{enumerate}
+\item n$^-$ドリフト領域に電子が流入すると、コレクタ側のp$^+$層とn$^-$層の接合が順バイアス状態になる
+\item p$^+$層（コレクタ）から正孔（○）がn$^-$ドリフト層へ注入される
+\item これにより、\textbf{双方向のキャリア注入}が実現される
+\end{enumerate}
+
+\textbf{ステップ3：伝導度変調の発生}
+
+n$^-$ドリフト領域に正孔が注入されると、以下の現象が起こります：
+
+\begin{itemize}
+\item \textbf{キャリア濃度の増加}：
+\begin{equation}
+n_{\text{total}} = n_{\text{electron}} + p_{\text{hole}} \gg n_{\text{electron}}
+\end{equation}
+
+\item \textbf{導電率の向上}：
+\begin{equation}
+\sigma = e(n\mu_n + p\mu_p) \quad \text{（$p$の寄与で大幅に増加）}
+\end{equation}
+
+\item \textbf{抵抗の低下}：
+\begin{equation}
+R = \frac{1}{\sigma A/L} \quad \text{（$\sigma$が増加すると$R$が減少）}
+\end{equation}
+\end{itemize}
+
+\textbf{伝導度変調の効果：}
+
+正孔注入により、n$^-$ドリフト層の導電率が以下のように変化します：
+
+\begin{itemize}
+\item \textbf{注入前}：低濃度n型（$N_d \approx 10^{14}$ cm$^{-3}$） → 高抵抗
+\item \textbf{注入後}：高濃度キャリア（電子＋正孔 $\approx 10^{16}$〜$10^{17}$ cm$^{-3}$） → \textbf{低抵抗}
+\end{itemize}
+
+この導電率の変調により、オン抵抗が大幅に低減されます。
+
+\textbf{MOSFETとの比較：}
+
+\begin{table}[H]
+\centering
+\caption{MOSFETとIGBTの電流メカニズムの比較}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{項目} & \textbf{MOSFET} & \textbf{IGBT} \\
+\hline
+キャリア & 電子のみ & 電子＋正孔 \\
+\hline
+動作モード & ユニポーラ & バイポーラ \\
+\hline
+ドリフト層の抵抗 & 高い & 低い（伝導度変調） \\
+\hline
+オン抵抗 & 大きい & 小さい \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{なぜIGBTは低オン抵抗を実現できるのか：}
+
+\begin{enumerate}
+\item \textbf{MOSFET}では、ドリフト層の抵抗がオン抵抗の主要因
+\begin{itemize}
+\item 高耐圧を得るために、ドリフト層を厚くかつ低濃度にする必要がある
+\item これにより、オン抵抗が増大する
+\end{itemize}
+
+\item \textbf{IGBT}では、伝導度変調により抵抗を低減
+\begin{itemize}
+\item ドリフト層は低濃度でも、正孔注入により実効的に高濃度化
+\item 高耐圧と低オン抵抗を両立できる
+\end{itemize}
+\end{enumerate}
+
+\textbf{電流の内訳：}
+
+IGBTのコレクタ電流$I_C$は、以下の2つの成分から構成されます：
+
+\begin{equation}
+I_C = I_{\text{electron}} + I_{\text{hole}}
+\end{equation}
+
+\begin{itemize}
+\item $I_{\text{electron}}$：MOSFETチャネルを通じた電子電流
+\item $I_{\text{hole}}$：コレクタから注入された正孔電流（伝導度変調に寄与）
+\end{itemize}
+
+この二重の電流メカニズムにより、IGBTは大電流を低損失で流すことができます。
+
 \subsection{IGBTの利点と特性}
 
 IGBTは、MOSFETとBJTの長所を組み合わせることで、以下の優れた特性を実現しています：
@@ -552,6 +738,126 @@ IGBTは、MOSFETとBJTの長所を組み合わせることで、以下の優れ�
 \item \textbf{MOSFET}：低電圧・高周波数・小～中容量の用途に適する
 \item \textbf{IGBT}：高電圧・中周波数・中～大容量の用途に適する
 \end{itemize}
+
+\subsection{IGBTのオフ状態における電位分布}
+
+IGBTはnpnp型の4層構造を持つため、3つのpn接合が存在します。オフ状態（ゲート電圧なし）でコレクタ-エミッタ間に電圧を印加すると、\textbf{なぜ特定の接合に電圧が集中するのか}という疑問が生じます。
+
+\textbf{IGBTの3つのpn接合：}
+
+\begin{verbatim}
+E側   n+ | p | n- | p+   C側
+        J1   J2   J3
+\end{verbatim}
+
+\begin{itemize}
+\item \textbf{J1（エミッタ側）}：n$^+$-p接合
+\item \textbf{J2（中央）}：p-n$^-$接合
+\item \textbf{J3（コレクタ側）}：n$^-$-p$^+$接合
+\end{itemize}
+
+\subsubsection{オフ状態での各接合の役割}
+
+コレクタが正、エミッタが負の電圧を印加した場合（通常の使用状態）：
+
+\begin{enumerate}
+\item \textbf{J1（n$^+$-p）接合}：
+\begin{itemize}
+\item エミッタ電極がn$^+$層とp層の\textbf{両方に接触}している
+\item 実質的に\textbf{短絡（ショート）}されている
+\item ほとんど電位差がかからない
+\item 抵抗：$R_1 \approx 0$
+\end{itemize}
+
+\item \textbf{J2（p-n$^-$）接合}：
+\begin{itemize}
+\item この接合は\textbf{逆バイアス}状態
+\item 空乏層が広がり、\textbf{ほぼ全ての電圧をここで支える}
+\item 耐圧を決定する重要な接合
+\item 抵抗：$R_2 \gg R_1, R_3$（非常に大きい）
+\end{itemize}
+
+\item \textbf{J3（n$^-$-p$^+$）接合}：
+\begin{itemize}
+\item 順バイアス方向（p$^+$が正）
+\item しかし、電流は流れない（後述の理由による）
+\item 電圧降下は小さい
+\item 抵抗：$R_3$ は小さい（順バイアスだが電流がないため）
+\end{itemize}
+\end{enumerate}
+
+\textbf{なぜJ2に電圧が集中するのか：}
+
+電圧は\textbf{抵抗が高い部分}に多くかかります。3つの接合を直列接続した抵抗と考えると：
+
+\begin{equation}
+V_{\text{CE}} = V_{J1} + V_{J2} + V_{J3}
+\end{equation}
+
+\begin{itemize}
+\item $V_{J1} \approx 0$（J1は短絡）
+\item $V_{J2} \approx V_{\text{CE}}$（J2が高抵抗）
+\item $V_{J3} \approx 0$（順バイアスだが電流なし）
+\end{itemize}
+
+\subsubsection{キャリア補充経路の重要性}
+
+\textbf{重要な疑問：}「J3が順バイアスなら電流が流れるはずでは？」
+
+実際には、J3を通じて連続的な電流は流れません。その理由を\textbf{キャリア補充の観点}から説明します。
+
+\textbf{もしJ3で電流が流れようとすると：}
+
+\begin{enumerate}
+\item J3（n$^-$-p$^+$）が順バイアスで、正孔がp$^+$からn$^-$へ注入される
+\item 同時に、電子がn$^-$からp$^+$へ移動する
+\item しかし、n$^-$層の電子を\textbf{補充する経路}が必要
+\end{enumerate}
+
+\textbf{キャリア補充経路の遮断：}
+
+\begin{verbatim}
+E側   n+ | p | n- | p+   C側
+        J1   J2   J3
+             ↑
+            逆バイアス
+          （電子が通れない）
+\end{verbatim}
+
+\begin{itemize}
+\item J3で電子が消費されると、n$^-$層の電子が枯渇する
+\item 電子を補充するには、J2を通って左側（p層）から供給される必要がある
+\item しかし、\textbf{J2は逆バイアス}で遮断されている
+\item 電子の補充経路がない
+\end{itemize}
+
+\textbf{結果：}
+
+\begin{itemize}
+\item n$^-$層の電子が枯渇して電流は止まる
+\item ごく微小な\textbf{漏れ電流}しか流れない
+\item \textbf{電圧はJ2で支えられる}
+\end{itemize}
+
+\textbf{電流の連続性：}
+
+電流が連続的に流れるためには、全ての接合で電流が等しくなければなりません：
+
+\begin{equation}
+I_{J1} = I_{J2} = I_{J3}
+\end{equation}
+
+J2が逆バイアスで電流をほぼ遮断 → 全体の電流がほぼゼロ → J3も実質的に電流が流れない → \textbf{電圧はJ2の空乏層で支えられる}
+
+\textbf{まとめ：}
+
+\begin{itemize}
+\item J1：エミッタ電極で短絡 → 電圧降下なし
+\item J2：逆バイアスで高抵抗 → \textbf{ほぼ全電圧を支える}
+\item J3：順バイアス方向だがキャリア補充経路がない → 電流が流れず、電圧降下小
+\end{itemize}
+
+この原理は、IGBTだけでなく、サイリスタなどの他の多層構造デバイスにも共通する重要な概念です。
 
 \section{サイリスタの動作原理}
 

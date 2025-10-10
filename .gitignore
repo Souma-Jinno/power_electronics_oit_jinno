@@ -16,6 +16,9 @@
 # Keynote slides (keep only PDFs)
 *.key
 
+# リモートに保存しないフォルダ
+revise_no_share/
+
 # macOS
 .DS_Store
 

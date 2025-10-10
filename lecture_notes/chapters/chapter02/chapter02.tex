@@ -517,6 +517,44 @@ I_{\text{拡散}} + I_{\text{ドリフト}} = 0
 
 \subsection{拡散電位}
 
+pn接合の拡散電位$V_{bi}$（ビルトイン電位）は、\textbf{接合前のn型半導体とp型半導体のフェルミ準位の差}に対応します。
+
+\textbf{重要な理解：}
+
+拡散電位は、以下のように定義されます：
+
+\begin{equation}
+eV_{bi} = E_{F,n}^{\text{（接合前）}} - E_{F,p}^{\text{（接合前）}}
+\end{equation}
+
+または電圧で表すと：
+
+\begin{equation}
+V_{bi} = \frac{E_{F,n} - E_{F,p}}{e}
+\end{equation}
+
+\textbf{符号に注意：}
+
+n型半導体のフェルミ準位$E_{F,n}$は、伝導帯に近い（高い位置）にあり、p型半導体のフェルミ準位$E_{F,p}$は、価電子帯に近い（低い位置）にあります。したがって：
+
+\begin{equation}
+E_{F,n} > E_{F,p} \quad \Rightarrow \quad V_{bi} > 0
+\end{equation}
+
+\begin{screen}
+\textbf{よくある誤解：}\\
+$V_{bi} = E_{F,p} - E_{F,n}$とすると負の値になってしまい、物理的におかしいです。\\
+正しくは $V_{bi} = (E_{F,n} - E_{F,p})/e > 0$ です。
+\end{screen}
+
+\textbf{接合前と接合後の違い：}
+
+\begin{itemize}
+\item \textbf{接合前}：n型とp型は独立した系で、異なるフェルミ準位を持つ
+\item \textbf{接合後（熱平衡）}：フェルミ準位は全体で一定（水平）
+\item \textbf{拡散電位}：接合前のフェルミ準位の差が、接合後のバンドの曲がり（拡散電位）に変換される
+\end{itemize}
+
 pn接合の拡散電位$V_{bi}$は、以下の式で表されます。
 
 \begin{equation}
@@ -578,6 +616,90 @@ d = \sqrt{\frac{2\varepsilon V_{bi}}{e}\left(\frac{1}{N_a} + \frac{1}{N_d}\right
 
 例えば、$N_a = 10^{18}$ 個/cm$^3$、$N_d = 10^{16}$ 個/cm$^3$の場合、p型側の空乏層幅は、n型側の空乏層幅の約$\sqrt{10^{18}/10^{16}} = 10$倍小さくなります。
 
+\subsubsection{空乏層幅の式の近似}
+
+教科書や資料によっては、空乏層幅の式が以下のように簡略化されている場合があります：
+
+\begin{equation}
+d = \sqrt{\frac{4\varepsilon V_{bi}}{eN_a}}
+\end{equation}
+
+この式は、一般式と比較すると係数が異なります。どのような近似からこの式が導かれるのでしょうか？
+
+一般式と簡略式を比較すると：
+
+\begin{align}
+\text{一般式：} \quad d &= \sqrt{\frac{2\varepsilon V_{bi}}{e}\left(\frac{1}{N_a} + \frac{1}{N_d}\right)} \\
+\text{簡略式：} \quad d &= \sqrt{\frac{4\varepsilon V_{bi}}{eN_a}}
+\end{align}
+
+両式が等しいためには：
+
+\begin{equation}
+\frac{1}{N_a} + \frac{1}{N_d} = \frac{2}{N_a}
+\end{equation}
+
+この式を変形すると：
+
+\begin{align}
+\frac{1}{N_d} &= \frac{2}{N_a} - \frac{1}{N_a} = \frac{1}{N_a} \\
+&\Rightarrow \quad \boxed{N_d = N_a}
+\end{align}
+
+\textbf{答え：対称接合（symmetric junction）の近似}
+
+簡略式は、\textbf{$N_a = N_d$（対称接合）を仮定}しています。
+
+\textbf{対称接合の物理的意味：}
+
+\begin{verbatim}
+p型        |        n型
+Na         |        Nd
+           |
+空乏層     |     空乏層
+←─ xp ─→|←─ xn ─→
+\end{verbatim}
+
+$N_a = N_d$のとき：
+
+\begin{itemize}
+\item 電荷の中性条件：$N_a \cdot x_p = N_d \cdot x_n$
+\item したがって：$x_p = x_n$
+\item \textbf{空乏層が両側に均等に広がる}
+\end{itemize}
+
+\textbf{計算の確認：}
+
+\begin{align}
+\frac{1}{N_a} + \frac{1}{N_d} &= \frac{1}{N_a} + \frac{1}{N_a} = \frac{2}{N_a} \\
+d &= \sqrt{\frac{2\varepsilon V_{bi}}{e} \cdot \frac{2}{N_a}} = \sqrt{\frac{4\varepsilon V_{bi}}{eN_a}}
+\end{align}
+
+\textbf{その他の近似：片側接合（one-sided junction）}
+
+もし一方のドーピング濃度が他方よりもはるかに高い場合（例：$N_d \gg N_a$）：
+
+\begin{equation}
+\frac{1}{N_a} + \frac{1}{N_d} \approx \frac{1}{N_a} \quad (\text{$N_d \gg N_a$のとき})
+\end{equation}
+
+このとき：
+
+\begin{equation}
+d \approx \sqrt{\frac{2\varepsilon V_{bi}}{eN_a}}
+\end{equation}
+
+この場合、空乏層はほとんど低濃度側（p型側）に広がります。
+
+\textbf{実際のデバイス設計：}
+
+\begin{itemize}
+\item \textbf{対称接合}（$N_a = N_d$）：教科書の例題や理論計算で使われる
+\item \textbf{片側接合}（$N_d \gg N_a$または$N_a \gg N_d$）：実際のデバイスでよく使われる設計
+\end{itemize}
+
+実用デバイスでは、片側接合の方が一般的です。例えば、パワーダイオードでは、高耐圧を得るために低濃度のn型ドリフト層（$N_d \approx 10^{14}$ cm$^{-3}$）に高濃度のp型層（$N_a \approx 10^{19}$ cm$^{-3}$）を接合します。
+
 \subsection{バンド図におけるエネルギー関係}
 
 バンド図を描く際、以下の関係を覚えておくと便利です（図\ref{fig:band_energy}）。
@@ -594,6 +716,104 @@ d = \sqrt{\frac{2\varepsilon V_{bi}}{e}\left(\frac{1}{N_a} + \frac{1}{N_d}\right
 \item 電場の向きは、バンドが上がる向き（正電荷から負電荷へ）
 \item 電位は、バンドが下がる方が高い（電子にとってのポテンシャルエネルギーが低い＝電位が高い）
 \item フェルミ準位は、平衡状態では全体で一定
+\end{itemize}
+
+\subsubsection{フェルミ準位とバンド端の本質的な違い}
+
+pn接合や金属-半導体接合を理解する上で、\textbf{「フェルミ準位は曲がらず、バンドが曲がる」}という原理は非常に重要です。しかし、多くの学生がこの違いを混同しやすいため、ここで本質的な違いを明確にします。
+
+\textbf{バンド端（$E_c$、$E_v$）とは：}
+
+\begin{itemize}
+\item \textbf{電子のエネルギー固有状態}を表す
+\item 電子が実際に占有できるエネルギー準位の境界
+\item 静電ポテンシャル$\phi(x)$の影響を直接受ける
+\item \textbf{局所的な量}（場所ごとに定義される）
+\item 例：$E_c(x) = E_{c0} - e\phi(x)$（電子のポテンシャルエネルギー）
+\end{itemize}
+
+\textbf{フェルミ準位（$E_F$）とは：}
+
+\begin{itemize}
+\item \textbf{電子の化学ポテンシャル}（熱力学的な量）
+\item 電子がどちらの方向に移動したがるかを決める基準
+\item 物質間で電子をやり取りする際の平衡条件
+\item \textbf{熱平衡状態では空間的に一定}（水平）
+\end{itemize}
+
+\textbf{なぜフェルミ準位は曲がらない（水平になる）のか：}
+
+熱平衡状態では、系全体でフェルミ準位が一定になります。これは熱力学の基本原理です。
+
+\begin{screen}
+\textbf{重要な関係：}\\
+熱平衡 $\Leftrightarrow$ フェルミ準位が空間的に一定
+\end{screen}
+
+もしフェルミ準位に傾き（空間的な差）があったら：
+
+\begin{enumerate}
+\item 場所Aと場所Bで $E_F(A) > E_F(B)$ となる
+\item 電子が高いエネルギー（A）から低いエネルギー（B）へ移動する
+\item 電流が流れる
+\item これは熱平衡ではない！
+\end{enumerate}
+
+したがって、熱平衡状態では電流がゼロであり、フェルミ準位は空間的に一定（水平）となります。
+
+\textbf{水の高さによる類推：}
+
+この概念を理解するために、水の高さで例えてみましょう：
+
+\begin{itemize}
+\item \textbf{バンド端} ＝ 容器の底の形（場所によって高さが違う）
+\item \textbf{フェルミ準位} ＝ 水面の高さ（つながっていれば同じ高さ）
+\end{itemize}
+
+\begin{verbatim}
+容器A    容器B
+┌─┐    ┌──┐
+│～│────│～ │  ←水面（フェルミ準位）は同じ高さ
+│～～～～～～～│
+└──┘  └───┘  ←底の形（バンド）は違う
+\end{verbatim}
+
+容器の底の形が違っても、つながっている水面は同じ高さになります。もし水面に高低差があれば、水が流れて平衡状態ではありません。
+
+\textbf{接合時の変化：}
+
+pn接合や金属-半導体接合を形成すると：
+
+\begin{enumerate}
+\item 電子が移動する（高いフェルミ準位から低いフェルミ準位へ）
+\item 界面に電荷が蓄積される
+\item 電場が発生する
+\item \textbf{バンド端が曲がる}（電場によるポテンシャルエネルギーの変化）
+\item その結果、\textbf{フェルミ準位が全体で一定}になる
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{フェルミ準位とバンド端の比較}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{性質} & \textbf{バンド端（$E_c$, $E_v$）} & \textbf{フェルミ準位（$E_F$）} \\
+\hline
+物理的意味 & エネルギー固有状態 & 化学ポテンシャル \\
+\hline
+ポテンシャルの影響 & 受ける（曲がる） & 受けない \\
+\hline
+熱平衡での振る舞い & 場所で変化可能 & 空間的に一定 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{まとめ：}
+
+\begin{itemize}
+\item フェルミ準位の水平性 = 熱平衡 = 電流ゼロ
+\item バンドの曲がりは、電場による電子のポテンシャルエネルギーの変化を表す
+\item この区別を理解することが、pn接合や金属-半導体接合を正しく理解する鍵となる
 \end{itemize}
 
 
@@ -756,21 +976,58 @@ U = -eV
 
 答えは：\textbf{どちらも変化しますが、変化量が大きく異なります}
 
+この非対称性の理由は、\textbf{キャリア密度（状態密度）の圧倒的な違い}にあります。
+
+\begin{screen}
+\textbf{キャリア密度の比較：}
+\begin{itemize}
+\item 金属：自由電子密度 $\approx 10^{22}$〜$10^{23}$ 個/cm$^3$
+\item n型半導体：電子密度 $\approx 10^{16}$〜$10^{18}$ 個/cm$^3$
+\end{itemize}
+$\rightarrow$ \textbf{金属は半導体の約$10^5$〜$10^7$倍の電子を持つ}
+\end{screen}
+
 \begin{itemize}
 \item \textbf{金属のフェルミ準位}：
 \begin{itemize}
 \item 金属中の自由電子密度は非常に高い（$\sim 10^{22}$〜$10^{23}$ 個/cm$^3$）
+\item \textbf{電子の「海」から少し出ていくだけ}
+\item $10^{23}$個のうちの$10^{16}$個程度 $\rightarrow$ 無視できる変化
 \item わずかな電子の出入りでは、フェルミ準位はほとんど変化しない
 \item 金属内部では、フェルミ準位は接合前とほぼ同じ位置にある
+\item \textbf{金属は「フェルミ準位の基準」として振る舞う}
 \end{itemize}
 
 \item \textbf{半導体のフェルミ準位}：
 \begin{itemize}
 \item 半導体中のキャリア密度は比較的低い（$\sim 10^{10}$〜$10^{16}$ 個/cm$^3$）
+\item \textbf{もともと電子が少ない}
+\item 相対的に大きな割合の電子が出入り
 \item 電子の出入りにより、\textbf{界面付近でバンド全体が曲がる}
 \item 半導体の内部（バルク）では、フェルミ準位は接合前と同じ位置にある
 \item しかし、界面付近ではバンドが曲がっているため、見かけ上「フェルミ準位が変化した」ように見える
+\item \textbf{半導体側が金属に「合わせに行く」}
 \end{itemize}
+\end{itemize}
+
+\textbf{水槽とコップの例え：}
+
+この状況を、大きな水槽と小さなコップを繋いだときの水の移動で例えることができます。
+
+\begin{verbatim}
+大きな水槽（金属）    小さなコップ（半導体）
+┌─────────┐      ┌──┐
+│～～～～～～│──→──│    │
+│～～～～～～│ 同量  │～～ │
+│～～～～～～│  移動  │～～ │
+└─────────┘      └──┘
+水位ほぼ不変          水位大変化！
+\end{verbatim}
+
+接合時に同じ量の電子が移動しても：
+\begin{itemize}
+\item \textbf{金属側}：膨大な電子の「海」から少量が移動するだけ → フェルミ準位はほぼ不変
+\item \textbf{半導体側}：相対的に少ない電子から同量が移動 → フェルミ準位が大きく変化（バンドが大きく曲がる）
 \end{itemize}
 
 \textbf{正確な表現：}
@@ -1018,6 +1275,80 @@ $\phi_m < \phi_s$ & オーム性接触 & 整流性接触 \\
 \end{equation}
 
 ここで、$\chi_s$は半導体の電子親和力（真空準位から伝導帯下端までのエネルギー差）です。
+
+\textbf{各記号の物理的意味：}
+
+ショットキーバリアの式$\phi_B = \phi_m - \chi_s$を理解するために、各記号の意味を明確にします。
+
+\begin{itemize}
+\item \textbf{$\phi_m$（金属の仕事関数）}：
+\begin{itemize}
+\item 真空準位から金属のフェルミ準位までのエネルギー差
+\item 金属から電子1個を真空中に取り出すのに必要なエネルギー
+\item 例：Al $\approx$ 4.3 eV、Au $\approx$ 5.1 eV
+\end{itemize}
+
+\item \textbf{$\chi_s$（半導体の電子親和力）}：
+\begin{itemize}
+\item 真空準位から半導体の伝導帯端までのエネルギー差
+\item 真空中の静止した電子を伝導帯底に入れたときに得られるエネルギー
+\item 例：Si $\approx$ 4.05 eV、GaAs $\approx$ 4.07 eV
+\item \textbf{重要}：電子親和力は半導体材料固有の値で、ドーピングには依存しない
+\end{itemize}
+
+\item \textbf{$\phi_B$（ショットキーバリア高さ）}：
+\begin{itemize}
+\item 金属のフェルミ準位から半導体の伝導帯端までのエネルギー差
+\item 金属から半導体へ電子が移る際の障壁の高さ
+\item この値が大きいほど、電子の移動が困難（整流性が強い）
+\end{itemize}
+\end{itemize}
+
+\textbf{バンド図での理解：}
+
+\begin{verbatim}
+真空準位 ─────────────────────
+        ↕ φm          ↕ χs
+      金属EF        半導体Ec
+        │            │
+        └─ φB = φm - χs ─┘
+\end{verbatim}
+
+\textbf{具体例：Au（金）とn型Si接合}
+
+具体的な数値で計算してみましょう：
+
+\begin{itemize}
+\item $\phi_m$(Au) $\approx$ 5.1 eV
+\item $\chi_s$(Si) $\approx$ 4.05 eV
+\item $\phi_B \approx 5.1 - 4.05 \approx$ \textbf{1.05 eV}
+\end{itemize}
+
+この1.05 eVが、金属から半導体への電子注入を妨げる障壁となります。この障壁の高さは、以下のデバイス特性を決定する最も重要なパラメータです：
+
+\begin{itemize}
+\item \textbf{整流特性}：障壁の高さが大きいほど、整流性が強くなる
+\item \textbf{逆方向リーク電流}：$I_{\text{leak}} \propto \exp(-\phi_B/kT)$で減少
+\item \textbf{接触抵抗}：オーム性接触では$\phi_B < 0$となるように設計
+\end{itemize}
+
+\textbf{接合タイプとの関係：}
+
+\begin{itemize}
+\item \textbf{$\phi_m > \chi_s$の場合}（整流性接触）：
+\begin{itemize}
+\item $\phi_B = \phi_m - \chi_s > 0$ → 正のバリアが存在
+\item 電子の流れが制限される
+\item ショットキーダイオードとして機能
+\end{itemize}
+
+\item \textbf{$\phi_m < \chi_s$の場合}（オーム性接触）：
+\begin{itemize}
+\item $\phi_B = \phi_m - \chi_s < 0$ → バリアが存在しない
+\item 電子が金属→半導体へ容易に流れる
+\item 低抵抗接触
+\end{itemize}
+\end{itemize}
 
 \textbf{ショットキー接合の特徴と応用：}
 

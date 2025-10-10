@@ -58,6 +58,72 @@
 \label{fig:what_is_pe}
 \end{figure}
 
+\subsubsection{パワーエレクトロニクスの重要性}
+
+現代社会において、パワーエレクトロニクスは極めて重要な役割を果たしています。その重要性は、以下の観点から理解できます：
+
+\textbf{1. エネルギー消費の観点}
+
+日本国内で消費される電力の\textbf{約60\%以上}が、何らかの形で電力変換を経由しています。例えば：
+
+\begin{itemize}
+\item 家電製品（エアコン、冷蔵庫、洗濯機）のモーター駆動
+\item IT機器（パソコン、サーバー）の電源
+\item 産業用モーター（工場の生産設備）
+\item 電気自動車のバッテリー充電と駆動制御
+\item 再生可能エネルギー（太陽光、風力）の系統連系
+\end{itemize}
+
+\textbf{2. 省エネルギーへの貢献}
+
+電力変換の効率を1\%改善するだけで、莫大な省エネルギー効果が得られます。
+
+\begin{screen}
+\textbf{具体例：}
+
+日本全体の年間電力消費量を約1兆kWh（$10^{12}$ kWh）とすると、そのうち60\%が電力変換を経由するため：
+
+\begin{itemize}
+\item 電力変換を経由する電力：$10^{12} \times 0.6 = 6 \times 10^{11}$ kWh
+\item 効率が1\%改善されると：$6 \times 10^{11} \times 0.01 = 6 \times 10^{9}$ kWh の省エネ
+\item これは約\textbf{200万世帯の年間電力消費量}に相当
+\end{itemize}
+\end{screen}
+
+\textbf{3. 環境問題との関係}
+
+電力変換の高効率化は、CO$_2$排出削減に直結します：
+
+\begin{itemize}
+\item 火力発電からのCO$_2$排出削減
+\item 再生可能エネルギーの有効活用（太陽光・風力発電のインバータ）
+\item 電気自動車の航続距離延長（バッテリーの有効利用）
+\end{itemize}
+
+\subsubsection{パワーエレクトロニクスの歴史}
+
+パワーエレクトロニクスの発展は、半導体技術の進歩と密接に関係しています。
+
+\begin{itemize}
+\item \textbf{1950年代}：サイリスタ（SCR）の発明 → 大電力制御が可能に
+\item \textbf{1970年代}：パワーMOSFETの実用化 → 高速スイッチングが可能に
+\item \textbf{1980年代}：IGBT（絶縁ゲートバイポーラトランジスタ）の開発 → 大電力と高速スイッチングの両立
+\item \textbf{1990年代以降}：デジタル制御の普及、高効率化の追求
+\item \textbf{2000年代以降}：SiC（炭化ケイ素）、GaN（窒化ガリウム）などのワイドバンドギャップ半導体の実用化 → さらなる高効率化・小型化
+\end{itemize}
+
+\begin{screen}
+\textbf{技術進化の方向性：}
+
+\begin{itemize}
+\item \textbf{高効率化}：損失の低減（95\% → 98\% → 99\%以上へ）
+\item \textbf{高速化}：スイッチング周波数の向上（kHz → MHz）
+\item \textbf{小型化}：受動部品（コイル、コンデンサ）の小型化
+\item \textbf{高耐圧化}：より高い電圧での動作（kV → 数十kV）
+\item \textbf{高温動作}：冷却システムの簡素化
+\end{itemize}
+\end{screen}
+
 \subsection{電力変換の例}
 
 電力変換の代表的な例として、交流から直流への変換がある。例えば、コンセントから得られる100Vの交流電圧を、ノートパソコンなどで使用する15Vの直流電圧に変換する。この変換を実現するために、以下の3つの主要な素子が用いられる：
@@ -110,6 +176,128 @@
 \caption{電力変換の種類}
 \label{fig:conversion_types}
 \end{figure}
+
+\subsection{なぜ電力変換が必要なのか}
+
+電力変換の必要性を理解するために、電源と負荷の関係を考えてみましょう。
+
+\subsubsection{電源と負荷のミスマッチ}
+
+現実の世界では、電源（エネルギー供給側）と負荷（エネルギー消費側）の電圧・電流特性が一致しないことがほとんどです。
+
+\begin{screen}
+\textbf{具体例1：スマートフォン充電}
+
+\begin{itemize}
+\item \textbf{電源}：コンセント（AC 100V、50/60Hz）
+\item \textbf{負荷}：スマホバッテリー（DC 3.7V、2000mAh）
+\item \textbf{必要な変換}：AC→DC変換、電圧降圧（100V→5V）
+\end{itemize}
+\end{screen}
+
+\begin{screen}
+\textbf{具体例2：太陽光発電}
+
+\begin{itemize}
+\item \textbf{電源}：太陽電池（DC 30-40V、出力が時間変動）
+\item \textbf{負荷}：家電製品（AC 100V、50/60Hz）
+\item \textbf{必要な変換}：DC→AC変換、電圧調整、周波数生成
+\end{itemize}
+\end{screen}
+
+\subsubsection{電力変換の物理的意味}
+
+電力変換は、単なる電圧・電流の変更ではありません。\textbf{エネルギーの形態を変換}しています。
+
+\textbf{1. 交流（AC）と直流（DC）の違い}
+
+\begin{itemize}
+\item \textbf{交流}：電圧・電流の向きと大きさが周期的に変化
+\begin{equation}
+v(t) = V_m \sin(\omega t)
+\end{equation}
+\begin{itemize}
+\item 長距離送電に適している（変圧が容易）
+\item モーターの駆動に適している
+\end{itemize}
+
+\item \textbf{直流}：電圧・電流の向きと大きさが一定
+\begin{equation}
+v(t) = V_{\text{dc}} = \text{一定}
+\end{equation}
+\begin{itemize}
+\item 電子回路の動作に必要
+\item バッテリー充電に必要
+\item 精密な制御がしやすい
+\end{itemize}
+\end{itemize}
+
+\textbf{2. 電圧変換の必要性}
+
+異なる電圧レベルが必要な理由：
+
+\begin{itemize}
+\item \textbf{送電}：高電圧（数百kV）→ 電力損失を低減
+\begin{equation}
+P_{\text{loss}} = I^2 R = \left(\frac{P}{V}\right)^2 R \propto \frac{1}{V^2}
+\end{equation}
+同じ電力$P$を送電する場合、電圧$V$を高くすると電流$I$が小さくなり、損失が減少
+
+\item \textbf{配電}：中電圧（6.6kV）→ 地域への配電
+
+\item \textbf{家庭}：低電圧（100V/200V）→ 安全性
+
+\item \textbf{電子機器}：極低電圧（1.2V〜5V）→ 半導体の動作電圧
+\end{itemize}
+
+\begin{screen}
+\textbf{送電損失の具体例：}
+
+1000 kWの電力を10 kmの距離を送電する場合（送電線抵抗：1 $\Omega$/km）
+
+\textbf{低電圧送電（1000 V）の場合：}
+\begin{itemize}
+\item 電流：$I = P/V = 1000000/1000 = 1000$ A
+\item 送電線抵抗：$R = 10 \times 1 = 10$ $\Omega$
+\item 損失：$P_{\text{loss}} = I^2 R = 1000^2 \times 10 = 10$ MW（送電電力の10倍！）
+\end{itemize}
+
+\textbf{高電圧送電（100 kV）の場合：}
+\begin{itemize}
+\item 電流：$I = P/V = 1000000/100000 = 10$ A
+\item 送電線抵抗：$R = 10$ $\Omega$
+\item 損失：$P_{\text{loss}} = I^2 R = 10^2 \times 10 = 1$ kW（わずか0.1\%）
+\end{itemize}
+
+$\rightarrow$ \textbf{電圧を100倍にすると、損失は1万分の1になる！}
+\end{screen}
+
+\subsubsection{直流と交流の使い分け}
+
+\begin{table}[H]
+\centering
+\caption{直流と交流の特徴と用途}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{項目} & \textbf{直流（DC）} & \textbf{交流（AC）} \\
+\hline
+\hline
+電圧変換 & 難しい（チョッパ必要） & 容易（変圧器） \\
+\hline
+長距離送電 & 損失大（以前） & 損失小（変圧可） \\
+\hline
+モーター駆動 & 制御が複雑 & 簡単（誘導機） \\
+\hline
+電子回路 & 必須 & 不適 \\
+\hline
+バッテリー & 必須 & 不可 \\
+\hline
+主な用途 & 電子機器、EV、データセンター & 送電網、家電、工場 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{注：} 近年は、HVDC（高圧直流送電）技術により、長距離送電でも直流が使われるようになってきています。これは、パワーエレクトロニクス技術の進歩により、大電力のDC-DC変換やDC-AC変換が可能になったためです。
 
 \section{パワーエレクトロニクスで扱う3つの要素}
 
@@ -170,6 +358,105 @@
 \label{fig:kirchhoff}
 \end{figure}
 
+\subsubsection{キルヒホッフの法則の物理的意味}
+
+キルヒホッフの2つの法則は、単なる経験則ではなく、\textbf{物理学の基本的な保存則}に基づいています。
+
+\textbf{1. キルヒホッフの電流則（KCL）← 電荷保存則}
+
+KCLは、\textbf{電荷保存則}の帰結です。
+
+\begin{screen}
+\textbf{物理的意味：}
+
+ノード（接続点）において、電荷は生成も消滅もしない。したがって、\textbf{流入する電荷の総量と流出する電荷の総量は等しい}。
+
+\begin{equation}
+\sum I_{\text{in}} = \sum I_{\text{out}}
+\end{equation}
+
+ここで、電流$I$は単位時間あたりの電荷量$dQ/dt$であるため：
+
+\begin{equation}
+\frac{dQ_{\text{in}}}{dt} = \frac{dQ_{\text{out}}}{dt}
+\end{equation}
+
+もしノードに電荷が蓄積されると、そこに電位が発生して流入を妨げる（あるいは流出を促進する）ため、定常状態では必ず流入＝流出となる。
+\end{screen}
+
+\textbf{具体例：}
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[circ](A){};
+\draw (A) -- ++(-1,1) node[left]{$I_1=3$ A};
+\draw (A) -- ++(-1,-1) node[left]{$I_2=2$ A};
+\draw (A) -- ++(1,0.5) node[right]{$I_3=?$};
+\draw (A) -- ++(1,-0.5) node[right]{$I_4=1$ A};
+\node at (0,-1.5) {流入：$I_1 + I_2 = 5$ A};
+\node at (0,-2) {流出：$I_3 + I_4$};
+\node at (0,-2.5) {$\rightarrow I_3 = 5 - 1 = 4$ A};
+\end{circuitikz}
+\caption{KCLの例：ノードでの電荷保存}
+\end{figure}
+
+\textbf{2. キルヒホッフの電圧則（KVL）← エネルギー保存則}
+
+KVLは、\textbf{エネルギー保存則}の帰結です。
+
+\begin{screen}
+\textbf{物理的意味：}
+
+電圧とは、単位電荷あたりの位置エネルギーの差です。閉回路を一周すると、出発点に戻るため、\textbf{位置エネルギーの変化はゼロ}でなければなりません。
+
+\begin{equation}
+\sum V = 0
+\end{equation}
+
+これは、重力場における位置エネルギーと同じです。山を登って（エネルギー獲得）、下って（エネルギー放出）、元の場所に戻れば、位置エネルギーの変化はゼロです。
+\end{screen}
+
+\textbf{具体例：}
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) to[battery1, v={$V_s=12$ V}] (0,3)
+      to[R, l=$R_1$, v={$V_1=5$ V}] (3,3)
+      to[R, l=$R_2$, v={$V_2{=}$?}] (3,0)
+      -- (0,0);
+\node at (5,1.5) {KVL: $V_s - V_1 - V_2 = 0$};
+\node at (5,0.5) {$\rightarrow V_2 = V_s - V_1 = 12 - 5 = 7$ V};
+\end{circuitikz}
+\caption{KVLの例：閉回路でのエネルギー保存}
+\end{figure}
+
+\begin{screen}
+\textbf{エネルギーの観点から：}
+
+電池が電荷に与えるエネルギー：$W_{\text{in}} = Q \cdot V_s$
+
+抵抗$R_1$、$R_2$で消費されるエネルギー：$W_{\text{out}} = Q \cdot V_1 + Q \cdot V_2$
+
+エネルギー保存則より：$W_{\text{in}} = W_{\text{out}}$
+
+\begin{equation}
+Q \cdot V_s = Q \cdot V_1 + Q \cdot V_2
+\end{equation}
+
+両辺を$Q$で割ると：$V_s = V_1 + V_2$（KVL）
+\end{screen}
+
+\subsubsection{パワーエレクトロニクスにおけるKVL・KCLの重要性}
+
+パワーエレクトロニクス回路では、スイッチの状態が時間的に変化するため、各瞬間においてKVL・KCLを適用することで、回路の動作を解析します。
+
+\begin{itemize}
+\item \textbf{KCL}：インダクタやキャパシタを含む回路で、電流の流れを追跡
+\item \textbf{KVL}：スイッチのオン・オフ状態に応じた電圧関係を導出
+\end{itemize}
+
 \subsection{オームの法則}
 
 抵抗$R$に流れる電流$I$と電圧$V$の関係は、オームの法則で表される：
@@ -228,6 +515,144 @@ V = RI
 \caption{可変抵抗の問題点}
 \label{fig:resistor_problem}
 \end{figure}
+
+\subsubsection{エネルギーはどこへ行くのか}
+
+可変抵抗による電力変換の問題を、エネルギーの流れから詳しく見てみましょう。
+
+\textbf{回路構成：}
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) to[battery1, v=$V_s$] (0,3)
+      to[R, l=$R_v$（可変抵抗）, v=$V_r$] (3,3)
+      to[R, l=$R_L$（負荷）, v=$V_L$] (3,0)
+      -- (0,0);
+\draw[->, thick, red] (4,2.5) -- (5,2.5) node[right]{熱};
+\draw[->, thick, blue] (4,0.5) -- (5,0.5) node[right]{有効出力};
+\end{circuitikz}
+\caption{可変抵抗による電圧制御}
+\end{figure}
+
+\textbf{エネルギー収支の計算：}
+
+\begin{screen}
+例：$V_s = 12$ V、$V_L = 5$ V（負荷に供給したい電圧）、$I = 0.5$ A（負荷電流）の場合
+
+\textbf{ステップ1：電源からの供給エネルギー}
+
+電源が供給する電力：
+\begin{equation}
+P_{\text{in}} = V_s \cdot I = 12 \times 0.5 = 6 \text{ W}
+\end{equation}
+
+\textbf{ステップ2：負荷で消費される有効エネルギー}
+
+負荷での消費電力（有効出力）：
+\begin{equation}
+P_{\text{out}} = V_L \cdot I = 5 \times 0.5 = 2.5 \text{ W}
+\end{equation}
+
+\textbf{ステップ3：可変抵抗で失われるエネルギー}
+
+KVLより：$V_r = V_s - V_L = 12 - 5 = 7$ V
+
+可変抵抗での損失：
+\begin{equation}
+P_{\text{loss}} = V_r \cdot I = 7 \times 0.5 = 3.5 \text{ W}
+\end{equation}
+
+\textbf{エネルギー収支：}
+\begin{equation}
+P_{\text{in}} = P_{\text{out}} + P_{\text{loss}} = 2.5 + 3.5 = 6 \text{ W} \quad \checkmark
+\end{equation}
+\end{screen}
+
+\subsubsection{なぜ熱になるのか}
+
+抵抗における電力損失のメカニズムを、微視的に理解しましょう。
+
+\begin{screen}
+\textbf{電子の運動とエネルギー散逸：}
+
+\begin{enumerate}
+\item \textbf{電界による加速}：\\
+電圧$V_r$が印加されると、抵抗内部に電界$E = V_r/L$（$L$：抵抗の長さ）が発生し、電子が加速される。
+
+\item \textbf{格子との衝突}：\\
+電子は金属の原子格子と衝突し、運動エネルギーを格子振動（フォノン）に変換する。
+
+\item \textbf{温度上昇}：\\
+格子振動のエネルギーが増加すると、物質の温度が上昇する。これが\textbf{ジュール熱}である。
+
+\begin{equation}
+P = I^2 R = \frac{V^2}{R}
+\end{equation}
+\end{enumerate}
+\end{screen}
+
+\subsubsection{電力と電力量（エネルギー）の違い}
+
+\begin{table}[H]
+\centering
+\caption{電力と電力量の違い}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{項目} & \textbf{電力} & \textbf{電力量（エネルギー）} \\
+\hline
+\hline
+記号 & $P$ & $E$ or $W$ \\
+\hline
+単位 & W（ワット） & Wh（ワット時）、J（ジュール） \\
+\hline
+定義 & 単位時間あたりのエネルギー & 時間積分した総エネルギー \\
+\hline
+式 & $P = VI$ & $E = \int P \, dt = Pt$（一定の場合） \\
+\hline
+物理的意味 & エネルギーの流れる速さ & 総エネルギー量 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{screen}
+\textbf{具体例：}
+
+上記の回路を1時間（3600秒）動作させた場合：
+
+\begin{itemize}
+\item 電源から供給されたエネルギー：$E_{\text{in}} = P_{\text{in}} \times t = 6 \times 3600 = 21600$ J $= 6$ Wh
+
+\item 負荷で消費されたエネルギー：$E_{\text{out}} = 2.5 \times 3600 = 9000$ J $= 2.5$ Wh
+
+\item 可変抵抗で失われたエネルギー：$E_{\text{loss}} = 3.5 \times 3600 = 12600$ J $= 3.5$ Wh
+
+\item \textbf{失われた熱量：12600 J $\approx$ 3 kcal}（水300gを約10℃温める熱量）
+\end{itemize}
+\end{screen}
+
+\subsubsection{可変抵抗方式の致命的な欠点}
+
+\begin{enumerate}
+\item \textbf{エネルギー効率が悪い}：\\
+出力電圧が入力電圧より低い場合、効率$\eta = V_L/V_s$となる。\\
+例：$\eta = 5/12 \approx 42\%$（半分以上のエネルギーを捨てている）
+
+\item \textbf{発熱問題}：\\
+無駄になったエネルギーは熱となり、冷却が必要。特に大電力では深刻。
+
+\item \textbf{サイズと重量}：\\
+発熱を処理するため、大型のヒートシンクや冷却ファンが必要。
+
+\item \textbf{電圧制御の柔軟性がない}：\\
+昇圧（$V_L > V_s$）は不可能。
+\end{enumerate}
+
+\begin{screen}
+\textbf{なぜパワーエレクトロニクスが必要なのか：}
+
+可変抵抗方式の問題を解決するために、\textbf{スイッチングによる電力変換}が開発されました。スイッチングでは、理想的には電力損失をゼロにできるため、高効率な電力変換が実現できます（次節で詳しく説明）。
+\end{screen}
 
 \subsection{電力変換の効率}
 
@@ -288,6 +713,174 @@ P = VI
 \caption{スイッチングによる電力変換}
 \label{fig:switching}
 \end{figure}
+
+\subsubsection{なぜスイッチングで高効率が実現できるのか}
+
+スイッチングによる高効率化の原理を、可変抵抗との比較で理解しましょう。
+
+\textbf{理想的なスイッチの動作：}
+
+\begin{table}[H]
+\centering
+\caption{理想的なスイッチの2つの状態}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{状態} & \textbf{電圧} & \textbf{電流} & \textbf{電力損失} & \textbf{抵抗値} \\
+\hline
+\hline
+ON（導通） & $V = 0$ & $I \neq 0$ & $P = VI = 0$ & $R = 0$ \\
+\hline
+OFF（遮断） & $V \neq 0$ & $I = 0$ & $P = VI = 0$ & $R = \infty$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{screen}
+\textbf{重要なポイント：}
+
+\textbf{どちらの状態でも電力損失$P = VI = 0$である！}
+
+\begin{itemize}
+\item ON状態：電圧降下がゼロ（$V=0$）なので、電流が流れても損失なし
+\item OFF状態：電流がゼロ（$I=0$）なので、電圧があっても損失なし
+\end{itemize}
+
+これが\textbf{スイッチングによる高効率化の核心原理}です。
+\end{screen}
+
+\subsubsection{可変抵抗とスイッチングの比較}
+
+同じ電力変換（12V → 5V、0.5A）を実現する場合を比較してみましょう。
+
+\textbf{1. 可変抵抗方式}
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) to[battery1, v={$12$ V}] (0,2)
+      to[R, l={$R_v=14\,\Omega$}] (3,2)
+      to[R, l={$R_L=10\,\Omega$}, i={$0.5$ A}] (3,0)
+      -- (0,0);
+\node at (5,1.5) {$V_r = 7$ V, $I = 0.5$ A};
+\node at (5,1) {$P_{\text{loss}} = 7 \times 0.5 = 3.5$ W};
+\node at (5,0.5) {効率 $= 5/12 = 41.7\%$};
+\end{circuitikz}
+\caption{可変抵抗方式：常に損失が発生}
+\end{figure}
+
+\textbf{2. スイッチング方式（理想的な場合）}
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) to[battery1, v={$12$ V}] (0,2)
+      to[nos] (3,2) node[above]{SW}
+      to[R, l={$R_L=10\,\Omega$}] (3,0)
+      -- (0,0);
+\node at (5,1.5) {ON時：$V_{\text{sw}}=0$, $P=0$};
+\node at (5,1) {OFF時：$I_{\text{sw}}=0$, $P=0$};
+\node at (5,0.5) {効率 $\approx 100\%$};
+\end{circuitikz}
+\caption{スイッチング方式：ON/OFFのどちらでも損失ゼロ}
+\end{figure}
+
+\subsubsection{平均化による電圧制御}
+
+スイッチングで電圧を制御できる理由は、\textbf{時間平均}にあります。
+
+\begin{screen}
+\textbf{スイッチング波形：}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\draw[->] (0,0) -- (8,0) node[right]{時間 $t$};
+\draw[->] (0,0) -- (0,3) node[above]{電圧 $v(t)$};
+\draw[thick, blue] (0,0) -- (0,2) -- (2,2) -- (2,0) -- (4,0) -- (4,2) -- (6,2) -- (6,0) -- (8,0);
+\draw[dashed, red] (0,0.83) -- (8,0.83) node[right]{平均値 $\bar{V}$};
+\node at (1,2.3) {$V_s=12$V};
+\draw[<->] (0,-0.5) -- (2,-0.5) node[midway, below]{$T_{\text{on}}$};
+\draw[<->] (2,-0.5) -- (4,-0.5) node[midway, below]{$T_{\text{off}}$};
+\draw[<->] (0,-1) -- (4,-1) node[midway, below]{$T$（周期）};
+\end{tikzpicture}
+\caption{スイッチング電圧波形とその平均値}
+\end{figure}
+
+平均電圧は以下のように計算されます：
+
+\begin{equation}
+\bar{V} = \frac{1}{T} \int_0^T v(t) \, dt = \frac{1}{T} (V_s \cdot T_{\text{on}} + 0 \cdot T_{\text{off}}) = V_s \cdot \frac{T_{\text{on}}}{T}
+\end{equation}
+
+デューティ比$D = T_{\text{on}}/T$を用いると：
+
+\begin{equation}
+\boxed{\bar{V} = D \cdot V_s}
+\end{equation}
+
+\textbf{具体例：}$V_s = 12$ V、目標電圧$\bar{V} = 5$ Vの場合
+
+\begin{equation}
+D = \frac{\bar{V}}{V_s} = \frac{5}{12} \approx 0.417 = 41.7\%
+\end{equation}
+
+つまり、周期の41.7\%だけONにすれば、平均で5Vが得られます。
+\end{screen}
+
+\subsubsection{フィルタの役割}
+
+実際の回路では、スイッチングによるパルス状の電圧を平滑化するために、\textbf{フィルタ（コイルとコンデンサ）}を使用します。
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}
+\draw (0,0) to[battery1, v=$V_s$] (0,2)
+      to[nos] (2,2) node[above]{SW}
+      to[L, l=$L$] (4,2)
+      to[C, l=$C$] (4,0)
+      (4,2) to[short] (6,2)
+      to[R, l=$R_L$, v=$V_{\text{out}}$] (6,0)
+      -- (0,0);
+\end{circuitikz}
+\caption{LC フィルタを用いたDC-DCコンバータ（降圧チョッパ）}
+\end{figure}
+
+\begin{screen}
+\textbf{フィルタの働き：}
+
+\begin{enumerate}
+\item \textbf{インダクタ（コイル）$L$}：\\
+電流の急激な変化を抑制。エネルギーを磁気エネルギーとして一時蓄積し、放出することで、電流を平滑化。
+
+\item \textbf{キャパシタ（コンデンサ）$C$}：\\
+電圧の急激な変化を抑制。エネルギーを静電エネルギーとして一時蓄積し、放出することで、電圧を平滑化。
+\end{enumerate}
+
+この組み合わせにより、パルス状の電圧が\textbf{ほぼ一定の直流電圧}に変換されます。
+\end{screen}
+
+\subsubsection{エネルギー保存の観点から}
+
+スイッチング方式では、エネルギーを\textbf{捨てずに一時保存}します。
+
+\begin{table}[H]
+\centering
+\caption{可変抵抗とスイッチングのエネルギー処理方式の違い}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{項目} & \textbf{可変抵抗} & \textbf{スイッチング} \\
+\hline
+\hline
+余剰エネルギー & \textcolor{red}{熱として廃棄} & \textcolor{blue}{LCに一時保存} \\
+\hline
+エネルギー変換 & 電気 → 熱（不可逆） & 電気 ↔ 磁気・静電（可逆） \\
+\hline
+効率 & 低い（$\eta = V_L/V_s$） & 高い（理想では100\%） \\
+\hline
+発熱 & 大きい & 小さい \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{デューティ比}
 
@@ -377,6 +970,217 @@ V_{\text{out}} = D \cdot V_{\text{in}}
 \label{fig:switching_loss}
 \end{figure}
 
+\subsubsection{スイッチング過渡現象の詳細}
+
+スイッチング素子は、瞬間的にON・OFFできるわけではありません。有限の時間（遷移時間）がかかります。
+
+\textbf{ターンオン（Turn-on）過程}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+% 電圧波形
+\begin{scope}
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電圧};
+\draw[thick, blue] (0,3.5) -- (1,3.5) -- (3,0.2) -- (6,0.2);
+\node at (0.5,4) {$V_{\text{off}}$};
+\node at (5,0.8) {$V_{\text{on}} \approx 0$};
+\draw[dashed] (1,0) -- (1,3.5);
+\draw[dashed] (3,0) -- (3,3.5);
+\node at (2,-0.5) {$t_{\text{rv}}$（電圧降下時間）};
+\end{scope}
+
+% 電流波形
+\begin{scope}[yshift=-5cm]
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電流};
+\draw[thick, red] (0,0.2) -- (1,0.2) -- (3,3.5) -- (6,3.5);
+\node at (0.5,1) {$I_{\text{off}} \approx 0$};
+\node at (5,4) {$I_{\text{on}}$};
+\draw[dashed] (1,0) -- (1,3.5);
+\draw[dashed] (3,0) -- (3,3.5);
+\node at (2,-0.5) {$t_{\text{ri}}$（電流立ち上がり時間）};
+\end{scope}
+
+% 電力波形
+\begin{scope}[yshift=-10cm]
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電力 $P=VI$};
+\draw[thick, magenta] (0,0.1) -- (1,0.1) -- (2,3) -- (3,0.1) -- (6,0.1);
+\fill[magenta, opacity=0.3] (1,0.1) -- (2,3) -- (3,0.1) -- cycle;
+\node at (2,1.5) {損失};
+\draw[<->] (1,-0.5) -- (3,-0.5) node[midway, below]{$t_{\text{on}}$（ターンオン時間）};
+\end{scope}
+\end{tikzpicture}
+\caption{ターンオン時の電圧・電流・電力波形}
+\end{figure}
+
+\begin{screen}
+\textbf{ターンオン損失の発生メカニズム：}
+
+\begin{enumerate}
+\item \textbf{初期状態（OFF）}：\\
+$V = V_{\text{off}}$（高電圧）、$I \approx 0$、$P = VI \approx 0$
+
+\item \textbf{遷移期間}：\\
+電圧が徐々に下がり、電流が徐々に上がる。\\
+\textbf{両方がゼロでない}ため、$P = VI > 0$（損失発生）
+
+\item \textbf{定常状態（ON）}：\\
+$V \approx 0$、$I = I_{\text{on}}$、$P = VI \approx 0$
+\end{enumerate}
+
+ターンオン損失のエネルギー：
+\begin{equation}
+E_{\text{on}} = \int_0^{t_{\text{on}}} v(t) \cdot i(t) \, dt \approx \frac{1}{6} V_{\text{off}} \cdot I_{\text{on}} \cdot t_{\text{on}}
+\end{equation}
+
+（三角形の面積の近似）
+\end{screen}
+
+\textbf{ターンオフ（Turn-off）過程}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+% 電圧波形
+\begin{scope}
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電圧};
+\draw[thick, blue] (0,0.2) -- (1,0.2) -- (3,3.5) -- (6,3.5);
+\node at (0.5,1) {$V_{\text{on}} \approx 0$};
+\node at (5,4) {$V_{\text{off}}$};
+\draw[dashed] (1,0) -- (1,3.5);
+\draw[dashed] (3,0) -- (3,3.5);
+\node at (2,-0.5) {$t_{\text{fv}}$（電圧上昇時間）};
+\end{scope}
+
+% 電流波形
+\begin{scope}[yshift=-5cm]
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電流};
+\draw[thick, red] (0,3.5) -- (1,3.5) -- (3,0.2) -- (6,0.2);
+\node at (0.5,4) {$I_{\text{on}}$};
+\node at (5,0.8) {$I_{\text{off}} \approx 0$};
+\draw[dashed] (1,0) -- (1,3.5);
+\draw[dashed] (3,0) -- (3,3.5);
+\node at (2,-0.5) {$t_{\text{fi}}$（電流降下時間）};
+\end{scope}
+
+% 電力波形
+\begin{scope}[yshift=-10cm]
+\draw[->] (0,0) -- (6,0) node[right]{時間};
+\draw[->] (0,0) -- (0,4) node[above]{電力 $P=VI$};
+\draw[thick, magenta] (0,0.1) -- (1,0.1) -- (2,3) -- (3,0.1) -- (6,0.1);
+\fill[magenta, opacity=0.3] (1,0.1) -- (2,3) -- (3,0.1) -- cycle;
+\node at (2,1.5) {損失};
+\draw[<->] (1,-0.5) -- (3,-0.5) node[midway, below]{$t_{\text{off}}$（ターンオフ時間）};
+\end{scope}
+\end{tikzpicture}
+\caption{ターンオフ時の電圧・電流・電力波形}
+\end{figure}
+
+\begin{screen}
+\textbf{ターンオフ損失の発生メカニズム：}
+
+\begin{enumerate}
+\item \textbf{初期状態（ON）}：\\
+$V \approx 0$、$I = I_{\text{on}}$、$P \approx 0$
+
+\item \textbf{遷移期間}：\\
+電圧が徐々に上がり、電流が徐々に下がる。\\
+\textbf{両方がゼロでない}ため、$P = VI > 0$（損失発生）
+
+\item \textbf{定常状態（OFF）}：\\
+$V = V_{\text{off}}$、$I \approx 0$、$P \approx 0$
+\end{enumerate}
+
+ターンオフ損失のエネルギー：
+\begin{equation}
+E_{\text{off}} = \int_0^{t_{\text{off}}} v(t) \cdot i(t) \, dt \approx \frac{1}{6} V_{\text{off}} \cdot I_{\text{on}} \cdot t_{\text{off}}
+\end{equation}
+\end{screen}
+
+\subsubsection{スイッチング損失の計算}
+
+\begin{screen}
+\textbf{1スイッチング周期あたりの損失：}
+
+\begin{equation}
+E_{\text{sw,cycle}} = E_{\text{on}} + E_{\text{off}} = \frac{1}{6} V_{\text{off}} I_{\text{on}} (t_{\text{on}} + t_{\text{off}})
+\end{equation}
+
+\textbf{平均スイッチング損失電力：}
+
+スイッチング周波数を$f_{\text{sw}}$とすると、1秒間に$f_{\text{sw}}$回スイッチングするため：
+
+\begin{equation}
+\boxed{P_{\text{sw}} = E_{\text{sw,cycle}} \cdot f_{\text{sw}} = \frac{1}{6} V_{\text{off}} I_{\text{on}} (t_{\text{on}} + t_{\text{off}}) \cdot f_{\text{sw}}}
+\end{equation}
+
+\textbf{重要な結論：}
+
+\begin{itemize}
+\item スイッチング損失は\textbf{周波数に比例}する：$P_{\text{sw}} \propto f_{\text{sw}}$
+\item 高速スイッチング（高周波数）ほど損失が増える
+\item 遷移時間（$t_{\text{on}} + t_{\text{off}}$）が短い素子ほど損失が小さい
+\end{itemize}
+\end{screen}
+
+\subsubsection{具体的な数値例}
+
+\begin{screen}
+\textbf{条件：}
+\begin{itemize}
+\item $V_{\text{off}} = 100$ V
+\item $I_{\text{on}} = 10$ A
+\item $t_{\text{on}} = 50$ ns（ナノ秒）
+\item $t_{\text{off}} = 50$ ns
+\item $f_{\text{sw}} = 100$ kHz
+\end{itemize}
+
+\textbf{計算：}
+
+1スイッチング周期あたりの損失：
+\begin{align}
+E_{\text{sw,cycle}} &= \frac{1}{6} \times 100 \times 10 \times (50 \times 10^{-9} + 50 \times 10^{-9}) \\
+&= \frac{1}{6} \times 1000 \times 100 \times 10^{-9} \\
+&= 16.7 \times 10^{-6} \text{ J} = 16.7~\mu\text{J}
+\end{align}
+
+平均スイッチング損失：
+\begin{align}
+P_{\text{sw}} &= 16.7 \times 10^{-6} \times 100 \times 10^3 \\
+&= 1.67 \text{ W}
+\end{align}
+\end{screen}
+
+\subsubsection{スイッチング周波数とのトレードオフ}
+
+\begin{table}[H]
+\centering
+\caption{スイッチング周波数の影響}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{項目} & \textbf{低周波数（kHz）} & \textbf{高周波数（MHz）} \\
+\hline
+\hline
+スイッチング損失 & 小 & 大 \\
+\hline
+LCフィルタサイズ & 大（大型） & 小（小型） \\
+\hline
+リプル（脈動） & 大 & 小 \\
+\hline
+制御応答速度 & 遅い & 速い \\
+\hline
+電磁ノイズ & 少 & 多 \\
+\hline
+\end{tabular}
+\end{table}
+
+設計者は、これらのトレードオフを考慮して最適なスイッチング周波数を選択する必要があります。
+
 \subsection{導通損失}
 
 スイッチがon状態のとき、理想的にはゼロであるべき電圧降下が実際には存在する。この電圧降下によって発生する損失を\textbf{導通損失}と呼ぶ。
@@ -394,6 +1198,193 @@ P_{\text{conduction}} = V_{\text{on}} \cdot I
 \label{fig:conduction_loss}
 \end{figure}
 
+\subsubsection{なぜON状態でも電圧降下が存在するのか}
+
+理想的なスイッチでは$V_{\text{on}} = 0$ですが、実際の半導体素子では有限の電圧降下が発生します。その物理的な理由を理解しましょう。
+
+\textbf{1. オン抵抗（On-resistance）$R_{\text{on}}$}
+
+半導体スイッチング素子（MOSFET、IGBTなど）は、ON状態でも\textbf{オン抵抗}$R_{\text{on}}$を持ちます。
+
+\begin{screen}
+\textbf{オン抵抗の物理的起源：}
+
+\begin{enumerate}
+\item \textbf{半導体材料の固有抵抗}：\\
+半導体は金属より導電率が低い（キャリア密度が小さい）
+
+\item \textbf{ドリフト領域の抵抗}：\\
+高耐圧素子ほど、ドリフト領域（低ドープ層）が厚く、抵抗が大きい
+
+\item \textbf{接触抵抗}：\\
+金属-半導体接合部での接触抵抗
+
+\item \textbf{配線抵抗}：\\
+チップ内部の配線や外部端子の抵抗
+\end{enumerate}
+\end{screen}
+
+\begin{table}[H]
+\centering
+\caption{代表的なパワー半導体素子のオン抵抗}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{素子タイプ} & \textbf{定格電圧} & \textbf{オン抵抗$R_{\text{on}}$} \\
+\hline
+\hline
+低耐圧MOSFET & 30 V & 数 m$\Omega$ \\
+\hline
+中耐圧MOSFET & 600 V & 数十〜数百 m$\Omega$ \\
+\hline
+IGBT & 600 V & $V_{\text{CE(sat)}} \approx 1$〜2 V（非線形） \\
+\hline
+SiC MOSFET & 1200 V & 数十 m$\Omega$（Siより小） \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{注：}IGBTは厳密には抵抗ではなく、電圧降下がほぼ一定値（飽和電圧$V_{\text{CE(sat)}}$）を示します。
+
+\subsubsection{導通損失の計算}
+
+\textbf{MOSFETの場合（オーミック特性）}
+
+ON状態での電圧降下：
+\begin{equation}
+V_{\text{on}} = R_{\text{on}} \cdot I_{\text{on}}
+\end{equation}
+
+導通時の瞬時電力損失：
+\begin{equation}
+p_{\text{cond}}(t) = V_{\text{on}} \cdot I_{\text{on}} = R_{\text{on}} \cdot I_{\text{on}}^2
+\end{equation}
+
+平均導通損失（デューティ比$D$を考慮）：
+\begin{equation}
+\boxed{P_{\text{cond}} = R_{\text{on}} \cdot I_{\text{on}}^2 \cdot D}
+\end{equation}
+
+ここで、$D$はスイッチがONになっている時間の割合（デューティ比）です。
+
+\begin{screen}
+\textbf{具体例：MOSFET}
+
+\begin{itemize}
+\item $R_{\text{on}} = 50$ m$\Omega$ = 0.05 $\Omega$
+\item $I_{\text{on}} = 10$ A
+\item $D = 0.5$（50\%デューティ）
+\end{itemize}
+
+導通損失：
+\begin{align}
+P_{\text{cond}} &= R_{\text{on}} \cdot I_{\text{on}}^2 \cdot D \\
+&= 0.05 \times 10^2 \times 0.5 \\
+&= 0.05 \times 100 \times 0.5 \\
+&= 2.5 \text{ W}
+\end{align}
+\end{screen}
+
+\textbf{IGBTの場合（飽和電圧特性）}
+
+IGBTでは、ON状態の電圧降下が電流にほぼ依存せず、ほぼ一定値$V_{\text{CE(sat)}}$となります。
+
+\begin{equation}
+V_{\text{on}} \approx V_{\text{CE(sat)}} \approx \text{一定}
+\end{equation}
+
+導通損失：
+\begin{equation}
+\boxed{P_{\text{cond}} = V_{\text{CE(sat)}} \cdot I_{\text{on}} \cdot D}
+\end{equation}
+
+\begin{screen}
+\textbf{具体例：IGBT}
+
+\begin{itemize}
+\item $V_{\text{CE(sat)}} = 1.5$ V
+\item $I_{\text{on}} = 20$ A
+\item $D = 0.5$
+\end{itemize}
+
+導通損失：
+\begin{align}
+P_{\text{cond}} &= V_{\text{CE(sat)}} \cdot I_{\text{on}} \cdot D \\
+&= 1.5 \times 20 \times 0.5 \\
+&= 15 \text{ W}
+\end{align}
+\end{screen}
+
+\subsubsection{オン抵抗と耐圧のトレードオフ}
+
+パワー半導体素子において、\textbf{オン抵抗と耐圧は基本的にトレードオフの関係}にあります。
+
+\begin{screen}
+\textbf{物理的な理由：}
+
+高耐圧を実現するには：
+\begin{itemize}
+\item ドリフト領域を厚くする必要がある
+\item ドリフト領域のドーピング濃度を低くする必要がある
+\end{itemize}
+
+$\rightarrow$ どちらも抵抗を増加させる要因
+
+\textbf{シリコン（Si）の理論限界：}
+
+オン抵抗と耐圧の関係は、材料の物理定数で決まります：
+
+\begin{equation}
+R_{\text{on}} \propto \frac{V_{\text{BR}}^{2.5}}{\epsilon_r \mu_n E_c^3}
+\end{equation}
+
+ここで、$V_{\text{BR}}$：降伏電圧、$\epsilon_r$：比誘電率、$\mu_n$：電子移動度、$E_c$：臨界電界
+
+\textbf{ワイドバンドギャップ半導体の優位性：}
+
+SiC（炭化ケイ素）やGaN（窒化ガリウム）は、臨界電界$E_c$がSiの約10倍：
+
+\begin{itemize}
+\item 同じ耐圧でドリフト領域を1/10に薄くできる
+\item オン抵抗を約1/100に削減できる
+\end{itemize}
+
+$\rightarrow$ これが次世代パワー半導体の本質的な優位性です。
+\end{screen}
+
+\subsubsection{導通損失とスイッチング損失のバランス}
+
+\begin{table}[H]
+\centering
+\caption{導通損失とスイッチング損失の特徴}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{項目} & \textbf{導通損失} & \textbf{スイッチング損失} \\
+\hline
+\hline
+発生タイミング & ON状態 & ON↔OFF遷移時 \\
+\hline
+周波数依存性 & 無関係 & 周波数に比例 \\
+\hline
+電流依存性 & $I^2$（MOSFET） & $I$に比例 \\
+& $I$（IGBT） & \\
+\hline
+デューティ依存 & デューティに比例 & 無関係 \\
+\hline
+削減方法 & 低$R_{\text{on}}$素子 & 高速素子、低周波数 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{screen}
+\textbf{設計における最適化：}
+
+\begin{itemize}
+\item \textbf{低周波数動作}：導通損失が支配的 → 低$R_{\text{on}}$素子を選択
+\item \textbf{高周波数動作}：スイッチング損失が支配的 → 高速スイッチング素子を選択
+\item 総損失$P_{\text{total}} = P_{\text{cond}} + P_{\text{sw}}$を最小化する周波数が存在
+\end{itemize}
+\end{screen}
+
 \subsection{トータル損失}
 
 パワー半導体素子の全体的な損失は、スイッチング損失と導通損失の和として表される：
@@ -410,6 +1401,219 @@ P_{\text{total}} = P_{\text{switching}} + P_{\text{conduction}}
 \caption{トータル損失}
 \label{fig:total_loss}
 \end{figure}
+
+\subsubsection{総合的な損失計算の具体例}
+
+実際のDC-DCコンバータを想定して、総損失を計算してみましょう。
+
+\begin{screen}
+\textbf{システム仕様：}
+
+\begin{itemize}
+\item 入力電圧：$V_{\text{in}} = 48$ V
+\item 出力電圧：$V_{\text{out}} = 12$ V
+\item 出力電流：$I_{\text{out}} = 10$ A
+\item 出力電力：$P_{\text{out}} = 12 \times 10 = 120$ W
+\item デューティ比：$D = V_{\text{out}}/V_{\text{in}} = 12/48 = 0.25$
+\item スイッチング周波数：$f_{\text{sw}} = 100$ kHz
+\end{itemize}
+
+\textbf{MOSFET パラメータ：}
+
+\begin{itemize}
+\item オン抵抗：$R_{\text{on}} = 20$ m$\Omega$ = 0.02 $\Omega$
+\item ターンオン時間：$t_{\text{on}} = 30$ ns
+\item ターンオフ時間：$t_{\text{off}} = 40$ ns
+\end{itemize}
+\end{screen}
+
+\textbf{ステップ1：導通損失の計算}
+
+スイッチON時の電流は、出力電流と等しいと仮定：$I_{\text{on}} = I_{\text{out}} = 10$ A
+
+\begin{align}
+P_{\text{cond}} &= R_{\text{on}} \cdot I_{\text{on}}^2 \cdot D \\
+&= 0.02 \times 10^2 \times 0.25 \\
+&= 0.02 \times 100 \times 0.25 \\
+&= 0.5 \text{ W}
+\end{align}
+
+\textbf{ステップ2：スイッチング損失の計算}
+
+OFF時の電圧は入力電圧：$V_{\text{off}} = V_{\text{in}} = 48$ V
+
+1周期あたりのスイッチング損失：
+\begin{align}
+E_{\text{sw,cycle}} &= \frac{1}{6} V_{\text{off}} I_{\text{on}} (t_{\text{on}} + t_{\text{off}}) \\
+&= \frac{1}{6} \times 48 \times 10 \times (30 + 40) \times 10^{-9} \\
+&= \frac{1}{6} \times 48 \times 10 \times 70 \times 10^{-9} \\
+&= 5600 \times 10^{-9} \text{ J} = 5.6~\mu\text{J}
+\end{align}
+
+平均スイッチング損失：
+\begin{align}
+P_{\text{sw}} &= E_{\text{sw,cycle}} \cdot f_{\text{sw}} \\
+&= 5.6 \times 10^{-6} \times 100 \times 10^3 \\
+&= 0.56 \text{ W}
+\end{align}
+
+\textbf{ステップ3：総損失と効率の計算}
+
+\begin{align}
+P_{\text{total}} &= P_{\text{cond}} + P_{\text{sw}} \\
+&= 0.5 + 0.56 \\
+&= 1.06 \text{ W}
+\end{align}
+
+入力電力：
+\begin{equation}
+P_{\text{in}} = P_{\text{out}} + P_{\text{total}} = 120 + 1.06 = 121.06 \text{ W}
+\end{equation}
+
+変換効率：
+\begin{equation}
+\eta = \frac{P_{\text{out}}}{P_{\text{in}}} = \frac{120}{121.06} \approx 99.1\%
+\end{equation}
+
+\begin{screen}
+\textbf{結果の解釈：}
+
+\begin{itemize}
+\item 導通損失：0.5 W（総損失の47\%）
+\item スイッチング損失：0.56 W（総損失の53\%）
+\item \textbf{変換効率：99.1\%}（非常に高効率！）
+\end{itemize}
+
+この例では、導通損失とスイッチング損失がほぼ同程度です。これが\textbf{最適な動作点}に近い状態と言えます。
+\end{screen}
+
+\subsubsection{スイッチング周波数と損失の関係}
+
+同じ回路で、スイッチング周波数を変化させた場合の損失を計算してみましょう。
+
+\begin{table}[H]
+\centering
+\caption{スイッチング周波数と損失の関係（$V_{\text{in}}=48$V、$I_{\text{out}}=10$A）}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{$f_{\text{sw}}$ [kHz]} & \textbf{$P_{\text{cond}}$ [W]} & \textbf{$P_{\text{sw}}$ [W]} & \textbf{$P_{\text{total}}$ [W]} & \textbf{$\eta$ [\%]} \\
+\hline
+\hline
+10 & 0.5 & 0.056 & 0.556 & 99.5 \\
+\hline
+50 & 0.5 & 0.28 & 0.78 & 99.4 \\
+\hline
+100 & 0.5 & 0.56 & 1.06 & 99.1 \\
+\hline
+200 & 0.5 & 1.12 & 1.62 & 98.7 \\
+\hline
+500 & 0.5 & 2.8 & 3.3 & 97.3 \\
+\hline
+1000 & 0.5 & 5.6 & 6.1 & 95.2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=8cm,
+    xlabel={スイッチング周波数 [kHz]},
+    ylabel={損失 [W]},
+    xmin=0, xmax=1000,
+    ymin=0, ymax=7,
+    grid=both,
+    legend pos=north west,
+]
+\addplot[blue, thick, mark=square] coordinates {
+    (10,0.5) (50,0.5) (100,0.5) (200,0.5) (500,0.5) (1000,0.5)
+};
+\addplot[red, thick, mark=triangle] coordinates {
+    (10,0.056) (50,0.28) (100,0.56) (200,1.12) (500,2.8) (1000,5.6)
+};
+\addplot[black, thick, mark=o] coordinates {
+    (10,0.556) (50,0.78) (100,1.06) (200,1.62) (500,3.3) (1000,6.1)
+};
+\legend{導通損失, スイッチング損失, 総損失}
+\end{axis}
+\end{tikzpicture}
+\caption{スイッチング周波数と損失の関係}
+\end{figure}
+
+\begin{screen}
+\textbf{重要な観察：}
+
+\begin{itemize}
+\item \textbf{導通損失}は周波数に依存しない（一定）
+\item \textbf{スイッチング損失}は周波数に比例して増加
+\item 低周波数では導通損失が支配的、高周波数ではスイッチング損失が支配的
+\item \textbf{最適周波数}は、回路パラメータとトレードオフで決まる
+\end{itemize}
+\end{screen}
+
+\subsubsection{効率と周波数のトレードオフ}
+
+\begin{screen}
+\textbf{高周波数化のメリット：}
+
+\begin{itemize}
+\item LCフィルタが小型化できる（$L \propto 1/f$、$C \propto 1/f$）
+\item リプル（出力電圧の変動）が小さくなる
+\item 応答速度が速くなる
+\end{itemize}
+
+\textbf{高周波数化のデメリット：}
+
+\begin{itemize}
+\item スイッチング損失が増加し、効率が低下
+\item 電磁ノイズ（EMI）が増加
+\item 制御回路が複雑化
+\end{itemize}
+
+\textbf{設計における判断基準：}
+
+\begin{itemize}
+\item \textbf{据え置き機器}（PC電源など）：効率重視 → 低〜中周波数（50-200 kHz）
+\item \textbf{モバイル機器}（スマホ充電器など）：小型化重視 → 高周波数（500 kHz - 数MHz）
+\item \textbf{大電力機器}（電気自動車など）：効率と冷却性重視 → 低周波数（10-50 kHz）
+\end{itemize}
+\end{screen}
+
+\subsubsection{熱設計の重要性}
+
+損失で発生した熱を適切に放熱しないと、素子の温度が上昇し、故障の原因となります。
+
+\begin{screen}
+\textbf{熱設計の基本：}
+
+\begin{equation}
+T_{\text{junction}} = T_{\text{ambient}} + P_{\text{total}} \cdot R_{\text{th}}
+\end{equation}
+
+ここで：
+\begin{itemize}
+\item $T_{\text{junction}}$：ジャンクション温度（半導体内部の温度）
+\item $T_{\text{ambient}}$：周囲温度
+\item $R_{\text{th}}$：熱抵抗（ジャンクションから周囲まで）
+\end{itemize}
+
+\textbf{具体例：}
+
+\begin{itemize}
+\item 総損失：$P_{\text{total}} = 6.1$ W（$f_{\text{sw}}=1$ MHz の場合）
+\item 周囲温度：$T_{\text{ambient}} = 25$°C
+\item 熱抵抗：$R_{\text{th}} = 10$°C/W（ヒートシンク付き）
+\end{itemize}
+
+ジャンクション温度：
+\begin{align}
+T_{\text{junction}} &= 25 + 6.1 \times 10 \\
+&= 25 + 61 = 86 \text{°C}
+\end{align}
+
+MOSFETの最大ジャンクション温度が150°Cなら、十分に安全に動作できます。
+\end{screen}
 
 \section{まとめ}
 
