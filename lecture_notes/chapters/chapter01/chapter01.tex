@@ -457,10 +457,14 @@ V = RI
 \label{fig:circuit_solution}
 \end{figure}
 
+\subsubsection{回路問題の定式化の練習}
+
+実際に回路問題を解くためには、KVL、KCL、枝構成式（オームの法則など）を全て書き出す練習が重要である。以下の図は、回路理論の基本的な定式化を確認するための演習問題である。
+
 \begin{figure}[H]
 \centering
 \fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-15.pdf}}
-\caption{回路問題の定式化}
+\caption{回路問題の定式化の演習}
 \label{fig:circuit_formulation}
 \end{figure}
 
@@ -648,24 +652,32 @@ P = VI
 \label{fig:resistor_quiz}
 \end{figure}
 
+\subsubsection{可変抵抗を用いた回路設計の演習}
+
+ここで、具体的な回路設計の演習問題を通して、KVLとKCLを用いた回路解析の実践を行う。12Vの電源で、10Ωの負荷を5Vで駆動する場合、可変抵抗$R_x$を何Ωにすればよいかを計算する。この問題を通して、回路理論の定式化と効率の概念を理解する。
+
 \begin{figure}[H]
 \centering
 \fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-16.pdf}}
-\caption{可変抵抗Quiz：KVL・KCLによる解法}
+\caption{可変抵抗Quiz：問題設定とKVL・KCLの適用}
 \label{fig:resistor_quiz_solution}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-17.pdf}}
-\caption{可変抵抗Quiz：計算過程の詳細}
+\caption{可変抵抗Quiz：計算過程と解答（$R_x = 14$ Ω）}
 \label{fig:resistor_calculation}
 \end{figure}
+
+\subsubsection{電力損失と発熱の実例}
+
+可変抵抗による電力変換では、理論的な計算だけでなく、実際の発熱現象を理解することが重要である。電力変換時の損失（Loss）は、全て熱エネルギーとして放出される。この熱は、電力変換機器（ACアダプタなど）の温度上昇として観測できる。以下の図は、サーマルカメラで撮影したACアダプタの発熱状況を示している。
 
 \begin{figure}[H]
 \centering
 \fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter01/images/page-19.pdf}}
-\caption{効率計算の具体例}
+\caption{電力損失による発熱（サーマルカメラによる観測）}
 \label{fig:efficiency_calculation}
 \end{figure}
 
