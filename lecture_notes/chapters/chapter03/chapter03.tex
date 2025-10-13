@@ -169,9 +169,152 @@ d = \sqrt{\frac{2\varepsilon V}{e}\left(\frac{1}{N_a} + \frac{1}{N_d}\right)}
 
 右側のグラフは、実際のダイオード（U10LC48）の電圧-電流特性を示しています。温度が高くなると（150℃）、順方向電圧が小さくなることがわかります。これは、温度上昇により真性キャリア濃度が増加するためです。
 
-\textbf{重要なポイント：}
+\subsection{電磁気学的観点からのダイオードの動作原理}
 
-pn接合のエネルギー障壁は完全にゼロにはならないため、ダイオードには必ず順方向電圧降下が存在します。この電圧降下は、ダイオードの損失の原因となります。
+ダイオードの整流作用を深く理解するためには、外部電圧印加時のバンドの曲がりと電位分布を電磁気学的に理解する必要があります。
+
+\subsubsection{熱平衡状態（外部電圧なし）}
+
+第2章で学んだように、pn接合を形成すると、熱平衡状態では以下の状態になります：
+
+\begin{itemize}
+\item 拡散により空乏層が形成される
+\item n型側に正の固定電荷（$+eN_d$）、p型側に負の固定電荷（$-eN_a$）が存在
+\item 空乏層内に電場$\mathcal{E}$が形成される（n型→p型の向き）
+\item 拡散電位$V_{bi} \approx 0.7$ V（シリコンの場合）
+\item バンドはn型側が低く、p型側が高い（エネルギー差$eV_{bi}$）
+\item フェルミ準位$E_F$は全体で一定（水平）
+\end{itemize}
+
+この状態では、拡散電流とドリフト電流が釣り合い、正味の電流はゼロです。
+
+\subsubsection{順方向バイアス時のバンドの変化}
+
+p型側（アノード）に正電圧$V_F$を、n型側（カソード）に負電圧を印加すると、以下の変化が起こります：
+
+\textbf{ステップ1：外部電圧による電位分布の変化}
+
+\begin{itemize}
+\item p型側の電位が$+V_F$だけ上昇
+\item n型側の電位は基準（グラウンド）
+\item 空乏層にかかる電位差：$V_{bi} - V_F$に\textbf{減少}
+\end{itemize}
+
+\textbf{ステップ2：バンドの曲がりの変化}
+
+電子のエネルギーは電位と逆の関係（$E = -e\phi$）にあるため：
+
+\begin{itemize}
+\item p型側の電位上昇 → p型側のバンド端が\textbf{下がる}
+\item 空乏層でのバンドの曲がり（傾き）が\textbf{緩やかになる}
+\item エネルギー障壁の高さ：$eV_{bi}$から$e(V_{bi} - V_F)$に\textbf{減少}
+\end{itemize}
+
+\textbf{ステップ3：キャリアの拡散電流の増加}
+
+エネルギー障壁が低くなることで：
+
+\begin{enumerate}
+\item n型側の電子がp型側へ拡散しやすくなる（障壁が低い）
+\item p型側の正孔がn型側へ拡散しやすくなる（障壁が低い）
+\item 拡散電流が\textbf{ドリフト電流を上回る}
+\item 正味の電流が流れる
+\end{enumerate}
+
+拡散電流は、エネルギー障壁の高さに指数関数的に依存します：
+
+\begin{equation}
+I = I_0 \left( e^{\frac{eV_F}{kT}} - 1 \right)
+\end{equation}
+
+ここで、$I_0$は逆方向飽和電流、$k$はボルツマン定数、$T$は絶対温度です。
+
+\textbf{ステップ4：電流の流れ}
+
+\begin{itemize}
+\item 電子：n型→p型へ拡散（電流の向きはp型→n型）
+\item 正孔：p型→n型へ拡散（電流の向きはp型→n型）
+\item 両者の合計が順方向電流となる
+\end{itemize}
+
+\subsubsection{逆方向バイアス時のバンドの変化}
+
+n型側（カソード）に正電圧$V_R$を、p型側（アノード）に負電圧を印加すると、以下の変化が起こります：
+
+\textbf{ステップ1：外部電圧による電位分布の変化}
+
+\begin{itemize}
+\item n型側の電位が$+V_R$だけ上昇
+\item p型側の電位は基準（グラウンド）
+\item 空乏層にかかる電位差：$V_{bi} + V_R$に\textbf{増加}
+\end{itemize}
+
+\textbf{ステップ2：バンドの曲がりの変化}
+
+\begin{itemize}
+\item n型側の電位上昇 → n型側のバンド端が\textbf{下がる}
+\item 空乏層でのバンドの曲がり（傾き）が\textbf{急になる}
+\item エネルギー障壁の高さ：$eV_{bi}$から$e(V_{bi} + V_R)$に\textbf{増加}
+\end{itemize}
+
+\textbf{ステップ3：キャリアの拡散の抑制}
+
+エネルギー障壁が高くなることで：
+
+\begin{enumerate}
+\item n型側の電子がp型側へ拡散できない（障壁が高すぎる）
+\item p型側の正孔がn型側へ拡散できない（障壁が高すぎる）
+\item 拡散電流がほぼゼロになる
+\item ごくわずかな逆方向飽和電流$I_0$のみが流れる
+\end{enumerate}
+
+\textbf{ステップ4：空乏層の拡大}
+
+\begin{itemize}
+\item 空乏層幅$d$が増加：$d \propto \sqrt{V_{bi} + V_R}$
+\item 空乏層内の電場$\mathcal{E}$が増加
+\item 静電容量$C$が減少：$C \propto 1/d$
+\end{itemize}
+
+\subsubsection{バンド図と電位・電場の対応関係}
+
+以下の表に、ダイオードの各状態における電磁気学的な量の対応関係をまとめます：
+
+\begin{table}[H]
+\centering
+\caption{ダイオードの各バイアス状態における物理量の比較}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{物理量} & \textbf{熱平衡} & \textbf{順バイアス} & \textbf{逆バイアス} \\
+\hline
+空乏層の電位差 & $V_{bi}$ & $V_{bi} - V_F$ & $V_{bi} + V_R$ \\
+\hline
+エネルギー障壁 & $eV_{bi}$ & $e(V_{bi} - V_F)$ & $e(V_{bi} + V_R)$ \\
+\hline
+バンドの曲がり & 中間 & 緩やか & 急 \\
+\hline
+空乏層幅 $d$ & 基準 & 減少 & 増加 \\
+\hline
+拡散電流 & ドリフト電流と平衡 & 増大 & ほぼゼロ \\
+\hline
+正味の電流 & ゼロ & 大（指数関数的） & ほぼゼロ（$I_0$） \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{重要なまとめ：ダイオードの整流作用の本質}
+
+\begin{enumerate}
+\item \textbf{順バイアス}：外部電圧がエネルギー障壁を\textbf{下げる} → 拡散電流が増大 → 電流が流れる
+\item \textbf{逆バイアス}：外部電圧がエネルギー障壁を\textbf{上げる} → 拡散電流が抑制 → 電流が流れない
+\item \textbf{整流作用}：バンドの曲がりを制御することで、一方向にのみ電流を流す
+\end{enumerate}
+
+この電磁気学的な理解は、BJT、MOSFET、IGBTなどの他のパワー半導体素子の動作原理を理解する上でも基礎となります。
+
+\textbf{順方向電圧降下の物理的意味}
+
+pn接合のエネルギー障壁は完全にゼロにはならないため（$V_{bi} - V_F > 0$）、ダイオードには必ず順方向電圧降下が存在します。この電圧降下は、ダイオードの損失の原因となります。
 
 \section{バイポーラトランジスタ（BJT）の動作原理}
 
@@ -463,6 +606,145 @@ BJTの電流増幅率$\beta$（ベータ）は、コレクタ電流$I_C$とベ�
 
 通常、$\beta$は数十から数百の値を持ち、小さなベース電流で大きなコレクタ電流を制御できることを意味します。
 
+\subsection{電磁気学的観点からのBJTの動作原理}
+
+BJTの動作を深く理解するためには、2つのpn接合（エミッタ-ベース接合とベース-コレクタ接合）のバンドの曲がりと電位分布を電磁気学的に理解する必要があります。
+
+\subsubsection{アクティブモード時のバンド図}
+
+BJTが正常に動作するアクティブモードでは、以下のバイアス条件が設定されます：
+
+\begin{itemize}
+\item エミッタ-ベース接合（J1）：\textbf{順方向バイアス}（$V_{BE} \approx 0.7$ V）
+\item ベース-コレクタ接合（J2）：\textbf{逆方向バイアス}（$V_{CB}$は数V〜数十V）
+\end{itemize}
+
+\textbf{各接合でのバンドの曲がり：}
+
+\begin{enumerate}
+\item \textbf{J1（エミッタ-ベース）接合}：順バイアス
+\begin{itemize}
+\item ダイオードの順バイアスと同様に、エネルギー障壁が\textbf{低下}
+\item 障壁の高さ：$e(V_{bi} - V_{BE})$
+\item エミッタ（n$^+$）からベース（p）へ電子が拡散しやすくなる
+\item バンドの曲がりが\textbf{緩やか}になる
+\end{itemize}
+
+\item \textbf{J2（ベース-コレクタ）接合}：逆バイアス
+\begin{itemize}
+\item ダイオードの逆バイアスと同様に、エネルギー障壁が\textbf{増加}
+\item 障壁の高さ：$e(V_{bi} + V_{CB})$
+\item ベース（p）からコレクタ（n）への正孔の拡散が抑制される
+\item バンドの曲がりが\textbf{急}になる
+\item 空乏層が拡大し、強い電界が形成される
+\end{itemize}
+\end{enumerate}
+
+\textbf{電子の流れとエネルギーダイアグラム：}
+
+npn型BJTの場合、電子のエネルギーダイアグラムは以下のようになります：
+
+\begin{verbatim}
+   E (n+)    B (p)        C (n)
+   ┌───┐   ┌──────┐   ┌───┐  Ec（伝導帯下端）
+   │   │   │      │   │   │
+   │ ●│→ →│ ●  → │ → │ ● │  電子の流れ
+   │   │   │   ↓  │   │   │
+   └───┘   └──────┘   └───┘  Ev（価電子帯上端）
+     J1        J2
+  （順バイアス）（逆バイアス）
+\end{verbatim}
+
+\textbf{エミッタ-ベース接合（J1）での電子注入：}
+
+\begin{itemize}
+\item エミッタ（n$^+$）は高い電子濃度を持つ（$N_d \approx 10^{19}$ cm$^{-3}$）
+\item 順バイアスにより、エネルギー障壁が低下
+\item エミッタの伝導帯の電子は、低下した障壁を越えてベースの伝導帯へ拡散
+\item ベース領域に入った電子は、ベース領域の正孔より\textbf{高いエネルギー状態}にある
+\end{itemize}
+
+\textbf{ベース領域での電子の挙動：}
+
+\begin{itemize}
+\item ベース領域に注入された電子は、\textbf{少数キャリア}として存在
+\item 電子は濃度勾配により、J2方向へ\textbf{拡散}
+\item ベースが薄いため、大部分の電子はJ2に到達する前に正孔と再結合しない
+\end{itemize}
+
+\textbf{ベース-コレクタ接合（J2）での電子の加速：}
+
+\begin{itemize}
+\item J2の逆バイアスにより、ベース→コレクタの方向に強い電界が形成
+\item ベースからJ2の空乏層に到達した電子は、この電界で\textbf{ドリフト}（加速）される
+\item 電子は急峻なエネルギー勾配（バンドの傾き）を「滑り降りる」ようにコレクタへ移動
+\item コレクタに到達した電子は、コレクタ電極へ引き込まれる
+\end{itemize}
+
+\subsubsection{電位分布とエネルギー障壁}
+
+BJTの電位分布を電磁気学的に理解することで、電子の流れがより明確になります：
+
+\textbf{各領域の電位：}
+
+\begin{itemize}
+\item エミッタ電位：$\phi_E = 0$（基準）
+\item ベース電位：$\phi_B = +V_{BE} \approx +0.7$ V
+\item コレクタ電位：$\phi_C = +V_{CE}$（例：$+5$ V〜$+100$ V）
+\end{itemize}
+
+\textbf{電子のポテンシャルエネルギー：}
+
+電子のエネルギーは電位と逆の関係（$E = -e\phi$）にあるため：
+
+\begin{itemize}
+\item エミッタ領域：電子のエネルギーが\textbf{最も高い}（$E_E = 0$）
+\item ベース領域：電子のエネルギーが\textbf{やや低い}（$E_B = -eV_{BE}$）
+\item コレクタ領域：電子のエネルギーが\textbf{最も低い}（$E_C = -eV_{CE}$）
+\end{itemize}
+
+この電子エネルギーの傾斜により、電子はエミッタ→ベース→コレクタの方向へ流れます。
+
+\subsubsection{バンド図と電流の対応関係}
+
+以下の表に、BJTの各接合における電磁気学的な量の対応関係をまとめます：
+
+\begin{table}[H]
+\centering
+\caption{BJTアクティブモードにおける物理量の比較}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{物理量} & \textbf{J1（E-B）} & \textbf{J2（B-C）} \\
+\hline
+バイアス状態 & 順バイアス & 逆バイアス \\
+\hline
+エネルギー障壁 & $e(V_{bi} - V_{BE})$ & $e(V_{bi} + V_{CB})$ \\
+\hline
+バンドの曲がり & 緩やか & 急 \\
+\hline
+空乏層幅 & 小さい & 大きい \\
+\hline
+電場の強さ & 弱い & 強い \\
+\hline
+電子の移動機構 & 拡散（濃度勾配） & ドリフト（電界） \\
+\hline
+主な電流 & 拡散電流 & ドリフト電流 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{重要なまとめ：BJTの電流増幅の本質}
+
+\begin{enumerate}
+\item \textbf{J1の順バイアス}：エネルギー障壁を下げ、エミッタから大量の電子を注入
+\item \textbf{薄いベース}：注入された電子の大部分が再結合せずにJ2に到達
+\item \textbf{J2の逆バイアス}：強い電界で電子をコレクタへ加速・引き込み
+\item \textbf{ベース電流}：ベースで再結合した電子を補うための小さな電流
+\item \textbf{電流増幅}：小さなベース電流で大きなコレクタ電流を制御
+\end{enumerate}
+
+この電磁気学的な理解により、BJTがなぜ電流増幅素子として機能するのか、そしてベース領域を薄くすることがなぜ重要なのかが明確になります。
+
 \section{MOSFET（金属酸化膜半導体電界効果トランジスタ）}
 
 \subsection{MOSFETの構造}
@@ -540,6 +822,104 @@ MOSFETの動作の核心は、\textbf{反転層（inversion layer）}の形成�
 \textbf{重要なポイント：}
 
 MOSFETでは、BJTと異なり、制御端子（ゲート）に電流を流す必要がありません。ゲート電圧によって電界を形成するだけで、主電流を制御できます。これにより、\textbf{極めて低い入力電力}でスイッチングが可能となります。
+
+\subsection{電磁気学的観点からのMOSFETの動作原理}
+
+MOSFETの反転層形成を電磁気学とバンド理論の観点から理解することで、電界効果トランジスタの本質が明確になります。
+
+\subsubsection{ゲート電圧印加によるバンドの曲がり}
+
+\textbf{ゲート電圧なし（$V_G = 0$）の状態：}
+
+\begin{itemize}
+\item p型基板のフェルミ準位$E_F$は、価電子帯$E_v$に近い
+\item 基板表面でもバンドは平坦（電界なし）
+\item 正孔が多数キャリア、電子は少数キャリア
+\end{itemize}
+
+\textbf{正のゲート電圧印加（$V_G > 0$）の状態：}
+
+ゲート電極に正電圧を印加すると、以下の変化が起こります：
+
+\begin{enumerate}
+\item \textbf{電界の形成}：
+\begin{itemize}
+\item ゲート電極（正）と基板（負）の間に垂直方向の電場が形成
+\item 電場の強さ：$\mathcal{E} = V_G / t_{ox}$（$t_{ox}$は酸化膜厚）
+\item 酸化膜は絶縁体なので、電流は流れない（電界のみ）
+\end{itemize}
+
+\item \textbf{基板表面での電荷の再分布}：
+\begin{itemize}
+\item 電界により、p型基板表面の正孔が\textbf{下方へ押し出される}（反発）
+\item 同時に、電子が基板表面へ\textbf{引き寄せられる}（吸引）
+\item 基板表面の電位が上昇
+\end{itemize}
+
+\item \textbf{バンドの曲がり}（基板表面での電位変化）：
+\begin{itemize}
+\item 基板表面の電位上昇 → 電子のエネルギー $E = -e\phi$ が\textbf{低下}
+\item バンド端（$E_c$、$E_v$）が基板表面で\textbf{下方へ曲がる}
+\item 表面での伝導帯端$E_c$がフェルミ準位$E_F$に\textbf{近づく}
+\end{itemize}
+
+\item \textbf{反転層の形成}：
+\begin{itemize}
+\item ゲート電圧が閾値電圧$V_{th}$を超えると、$E_c$が$E_F$より下になる
+\item 表面の伝導帯に電子が占有される（フェルミ-ディラック分布）
+\item 電子濃度が正孔濃度を超える → \textbf{反転}
+\item 表面が実質的にn型となる（nチャネル形成）
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{閾値電圧の物理的意味}
+
+閾値電圧$V_{th}$は、バンドの曲がりの観点から以下のように理解できます：
+
+\begin{itemize}
+\item $V_G < V_{th}$：基板表面の$E_c$がまだ$E_F$より上 → 電子濃度が低い → オフ状態
+\item $V_G = V_{th}$：基板表面の$E_c$が$E_F$と一致 → 反転が始まる
+\item $V_G > V_{th}$：基板表面の$E_c$が$E_F$より下 → 多数の電子が存在 → オン状態
+\end{itemize}
+
+閾値電圧は、p型基板をn型に反転させるのに必要な電位の変化量に対応します。
+
+\subsubsection{電界効果による制御の本質}
+
+MOSFETの動作原理の本質は、\textbf{電界によってバンドを曲げ、キャリア濃度を制御する}ことにあります：
+
+\begin{table}[H]
+\centering
+\caption{ゲート電圧とバンドの曲がりの対応関係}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{状態} & \textbf{$V_G = 0$} & \textbf{$V_G = V_{th}$} & \textbf{$V_G > V_{th}$} \\
+\hline
+電界 & なし & 中程度 & 強い \\
+\hline
+バンドの曲がり & 平坦 & 曲がり始め & 大きく曲がる \\
+\hline
+表面電子濃度 & 極小 & 増加開始 & 高濃度 \\
+\hline
+チャネル & なし & 形成開始 & 形成完了 \\
+\hline
+動作状態 & オフ & 閾値 & オン \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{重要なまとめ：MOSFET制御の電磁気学的メカニズム}
+
+\begin{enumerate}
+\item \textbf{ゲート電圧}：絶縁体を介して電界を形成
+\item \textbf{電界}：基板表面の電位を変化させる
+\item \textbf{電位変化}：バンドを曲げる（$E = -e\phi$）
+\item \textbf{バンドの曲がり}：伝導帯端を下げ、電子を表面に引き寄せる
+\item \textbf{反転層形成}：表面がn型に反転し、導電チャネルができる
+\item \textbf{電流制御}：チャネルを通じてソース-ドレイン間に電流が流れる
+\end{enumerate}
+
+この電界による制御方式により、MOSFETは極めて小さい入力電力（ゲート電圧のみ、電流なし）で大きな出力電流を制御できます。
 
 \subsection{MOSFETのスイッチ特性}
 
@@ -718,6 +1098,35 @@ I_C = I_{\text{electron}} + I_{\text{hole}}
 \end{itemize}
 
 この二重の電流メカニズムにより、IGBTは大電流を低損失で流すことができます。
+
+\subsubsection{電磁気学的観点からのIGBT動作}
+
+IGBTの動作を、バンドダイアグラムと電位分布の観点から理解することで、なぜ伝導度変調が起こるのかが明確になります。
+
+\textbf{オン状態でのバンド図（簡略化）：}
+
+IGBTをオンにすると、以下のバンドの曲がりが形成されます：
+
+\begin{enumerate}
+\item \textbf{MOSFETチャネル部}：ゲート電界でバンドが曲がり、反転層（nチャネル）形成
+\item \textbf{n$^+$-p接合（エミッタ側）}：短絡されているため、バンドの曲がりはほぼなし
+\item \textbf{p-n$^-$接合（中央部）}：最初は逆バイアスだが、電子が流れ込むと順バイアス化
+\item \textbf{n$^-$-p$^+$接合（コレクタ側）}：\textbf{順バイアス状態になる}
+\end{enumerate}
+
+\textbf{伝導度変調のメカニズム（バンドダイアグラムの観点）：}
+
+\begin{itemize}
+\item MOSFETチャネルからn$^-$ドリフト層へ電子が注入される
+\item n$^-$層の電位が上昇し、n$^-$-p$^+$接合が順バイアス状態になる
+\item n$^-$-p$^+$接合のエネルギー障壁が低下（$eV_{bi} \rightarrow e(V_{bi} - V_F)$）
+\item p$^+$層（コレクタ）から正孔がn$^-$層へ\textbf{注入}される
+\item n$^-$層のキャリア濃度が増加 → 導電率上昇 → 抵抗低下
+\end{itemize}
+
+\textbf{重要なポイント：}
+
+IGBTの低オン抵抗は、\textbf{pn接合の順バイアス時の両極性キャリア注入}という、ダイオードやBJTと同じ物理現象を利用しています。ゲート制御でこの状態を作り出すことが、IGBTの巧妙な設計です。
 
 \subsection{IGBTの利点と特性}
 
