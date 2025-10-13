@@ -480,6 +480,170 @@ p型半導体とn型半導体を接合すると、接合部でキャリアの濃
 \item n型側のバンドが上がり、p型側のバンドが下がります
 \end{itemize}
 
+\subsection{電磁気学的な観点からのpn接合の理解}
+
+pn接合の動作を深く理解するためには、電磁気学の基本原理に立ち返ることが重要です。ここでは、拡散による帯電、電場と電位の分布、電子のエネルギー変化、そしてバンドの曲がりの関係を、電磁気学の観点から詳しく説明します。
+
+\subsubsection{拡散による帯電のメカニズム}
+
+pn接合を形成すると、キャリアの濃度勾配により以下のプロセスが進行します：
+
+\begin{enumerate}
+\item \textbf{電子の拡散}：n型領域の電子はp型領域へ拡散し、p型領域の正孔と再結合して消滅します。
+\item \textbf{正孔の拡散}：p型領域の正孔はn型領域へ拡散し、n型領域の電子と再結合して消滅します。
+\item \textbf{固定電荷（イオン）の出現}：
+\begin{itemize}
+\item n型領域では、電子が拡散により失われると、動けないドナーイオン（$\text{P}^+$など）が正電荷として残る
+\item p型領域では、正孔が拡散により失われると、動けないアクセプタイオン（$\text{B}^-$など）が負電荷として残る
+\end{itemize}
+\end{enumerate}
+
+この過程で、\textbf{接合部付近に正負の固定電荷層が形成}されます。これが空乏層です。
+
+\textbf{重要な理解：}
+\begin{itemize}
+\item 拡散するのは「移動可能なキャリア」（電子と正孔）
+\item 残るのは「固定された不純物イオン」
+\item このイオン化した不純物が空乏層内の電荷分布を形成する
+\end{itemize}
+
+\subsubsection{電荷分布と電場の形成}
+
+空乏層内の電荷分布は、以下のようになります：
+
+\begin{itemize}
+\item \textbf{n型側の空乏層}：正の固定電荷（密度$+eN_d$）
+\item \textbf{p型側の空乏層}：負の固定電荷（密度$-eN_a$）
+\end{itemize}
+
+この電荷分布により、\textbf{ポアソン方程式}に従って電場が発生します：
+
+\begin{equation}
+\frac{d\mathcal{E}}{dx} = \frac{\rho(x)}{\varepsilon}
+\end{equation}
+
+ここで、$\mathcal{E}$は電場、$\rho(x)$は電荷密度、$\varepsilon$は誘電率です。
+
+空乏層内では：
+\begin{align}
+\text{n型側：} \quad \rho(x) &= +eN_d \\
+\text{p型側：} \quad \rho(x) &= -eN_a
+\end{align}
+
+したがって、電場は空乏層の境界（接合面）で最大となり、\textbf{n型からp型へ向かう方向}に電場が形成されます。
+
+\subsubsection{電場と電位の関係}
+
+電場$\mathcal{E}$と電位$\phi$の関係は、電磁気学の基本式から：
+
+\begin{equation}
+\mathcal{E} = -\frac{d\phi}{dx}
+\end{equation}
+
+電場がn型からp型へ向かう（$\mathcal{E} > 0$）ので、電位は\textbf{n型側で高く、p型側で低く}なります。
+
+電位差（拡散電位）$V_{bi}$は、電場を積分して求められます：
+
+\begin{equation}
+V_{bi} = -\int_{p\text{型}}^{n\text{型}} \mathcal{E}\, dx = \phi_{n} - \phi_{p}
+\end{equation}
+
+ここで、$\phi_n$はn型側の電位、$\phi_p$はp型側の電位です。
+
+\textbf{重要なポイント：}
+\begin{itemize}
+\item 電場はn型→p型の向き（正電荷から負電荷へ）
+\item 電位はn型側が高い（$\phi_n > \phi_p$）
+\item 拡散電位$V_{bi} = \phi_n - \phi_p > 0$
+\end{itemize}
+
+\subsubsection{電子のポテンシャルエネルギーと電位の関係}
+
+電子は負の電荷（$-e$）を持つため、電子のポテンシャルエネルギー$U_e$と電位$\phi$の関係は：
+
+\begin{equation}
+U_e(x) = -e\phi(x)
+\end{equation}
+
+\textbf{符号に注意：}
+
+\begin{itemize}
+\item 電位が高い場所（n型側）では、電子のポテンシャルエネルギーは\textbf{低い}
+\item 電位が低い場所（p型側）では、電子のポテンシャルエネルギーは\textbf{高い}
+\end{itemize}
+
+これは、電子が負電荷であるため、正の電場（高電位）に引き寄せられる（ポテンシャルエネルギーが低くなる）ことを意味します。
+
+\subsubsection{バンド図におけるエネルギーの曲がり}
+
+バンド図は、\textbf{電子のエネルギー状態}を表します。伝導帯端$E_c$と価電子帯端$E_v$は、電子がとりうるエネルギー準位の境界を示します。
+
+電位$\phi(x)$の空間変化により、バンド端は以下のように変化します：
+
+\begin{align}
+E_c(x) &= E_{c0} - e\phi(x) \\
+E_v(x) &= E_{v0} - e\phi(x)
+\end{align}
+
+ここで、$E_{c0}$、$E_{v0}$は電位がゼロの基準点でのバンド端のエネルギーです。
+
+\textbf{バンドが曲がる理由：}
+
+\begin{enumerate}
+\item n型側では電位$\phi$が高い → $-e\phi$は負に大きい → バンド端が\textbf{下がる}
+\item p型側では電位$\phi$が低い → $-e\phi$は負に小さい → バンド端が\textbf{上がる}
+\item 結果として、n型からp型へ移動すると、バンド端が上昇する（バンドが曲がる）
+\end{enumerate}
+
+バンドの曲がりの大きさは、拡散電位$V_{bi}$に対応します：
+
+\begin{equation}
+\Delta E_c = E_c(\text{n型}) - E_c(\text{p型}) = -e(V_{bi}) = -eV_{bi}
+\end{equation}
+
+または、エネルギー単位で：
+
+\begin{equation}
+\Delta E_c = eV_{bi} \quad \text{（n型側が低く、p型側が高い）}
+\end{equation}
+
+\subsubsection{電位、電子エネルギー、バンド図の対応関係}
+
+以下の表に、電位、電場、電子エネルギー、バンドの関係をまとめます：
+
+\begin{table}[H]
+\centering
+\caption{pn接合における電磁気学的な量の対応関係}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{物理量} & \textbf{n型側} & \textbf{p型側} \\
+\hline
+電位 $\phi$ & 高い & 低い \\
+\hline
+電場 $\mathcal{E}$ & \multicolumn{2}{c|}{n型→p型の向き} \\
+\hline
+電子のポテンシャルエネルギー $U_e = -e\phi$ & 低い & 高い \\
+\hline
+バンド端 $E_c$, $E_v$ & 低い & 高い \\
+\hline
+フェルミ準位 $E_F$ & \multicolumn{2}{c|}{水平（一定）} \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{まとめ：バンドが曲がるメカニズム}
+
+\begin{enumerate}
+\item 拡散により、接合部に固定電荷（イオン）が出現
+\item 電荷分布により電場が発生（n型→p型）
+\item 電場により電位が分布（n型側が高い）
+\item 電位により電子のポテンシャルエネルギーが変化（$U_e = -e\phi$）
+\item 電子エネルギーの変化がバンド図に反映される（バンドが曲がる）
+\item 熱平衡では、フェルミ準位が全体で一定（水平）になる
+\end{enumerate}
+
+この一連のプロセスを理解することで、pn接合の電気的特性（整流作用、容量特性など）を定量的に予測できるようになります。
+
 \subsection{平衡状態のpn接合}
 
 図\ref{fig:pn_junction_initial}に、pn接合を接続した直後（平衡状態）のバンド図を示します。
