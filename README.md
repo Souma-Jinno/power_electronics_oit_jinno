@@ -7,29 +7,17 @@
 ```
 power_electronics_oit_jinno/
 ├── README.md                    # このファイル
-├── lecture_notes/               # 講義テキスト（LaTeX形式）
-│   ├── main.tex                # メインファイル
-│   ├── main.pdf                # コンパイル済みPDF
-│   └── chapters/               # 各章のTeXファイル
-│       ├── chapter01/          # 第1章
-│       ├── chapter02/          # 第2章
-│       └── chapter03/          # 第3章
-├── slides/                      # 講義スライド
-│   ├── 01_overview/            # 第1回：パワーエレクトロニクスの概要
-│   │   ├── slides.key          # Keynoteスライド
-│   │   ├── slides.pdf          # PDFスライド
-│   │   └── quiz.key            # 小テスト
-│   ├── 02_semiconductor_physics/  # 第2回：半導体の物理
-│   │   ├── slides.key
-│   │   ├── slides.pdf
-│   │   └── quiz.key
-│   └── 03_power_semiconductor_principles/  # 第3回：パワー半導体の動作原理
-│       └── slides.key
-└── exercises/                   # 演習問題
-    ├── quiz01/                 # 第1回演習
-    ├── quiz02/                 # 第2回演習
-    └── quiz03/                 # 第3回演習
+└── lecture_notes/               # 講義テキスト（LaTeX形式）※Git管理対象
+    ├── main.tex                # メインファイル
+    ├── main.pdf                # コンパイル済みPDF
+    └── chapters/               # 各章のTeXファイル
+        ├── chapter01/          # 第1章：パワーエレクトロニクスの概要
+        ├── chapter02/          # 第2章：半導体の物理
+        ├── chapter03/          # 第3章：パワー半導体の動作原理
+        └── chapter04/          # 第4章：LCR回路の復習
 ```
+
+**注意**: `slides/`フォルダと`revise_no_share/`フォルダは`.gitignore`により管理対象外です。
 
 ## 注意事項
 
@@ -38,17 +26,25 @@ power_electronics_oit_jinno/
 
 ## 講義内容
 
-### 第1回：パワーエレクトロニクスの概要
+### 第1章：パワーエレクトロニクスの概要
 - パワーエレクトロニクスの基礎
 - 応用分野の紹介
+- スイッチング素子の役割
 
-### 第2回：半導体の物理
+### 第2章：半導体の物理
 - 半導体の基本特性
 - pn接合の原理
+- 空乏層と電気的特性
 
-### 第3回：パワー半導体の動作原理
-- パワー半導体デバイスの種類
+### 第3章：パワー半導体の動作原理
+- パワー半導体デバイスの種類（ダイオード、MOSFET、IGBT）
 - 動作原理と特性
+- スイッチング特性
+
+### 第4章：LCR回路の復習
+- スイッチング時のコイルとコンデンサの振る舞い
+- エネルギー蓄積と平滑化の原理
+- RLC共振回路
 
 ## ライセンス
 

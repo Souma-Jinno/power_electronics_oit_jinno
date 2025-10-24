@@ -1,0 +1,1009 @@
+% 第4章：LCR回路の復習
+\chapter{LCR回路の復習}
+
+\section{はじめに}
+
+\subsection{本章の目的と学習目標}
+
+パワーエレクトロニクス回路において、コイル（インダクタ）とコンデンサ（キャパシタ）は、スイッチング素子と並んで重要な役割を果たします。これらの受動素子は、スイッチングによって生じるパルス状の電圧や電流を平滑化し、安定した直流電圧・電流を出力するために不可欠です。
+
+本章では、スイッチング回路におけるコイルとコンデンサの動作原理を、回路理論とエネルギーの観点から詳しく学びます。
+
+\textbf{学習目標：}
+\begin{itemize}
+\item スイッチング時のコイルとコンデンサの特性を理解する
+\item コイルとコンデンサに蓄えられるエネルギーを理解する
+\item フィルタとしてのLCRの役割を理解する
+\item 共振回路の基本原理を理解する
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-02.pdf}}
+\caption{本日の目標}
+\label{fig:ch04_objectives}
+\end{figure}
+
+\subsection{第1回の復習：スイッチを使った電力変換}
+
+第1回の講義では、スイッチングによる電力変換の基本原理を学びました。ここで、その要点を復習しましょう。
+
+\subsubsection{デューティ比による電圧制御}
+
+スイッチングによる電圧制御では、スイッチのオン・オフを高速に繰り返し、その時間平均によって出力電圧を制御します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-03.pdf}}
+\caption{スイッチを使った電力変換（第1回復習）}
+\label{fig:ch04_switching_review}
+\end{figure}
+
+スイッチング電圧$v_{in}(t)$の時間平均$\bar{v}_o$は、デューティ比$D$を用いて以下のように表されます：
+
+\begin{equation}
+\bar{v}_o = \frac{1}{T_{\text{SW}}} \int_0^{T_{\text{SW}}} v(t)dt = \frac{1}{T_{\text{SW}}} \times 12 T_{\text{on}} = \frac{T_{\text{on}}}{T_{\text{SW}}} \times 12
+\end{equation}
+
+ここで、デューティ比$D$は以下のように定義されます：
+
+\begin{equation}
+D = \frac{T_{\text{on}}}{T_{\text{SW}}}
+\end{equation}
+
+したがって、平均出力電圧は：
+
+\begin{equation}
+\bar{v}_o = D \times V_{\text{in}}
+\end{equation}
+
+\subsubsection{電力が送れない時間の発生}
+
+スイッチング波形を見ると、スイッチがオフの期間では電圧がゼロとなり、負荷に電力を供給できません。この問題を解決するために、\textbf{コイルとコンデンサ}を使用します。
+
+コイルとコンデンサは、エネルギーを一時的に蓄積し、スイッチがオフの期間でも負荷に電力を供給し続けることができます。これにより、連続的な電力供給が可能になります。
+
+\section{LCRの用途}
+
+パワーエレクトロニクス回路において、コイル（L）、コンデンサ（C）、抵抗（R）は、主に以下の2つの用途で使用されます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-04.pdf}}
+\caption{LCRの用途（電荷や電流を貯める）}
+\label{fig:ch04_lcr_usage}
+\end{figure}
+
+\subsection{フィルタ（電圧や電流を平滑化するため）}
+
+スイッチングによって生成されるパルス状の電圧・電流波形は、そのままでは負荷に適していません。コイルとコンデンサを組み合わせたフィルタ回路により、これらの変動を抑制し、滑らかな直流電圧・電流を得ることができます。
+
+\textbf{フィルタの動作原理：}
+
+\begin{itemize}
+\item \textbf{コイル}：電流の変動を抑制する（電流の平滑化）
+\begin{itemize}
+\item コイルにかかる電圧：$v_L(t) = L \frac{di_L(t)}{dt}$
+\item 電流が急激に変化しようとすると、大きな逆起電力が発生し、変化を妨げる
+\end{itemize}
+
+\item \textbf{コンデンサ}：電圧の変動を抑制する（電圧の平滑化）
+\begin{itemize}
+\item コンデンサに流れる電流：$i_C(t) = C \frac{dv_C(t)}{dt}$
+\item 電圧が急激に変化しようとすると、大きな電流が流れ、変化を妨げる
+\end{itemize}
+\end{itemize}
+
+スイッチング周波数を高くし、適切なLとCの値を選ぶことで、リプル（変動）を小さく抑えることができます。
+
+\subsection{共振回路（モーターなどの駆動のため）}
+
+コイルとコンデンサを組み合わせた回路は、特定の周波数で共振現象を起こします。この性質を利用して、モーターの駆動や高周波電源など、さまざまな応用が可能です。
+
+共振周波数$f_0$は以下の式で表されます：
+
+\begin{equation}
+f_0 = \frac{1}{2\pi\sqrt{LC}}
+\end{equation}
+
+共振回路については、本章の後半で詳しく説明します。
+
+\section{スイッチング時のコイルの振る舞い}
+
+\subsection{コイルの基本特性}
+
+コイル（インダクタ）は、電流の変化を妨げる性質を持つ受動素子です。その電圧-電流関係は、以下の微分方程式で表されます：
+
+\begin{equation}
+v_L(t) = L \frac{di_L(t)}{dt}
+\end{equation}
+
+ここで、$v_L(t)$はコイルにかかる電圧[V]、$i_L(t)$はコイルに流れる電流[A]、$L$はインダクタンス[H]です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-05.pdf}}
+\caption{スイッチング時のコイルの振る舞い}
+\label{fig:ch04_inductor_switching}
+\end{figure}
+
+\textbf{重要なポイント：}
+
+パワーエレクトロニクスでは、\textbf{スイッチング信号を入れた時の振る舞い}が重要です。スイッチがオン・オフを繰り返す際、コイルにかかる電圧が矩形波状に変化し、それに応じてコイル電流がどのように変化するかを理解する必要があります。
+
+\subsection{スイッチング時のコイル電流の時間変化}
+
+コイルにスイッチング電圧$v_L(t)$を印加した場合、コイル電流$i_L(t)$の時間変化を求めてみましょう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-06.pdf}}
+\caption{初期条件の設定}
+\label{fig:ch04_inductor_initial}
+\end{figure}
+
+\subsubsection{電流の積分計算}
+
+コイルの電圧-電流関係式：
+
+\begin{equation}
+v_L(t) = L \frac{di_L(t)}{dt}
+\end{equation}
+
+両辺を時刻$t_s \leq t \leq t_e$の範囲で積分すると：
+
+\begin{equation}
+\int_{t_s}^{t_e} v_L(t)dt = L \int_{t_s}^{t_e} \frac{di_L(t)}{dt} dt
+\end{equation}
+
+右辺を計算すると：
+
+\begin{equation}
+\int_{t_s}^{t_e} v_L(t)dt = L \left[ i_L(t) \right]_{t_s}^{t_e} = L(i_L(t_e) - i_L(t_s))
+\end{equation}
+
+したがって、電流の変化は：
+
+\begin{equation}
+i_L(t_e) - i_L(t_s) = \frac{1}{L} \int_{t_s}^{t_e} v_L(t)dt
+\end{equation}
+
+初期条件として$t_s = 0$ [s]のとき$i_L = 0.0$ [A]とすると：
+
+\begin{equation}
+i_L(t_e) = \frac{1}{L} \int_0^{t_e} v_L(t)dt
+\end{equation}
+
+\textbf{重要な結論：}
+
+\textcolor{blue}{コイルに流れる電流の時間変化は、コイルにかかる電圧の時間積分に比例します。}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-07.pdf}}
+\caption{スイッチング時のコイル電流の計算}
+\label{fig:ch04_inductor_current}
+\end{figure}
+
+\subsection{コイルに正の電圧を印加し続けると}
+
+スイッチング電圧$v_L(t)$が正の値（例えば$V_0$）の期間、コイル電流は一定の傾きで増加し続けます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-08.pdf}}
+\caption{コイルに正の電圧を印加すると電流が際限なく増加する}
+\label{fig:ch04_inductor_increasing}
+\end{figure}
+
+電圧が$V_0$で一定の期間、電流の増加率は：
+
+\begin{equation}
+\frac{di_L}{dt} = \frac{V_0}{L} = \text{一定}
+\end{equation}
+
+したがって、コイル電流は：
+
+\begin{equation}
+i_L(t) = \frac{V_0}{L} t
+\end{equation}
+
+と、時間に比例して増加し続けます。
+
+\textbf{問題点：}
+
+このままでは電流が際限なく増加してしまいます。\textcolor{red}{どうすれば定常状態になるのでしょうか？増加も減少もしなくなるのでしょうか？}
+
+\textbf{解決策：}
+
+\textcolor{blue}{負の電圧をかけると電流が減少します。}定常状態では、IとIIの領域の面積（電圧×時間の積分値）が等しくなる必要があります。
+
+\subsection{定常状態時のコイルに流れる電流}
+
+定常状態では、1スイッチング周期$T$における電流の変化がゼロになります。すなわち、スイッチオン時に増加した電流と、スイッチオフ時に減少した電流が釣り合う必要があります。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-09.pdf}}
+\caption{定常状態時のコイルに流れる電流}
+\label{fig:ch04_inductor_steady}
+\end{figure}
+
+\textbf{定常状態の条件：}
+
+\begin{equation}
+\int_0^{DT} v_L(t)dt + \int_{DT}^{T} v_L(t)dt = 0
+\end{equation}
+
+つまり、領域Iと領域IIの面積が等しくなります：
+
+\begin{equation}
+DT \cdot V_0 = (T - DT) \cdot |v_L|
+\end{equation}
+
+\subsection{電圧源や負荷が接続された場合のコイル電圧}
+
+実際のパワーエレクトロニクス回路では、コイルに電圧源や負荷（抵抗）が接続されています。この場合、キルヒホッフの電圧則（KVL）を用いて、コイルにかかる電圧を求めます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-10.pdf}}
+\caption{定常状態時の出力電圧とスイッチング電圧の関係（問題設定）}
+\label{fig:ch04_inductor_load_problem}
+\end{figure}
+
+\subsubsection{回路解析}
+
+電圧源$v_{in}(t)$、コイル$L$、コンデンサ$C$、出力電圧$V_1$が接続された回路を考えます。
+
+\textbf{KVL（キルヒホッフの電圧則）：}
+
+\begin{equation}
+v_{in}(t) - v_L(t) - V_1 = 0
+\end{equation}
+
+したがって、コイルにかかる電圧は：
+
+\begin{equation}
+v_L(t) = v_{in}(t) - V_1
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-11.pdf}}
+\caption{KVLによるコイル電圧の導出}
+\label{fig:ch04_inductor_load_kvl}
+\end{figure}
+
+コンデンサは、定常状態において電圧がほぼ一定（$V_1$）となります。したがって、コイルにかかる電圧$v_L(t)$は、以下のようになります：
+
+\textbf{スイッチON時（$0 \leq t < DT$）：}
+\begin{equation}
+v_L(t) = V_0 - V_1
+\end{equation}
+
+\textbf{スイッチOFF時（$DT \leq t < T$）：}
+\begin{equation}
+v_L(t) = 0 - V_1 = -V_1
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-12.pdf}}
+\caption{負荷電圧に応じて電流の大きさが変わる}
+\label{fig:ch04_inductor_load_voltage}
+\end{figure}
+
+\subsubsection{定常状態条件と出力電圧の導出}
+
+定常状態では、1周期における電圧の時間積分がゼロになります：
+
+\begin{equation}
+\int_0^{T} v_L(t)dt = 0
+\end{equation}
+
+つまり、領域Iと領域IIの面積が等しくなります：
+
+\begin{equation}
+DT(V_0 - V_1) = (T - DT)V_1
+\end{equation}
+
+展開すると：
+
+\begin{equation}
+DTV_0 - DTV_1 = TV_1 - DTV_1
+\end{equation}
+
+\begin{equation}
+DTV_0 = TV_1
+\end{equation}
+
+したがって、定常状態時の出力電圧$V_1$は：
+
+\begin{equation}
+\boxed{V_1 = DV_0}
+\end{equation}
+
+\textbf{重要な結論：}
+
+\textcolor{red}{デューティ比によって出力電圧が制御可能です。}定常状態の時、$V_1$はスイッチング電圧の平均電圧となります。
+
+これが、スイッチングとコイルを用いた降圧型DC-DCコンバータ（バックコンバータ）の基本原理です。
+
+\subsection{定常状態時の電流の振動の大きさ}
+
+定常状態において、コイル電流は平均値を中心に上下に振動します。この振動の大きさ（リプル）を計算してみましょう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-13.pdf}}
+\caption{定常状態時の電流の振動の大きさ（問題設定）}
+\label{fig:ch04_inductor_ripple_problem}
+\end{figure}
+
+理想的には直流電流を流したいところですが、実際にはスイッチングによる電流リプルが発生します。この振動を小さくするには、どうすれば良いでしょうか？
+
+\subsubsection{電流リプルの計算}
+
+コイル電圧が$v_L(t) = V_0 - DV_0 = V_0(1-D)$の期間（$0 \leq t \leq DT$）における電流の変化を考えます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-14.pdf}}
+\caption{電流リプルの計算}
+\label{fig:ch04_inductor_ripple_calc}
+\end{figure}
+
+電流の増加量は：
+
+\begin{equation}
+\Delta i_L = I_{\max} - I_{\min} = \frac{1}{L} \int_0^{DT} v_L(t)dt
+\end{equation}
+
+スイッチON期間では$v_L(t) = V_0 - DV_0$が一定なので：
+
+\begin{equation}
+I_{\max} - I_{\min} = \frac{1}{L} DT(V_0 - DV_0)
+\end{equation}
+
+簡略化すると：
+
+\begin{equation}
+\boxed{\Delta i_L = \frac{DT(1-D)V_0}{L}}
+\end{equation}
+
+\textbf{重要な考察：}
+
+\begin{itemize}
+\item 電流リプル$\Delta i_L$は、\textbf{インダクタンス$L$に反比例}します
+\item $L$を大きくすると、電流の変動が抑えられます
+\item 周期$T$（すなわちスイッチング周波数$f_{\text{sw}} = 1/T$）を小さくする（周波数を高くする）と、リプルが小さくなります
+\end{itemize}
+
+\subsection{負荷（抵抗）を繋げた時の振る舞い}
+
+実際の回路では、コイルの出力側に負荷抵抗$R$が接続されています。この場合の動作を考えてみましょう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-15.pdf}}
+\caption{負荷（抵抗）を繋げた時の振る舞い（問題設定）}
+\label{fig:ch04_inductor_resistor_problem}
+\end{figure}
+
+抵抗$R$を負荷として接続した場合、この抵抗にかかる電圧$v_R(t)$はどのようになるでしょうか？
+
+\subsubsection{逐次近似法による解析}
+
+この問題を厳密に解くためには、微分方程式を解く必要がありますが、ここでは\textbf{逐次近似法}（successive approximation method）を用いて近似解を求めます。
+
+\textbf{逐次近似法とは？}
+
+逐次近似法は、複雑な方程式を解く際に、初期推定値から始めて徐々に解を改善していく数値解法です。以下のような状況で有効です：
+
+\begin{itemize}
+\item 解析的に厳密解を求めるのが困難な場合
+\item 複数の変数が相互に依存している場合
+\item 微分方程式と代数方程式が連立している場合
+\end{itemize}
+
+\textbf{なぜこの方法が必要か？}
+
+本問題では、以下の2つの関係式が同時に成り立ちます：
+
+\begin{itemize}
+\item KVL（キルヒホッフの電圧則）：$v_{in}(t) = v_L(t) + v_R(t)$
+\item コイルの電圧-電流関係：$v_L(t) = L \frac{di_L(t)}{dt}$
+\item オームの法則：$v_R(t) = R \cdot i_L(t)$
+\end{itemize}
+
+これらを組み合わせると、以下の微分方程式が得られます：
+
+\begin{equation}
+v_{in}(t) = L \frac{di_L(t)}{dt} + R \cdot i_L(t)
+\end{equation}
+
+この1階線形微分方程式は、$v_{in}(t)$がステップ関数の場合は厳密解を求められますが、スイッチング波形（矩形波）の場合は各区間で解を求め、境界条件を一致させる必要があり、計算が煩雑になります。
+
+\textbf{逐次近似法の手順}
+
+逐次近似法では、以下のプロセスを繰り返します：
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-16.pdf}}
+\caption{逐次近似法による解析}
+\label{fig:ch04_inductor_resistor_iteration}
+\end{figure}
+
+\textbf{第0次近似（初期推定）：}
+
+初期状態として、抵抗電圧$v_R^{(0)}(t)$が定常状態の平均値で一定であると仮定します：
+
+\begin{equation}
+v_R^{(0)}(t) = DV_0 \quad \text{（一定）}
+\end{equation}
+
+この仮定は、コイルが十分に大きく、電流リプルが小さい場合に妥当です。
+
+\textbf{第1次近似：}
+
+第0次近似の抵抗電圧を使って、コイル電圧を計算します：
+
+\begin{equation}
+v_L^{(1)}(t) = v_{in}(t) - v_R^{(0)}(t) = v_{in}(t) - DV_0
+\end{equation}
+
+スイッチング波形を考慮すると：
+
+\begin{equation}
+v_L^{(1)}(t) = \begin{cases}
+V_0 - DV_0 = V_0(1-D) & (0 \leq t < DT) \\
+0 - DV_0 = -DV_0 & (DT \leq t < T)
+\end{cases}
+\end{equation}
+
+このコイル電圧から、コイル電流を積分により計算します：
+
+\begin{equation}
+i_L^{(1)}(t) = i_L(0) + \frac{1}{L} \int_0^t v_L^{(1)}(\tau) d\tau
+\end{equation}
+
+スイッチON期間（$0 \leq t < DT$）では：
+
+\begin{equation}
+i_L^{(1)}(t) = I_{\min} + \frac{V_0(1-D)}{L} t
+\end{equation}
+
+電流は直線的に増加します。時刻$t = DT$での電流は：
+
+\begin{equation}
+i_L^{(1)}(DT) = I_{\min} + \frac{V_0(1-D)DT}{L}
+\end{equation}
+
+スイッチOFF期間（$DT \leq t < T$）では：
+
+\begin{equation}
+i_L^{(1)}(t) = i_L^{(1)}(DT) - \frac{DV_0}{L}(t - DT)
+\end{equation}
+
+電流は直線的に減少します。
+
+次に、オームの法則を使って、新しい抵抗電圧を計算します：
+
+\begin{equation}
+v_R^{(1)}(t) = R \cdot i_L^{(1)}(t)
+\end{equation}
+
+この$v_R^{(1)}(t)$は、もはや一定ではなく、電流と同じく三角波状に変動します。
+
+\textbf{第2次近似以降：}
+
+第1次近似で得られた$v_R^{(1)}(t)$を使って、同じプロセスを繰り返します：
+
+\begin{enumerate}
+\item $v_L^{(2)}(t) = v_{in}(t) - v_R^{(1)}(t)$を計算
+\item $v_L^{(2)}(t)$から$i_L^{(2)}(t)$を積分により計算
+\item $v_R^{(2)}(t) = R \cdot i_L^{(2)}(t)$を計算
+\end{enumerate}
+
+この反復を繰り返すと、解は真の解に収束していきます：
+
+\begin{equation}
+v_R^{(0)}(t) \rightarrow v_R^{(1)}(t) \rightarrow v_R^{(2)}(t) \rightarrow \cdots \rightarrow v_R^{(\infty)}(t) = v_R(t)
+\end{equation}
+
+\textbf{収束の判定：}
+
+通常、以下のような収束条件を使います：
+
+\begin{equation}
+\max_t |v_R^{(n+1)}(t) - v_R^{(n)}(t)| < \epsilon
+\end{equation}
+
+ここで、$\epsilon$は許容誤差（例えば$10^{-6}$ V）です。
+
+\textbf{逐次近似法の利点と限界}
+
+\textit{利点：}
+\begin{itemize}
+\item 複雑な微分方程式を解かなくても、近似解が得られる
+\item プログラミングによる数値計算が容易
+\item 各反復で解の精度が向上していく様子が視覚的に理解できる
+\end{itemize}
+
+\textit{限界：}
+\begin{itemize}
+\item 収束が保証されない場合もある（適切な初期値が必要）
+\item 収束が遅い場合、多くの反復が必要
+\item 厳密解ではなく、あくまで近似解
+\end{itemize}
+
+\textbf{実際の回路での意味}
+
+この解析から分かることは、実際の回路では：
+
+\begin{itemize}
+\item 抵抗電圧$v_R(t)$は完全に一定ではなく、わずかに変動（リプル）を持つ
+\item 電流リプルが小さい場合（$L$が大きい場合）、第0次近似でも十分な精度が得られる
+\item リプルを考慮した厳密な解析には、逐次近似法や直接的な微分方程式の解法が必要
+\end{itemize}
+
+\textbf{数値例}
+
+$V_0 = 12$ V、$D = 0.5$、$L = 10$ mH、$R = 1~\Omega$、$T = 10~\mu$sの場合を考えます。
+
+第0次近似では：
+\begin{equation}
+v_R^{(0)} = DV_0 = 6~\text{V（一定）}
+\end{equation}
+
+第1次近似では、電流リプルにより抵抗電圧は約$\pm 3$mV程度変動します。これは平均値の約0.05\%であり、多くの実用的な目的では第0次近似で十分です。
+
+しかし、高精度な制御や、リプルが制御性能に影響を与える場合には、より高次の近似や厳密解が必要になります。
+
+\subsection{フィルタとしてのコイルの役割}
+
+ここまでの解析から、コイルの重要な役割が明らかになります。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-17.pdf}}
+\caption{フィルタとしてのコイルの役割}
+\label{fig:ch04_inductor_filter}
+\end{figure}
+
+\textbf{コイルによる電圧の変動抑制：}
+
+\begin{itemize}
+\item コイルによって、電圧の変動が小さくなる
+\item $L$を大きくすると電圧の変動が抑えられる
+\item これを\textbf{ローパスフィルタ}として用いる
+\end{itemize}
+
+\textbf{平均電圧の制御：}
+
+\begin{itemize}
+\item 平均電圧はデューティ比に比例する：$\bar{v}_R = DV_0$
+\item スイッチと$L$によって、電圧を降下することができる
+\end{itemize}
+
+\subsection{応用例：スイッチング信号から交流信号の生成}
+
+デューティ比を時間的に変化させることで、任意の波形を生成できます。これは、インバータ（DC-AC変換器）の基本原理です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-18.pdf}}
+\caption{応用例：スイッチング信号から交流信号の生成}
+\label{fig:ch04_ac_generation}
+\end{figure}
+
+\textbf{動作原理：}
+
+\begin{itemize}
+\item デューティ比$D(t)$を正弦波状に変化させる：$D(t) = 0.5 + 0.5\sin(\omega t)$
+\item スイッチング電圧の平均値が正弦波状に変化する
+\item ローパスフィルタ（LCフィルタ）で高周波成分を除去
+\item 結果として、滑らかな正弦波交流電圧が得られる
+\end{itemize}
+
+\textcolor{blue}{平均電圧を変えることで、任意の波形を生成できます。}これが、PWM（Pulse Width Modulation：パルス幅変調）インバータの基本原理です。
+
+\section{コイルに流出入するエネルギー}
+
+コイルは、磁気エネルギーとしてエネルギーを蓄積する能力を持ちます。この性質が、スイッチングによる電力変換において重要な役割を果たします。
+
+\subsection{磁気エネルギーの式}
+
+コイルに蓄積される磁気エネルギー$U_m$は、以下の式で表されます：
+
+\begin{equation}
+\boxed{U_m = \frac{1}{2}\Phi i_L = \frac{1}{2}Li_L^2}
+\end{equation}
+
+ここで、$\Phi$は磁束[Wb]、$i_L$はコイル電流[A]、$L$はインダクタンス[H]です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-19.pdf}}
+\caption{コイルに流出入するエネルギー}
+\label{fig:ch04_inductor_energy}
+\end{figure}
+
+\subsection{エネルギーの蓄積と放出}
+
+スイッチング動作において、コイルのエネルギーは時間とともに変化します。
+
+\textbf{領域I：コイルに磁気エネルギーが蓄積}
+
+スイッチON期間では、コイル電流が増加し、磁気エネルギーが蓄積されます。
+
+\textbf{領域II：コイルから磁気エネルギーが放出}
+
+スイッチOFF期間では、コイル電流が減少し、蓄積されていた磁気エネルギーが負荷に供給されます。
+
+\textbf{重要なポイント：}
+
+\textcolor{blue}{コイルは、エネルギーを一時的に蓄積し、後で放出する「エネルギーバッファ」として機能します。}これにより、スイッチがOFFの期間でも負荷に電力を供給し続けることができます。
+
+\section{スイッチング時のコンデンサの振る舞い}
+
+\subsection{コンデンサの基本特性}
+
+コンデンサ（キャパシタ）は、電圧の変化を妨げる性質を持つ受動素子です。その電流-電圧関係は、以下の微分方程式で表されます：
+
+\begin{equation}
+i_C(t) = C \frac{dv_C(t)}{dt}
+\end{equation}
+
+ここで、$i_C(t)$はコンデンサに流れる電流[A]、$v_C(t)$はコンデンサにかかる電圧[V]、$C$はキャパシタンス[F]です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-20.pdf}}
+\caption{スイッチング時のコンデンサの振る舞い}
+\label{fig:ch04_capacitor_switching}
+\end{figure}
+
+\textbf{重要なポイント：}
+
+コンデンサはコイルの電流と電圧の関係を入れ替えただけです。コイルが電流源として振る舞うのに対し、\textcolor{blue}{コンデンサは電圧源として振る舞います。}
+
+\subsection{スイッチング時のコンデンサ電圧の時間変化}
+
+コンデンサにスイッチング電流$i_C(t)$を印加した場合、コンデンサ電圧$v_C(t)$の時間変化を求めてみましょう。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-21.pdf}}
+\caption{スイッチング時のコンデンサ電圧の計算}
+\label{fig:ch04_capacitor_voltage}
+\end{figure}
+
+\subsubsection{電圧の積分計算}
+
+コンデンサの電流-電圧関係式：
+
+\begin{equation}
+i_C(t) = C \frac{dv_C(t)}{dt}
+\end{equation}
+
+両辺を時刻$t_s \leq t \leq t_e$の範囲で積分すると：
+
+\begin{equation}
+\int_{t_s}^{t_e} i_C(t)dt = C \int_{t_s}^{t_e} \frac{dv_C(t)}{dt} dt
+\end{equation}
+
+右辺を計算すると：
+
+\begin{equation}
+\int_{t_s}^{t_e} i_C(t)dt = C \left[ v_C(t) \right]_{t_s}^{t_e} = C(v_C(t_e) - v_C(t_s))
+\end{equation}
+
+したがって、電圧の変化は：
+
+\begin{equation}
+v_C(t_e) - v_C(t_s) = \frac{1}{C} \int_{t_s}^{t_e} i_C(t)dt
+\end{equation}
+
+初期条件として$t_s = 0$ [s]のとき$v_C = 0.0$ [V]とすると：
+
+\begin{equation}
+v_C(t_e) = \frac{1}{C} \int_0^{t_e} i_C(t)dt
+\end{equation}
+
+\textbf{重要な結論：}
+
+\textcolor{blue}{コンデンサにかかる電圧の時間変化は、コンデンサに流れる電流の時間積分に比例します。}これは、コイルの場合と双対的な関係にあります。
+
+\subsection{コンデンサに正の電流を流し続けると}
+
+スイッチング電流$i_C(t)$が正の値（例えば$I_0$）の期間、コンデンサ電圧は一定の傾きで増加し続けます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-23.pdf}}
+\caption{コンデンサに正の電流を流すと電圧が際限なく増加する}
+\label{fig:ch04_capacitor_increasing}
+\end{figure}
+
+電流が$I_0$で一定の期間、電圧の増加率は：
+
+\begin{equation}
+\frac{dv_C}{dt} = \frac{I_0}{C} = \text{一定}
+\end{equation}
+
+したがって、コンデンサ電圧は：
+
+\begin{equation}
+v_C(t) = \frac{I_0}{C} t
+\end{equation}
+
+と、時間に比例して増加し続けます。
+
+\textbf{問題点：}
+
+このままでは電圧が際限なく増加してしまいます。\textcolor{red}{どうすれば定常状態になるのでしょうか？増加も減少もしなくなるのでしょうか？}
+
+\textbf{解決策：}
+
+コイルの場合と同様に、\textcolor{blue}{負の電流を流すと電圧が減少します。}定常状態では、IとIIの領域の面積（電流×時間の積分値）が等しくなる必要があります。
+
+\subsection{定常状態時のコンデンサにかかる電圧}
+
+定常状態では、1スイッチング周期$T$における電圧の変化がゼロになります。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-24.pdf}}
+\caption{定常状態時のコンデンサにかかる電圧}
+\label{fig:ch04_capacitor_steady}
+\end{figure}
+
+\textbf{定常状態の条件：}
+
+\begin{equation}
+\int_0^{DT} i_C(t)dt + \int_{DT}^{T} i_C(t)dt = 0
+\end{equation}
+
+つまり、領域Iと領域IIの面積が等しくなります。
+
+\subsection{電流源や負荷が接続された場合のコンデンサ電流}
+
+実際の回路では、コンデンサに電流源や負荷が接続されています。この場合、キルヒホッフの電流則（KCL）を用いて、コンデンサに流れる電流を求めます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-25.pdf}}
+\caption{定常状態時の出力電圧とスイッチング電圧の関係（コンデンサと電流源）}
+\label{fig:ch04_capacitor_load}
+\end{figure}
+
+\subsubsection{回路解析}
+
+電流源$i_{in}(t)$、コンデンサ$C$、負荷電流$I_1$が接続された回路を考えます。
+
+\textbf{KCL（キルヒホッフの電流則）：}
+
+\begin{equation}
+-I_{in} + i_C + I_1 = 0
+\end{equation}
+
+したがって、コンデンサに流れる電流は：
+
+\begin{equation}
+i_C = I_{in} - I_1
+\end{equation}
+
+\textbf{負荷電流に応じて電圧の大きさが変わります。}
+
+\subsection{フィルタとしてのコンデンサの役割}
+
+コンデンサもコイルと同様に、フィルタとして重要な役割を果たします。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-30.pdf}}
+\caption{フィルタとしてのコンデンサの役割}
+\label{fig:ch04_capacitor_filter}
+\end{figure}
+
+\textbf{コンデンサによる電流の変動抑制：}
+
+\begin{itemize}
+\item コンデンサによって、電流の変動が小さくなる
+\item $C$を大きくすると電流の変動が抑えられる
+\item これを\textbf{ローパスフィルタ}として用いる
+\end{itemize}
+
+\textbf{平均電流の制御：}
+
+\begin{itemize}
+\item 平均電流はデューティ比に比例する
+\item スイッチと$C$によって、電流を降下することができる
+\end{itemize}
+
+\section{RLC直列回路のエネルギー}
+
+コイルとコンデンサを組み合わせた回路では、エネルギーの交換による\textbf{共振現象}が発生します。
+
+\subsection{RLC直列回路のインピーダンス}
+
+RLC直列回路のインピーダンス$Z$は、以下のように表されます：
+
+\begin{equation}
+Z = j\left(\omega L - \frac{1}{\omega C}\right) + R
+\end{equation}
+
+ここで、$j$は虚数単位、$\omega = 2\pi f$は角周波数[rad/s]です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-35.pdf}}
+\caption{RLC直列回路のエネルギー}
+\label{fig:ch04_rlc_energy}
+\end{figure}
+
+\subsection{共振周波数}
+
+インピーダンスの虚部がゼロになる周波数を\textbf{共振周波数}$f_0$と呼びます：
+
+\begin{equation}
+\omega_0 L - \frac{1}{\omega_0 C} = 0
+\end{equation}
+
+したがって：
+
+\begin{equation}
+\omega_0 = \frac{1}{\sqrt{LC}}
+\end{equation}
+
+\begin{equation}
+\boxed{f_0 = \frac{1}{2\pi\sqrt{LC}}}
+\end{equation}
+
+共振周波数では、インピーダンスが最小（$Z = R$）となり、回路に最大の電流が流れます。
+
+\subsection{エネルギーの交換}
+
+RLC回路では、コイルの磁気エネルギー$\frac{1}{2}Li_L^2$とコンデンサの静電エネルギー$\frac{1}{2}Cv_C^2$が周期的に交換されます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-40.pdf}}
+\caption{コンデンサ主体のRLC直列回路のエネルギー}
+\label{fig:ch04_rlc_capacitor_dominant}
+\end{figure}
+
+\textbf{エネルギー交換のプロセス：}
+
+\begin{enumerate}
+\item \textbf{コイルのエネルギー蓄積}：電流が増加し、磁気エネルギーが蓄積
+\item \textbf{Lのエネルギー放出}：蓄積された磁気エネルギーがコンデンサに転送
+\item \textbf{コンデンサのエネルギー蓄積}：電圧が上昇し、静電エネルギーが蓄積
+\item \textbf{Cのエネルギー放出}：蓄積された静電エネルギーがコイルに転送
+\end{enumerate}
+
+このエネルギー交換が周期的に繰り返されることで、共振現象が発生します。抵抗$R$が小さい場合、エネルギー損失が少なく、振動が持続します。
+
+\subsection{フィルタと共振器の違い}
+
+同じLCR回路でも、周波数領域によって動作が異なります。
+
+\textbf{低周波数領域（フィルタ動作）：}
+
+\begin{itemize}
+\item スイッチング周波数$f_{\text{sw}} \ll f_0$の場合
+\item LとCが独立に動作し、それぞれ電流と電圧の平滑化を担当
+\item エネルギー交換はほとんど起こらない
+\end{itemize}
+
+\textbf{共振周波数付近（共振器動作）：}
+
+\begin{itemize}
+\item 動作周波数$f \approx f_0$の場合
+\item LとCの間でエネルギーが激しく交換される
+\item 大きな電圧・電流振動が発生
+\end{itemize}
+
+\section{コンデンサに電圧源を繋げてはいけない理由}
+
+最後に、コンデンサ回路における重要な注意点を説明します。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-45.pdf}}
+\caption{コンデンサに電圧源を繋げてはいけない理由}
+\label{fig:ch04_capacitor_voltage_source}
+\end{figure}
+
+\subsection{コンデンサに電圧源を繋ぐとどうなる？}
+
+理想的な電圧源を直接コンデンサに接続すると、以下のような問題が発生します。
+
+\textbf{電流の発散：}
+
+コンデンサの電流は：
+
+\begin{equation}
+i_C(t) = C \frac{dv_C(t)}{dt}
+\end{equation}
+
+スイッチをONにした瞬間、コンデンサ電圧は瞬時に$V_0$に変化しようとします。このとき、電圧の変化率$\frac{dv_C(t)}{dt}$が無限大となり、電流$i_C(t)$も無限大になります：
+
+\begin{equation}
+i_C(t) = C \frac{V_0}{0} \rightarrow \infty
+\end{equation}
+
+\textbf{実際の回路での影響：}
+
+\begin{itemize}
+\item 実際には、配線の抵抗やインダクタンスにより、電流は有限値に制限されます
+\item しかし、非常に大きな突入電流（インラッシュカレント）が流れ、部品が破壊される可能性があります
+\item スイッチング素子や電源に大きなストレスがかかります
+\end{itemize}
+
+\subsection{正しい接続方法}
+
+コンデンサを電圧源に接続する場合は、必ず抵抗やインダクタを直列に接続し、電流を制限する必要があります。
+
+\textbf{推奨される回路構成：}
+
+\begin{itemize}
+\item \textbf{突入電流制限抵抗}：コンデンサの充電電流を制限
+\item \textbf{インダクタ}：電流の急激な変化を防ぐ
+\item \textbf{ソフトスタート回路}：徐々に電圧を印加
+\end{itemize}
+
+\section{まとめ}
+
+本章では、パワーエレクトロニクス回路におけるコイルとコンデンサの動作原理を学習しました。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter04/images/page-47.pdf}}
+\caption{まとめ}
+\label{fig:ch04_summary}
+\end{figure}
+
+\textbf{主な学習内容：}
+
+\begin{itemize}
+\item スイッチング時のコイルとコンデンサの特性について説明した（平滑化と共振）
+\item コイルとコンデンサに蓄えられるエネルギーの観点から平滑化と共振器の原理について説明した
+\end{itemize}
+
+\subsection{コイルの役割}
+
+\begin{enumerate}
+\item \textbf{電流源として動作}：$v_L(t) = L \frac{di_L(t)}{dt}$
+\item \textbf{電流の平滑化}：電流の急激な変化を抑制
+\item \textbf{磁気エネルギーの蓄積}：$U_m = \frac{1}{2}Li_L^2$
+\item \textbf{定常状態条件}：$\int_0^T v_L(t)dt = 0$
+\end{enumerate}
+
+\subsection{コンデンサの役割}
+
+\begin{enumerate}
+\item \textbf{電圧源として動作}：$i_C(t) = C \frac{dv_C(t)}{dt}$
+\item \textbf{電圧の平滑化}：電圧の急激な変化を抑制
+\item \textbf{静電エネルギーの蓄積}：$U_e = \frac{1}{2}Cv_C^2$
+\item \textbf{定常状態条件}：$\int_0^T i_C(t)dt = 0$
+\end{enumerate}
+
+\subsection{LCフィルタの設計指針}
+
+パワーエレクトロニクス回路におけるLCフィルタの設計では、以下の点を考慮します：
+
+\begin{itemize}
+\item \textbf{リプルの低減}：$L$と$C$を大きくすると、電流・電圧リプルが小さくなる
+\item \textbf{共振周波数}：$f_0 = \frac{1}{2\pi\sqrt{LC}}$がスイッチング周波数より十分低くなるように設計
+\item \textbf{サイズとコスト}：$L$と$C$が大きすぎると、部品サイズとコストが増大
+\item \textbf{過渡応答}：$L$と$C$が大きすぎると、応答速度が遅くなる
+\end{itemize}
+
+\subsection{次回の予告}
+
+次回は、これらの知識を基に、実際のDC-DCコンバータ（降圧型・昇圧型）の動作原理と設計方法について学習します。
+

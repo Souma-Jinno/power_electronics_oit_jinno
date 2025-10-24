@@ -18,6 +18,10 @@
 
 # リモートに保存しないフォルダ
 revise_no_share/
+slides/
+
+# lecture_notesフォルダ内のスライドPDFも除外
+lecture_notes/*.key.pdf
 
 # macOS
 .DS_Store
