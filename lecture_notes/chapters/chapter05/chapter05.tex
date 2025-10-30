@@ -1,0 +1,757 @@
+\chapter{直流-直流変換（１）}
+
+\section{はじめに}
+
+本章では、パワーエレクトロニクスの基本的な応用である\textbf{DC-DC変換}（直流-直流変換）について学習します。DC-DC変換は、直流電圧を異なる直流電圧に変換する技術であり、電源回路、モータ駆動回路、バッテリー充電回路など、幅広い分野で利用されています。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-02.pdf}}
+\caption{本日の目標}
+\label{fig:ch05_objectives}
+\end{figure}
+
+\textbf{本章の学習目標：}
+
+\begin{itemize}
+\item 降圧チョッパー回路の構成と原理を理解する
+\item 昇圧チョッパー回路の構成と原理を理解する
+\item 昇降圧チョッパー回路の構成と原理を理解する
+\item 定常状態のスイッチのオンオフ時における各素子の電圧や電流波形を理解する
+\end{itemize}
+
+\section{DC-DC変換とは}
+
+\subsection{DC-DC変換の基本概念}
+
+DC-DC変換とは、ある直流電圧を別の直流電圧に変換することです。変換の方法には、大きく分けて以下の3種類があります。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-03.pdf}}
+\caption{直流-直流（DC-DC）変換とは}
+\label{fig:ch05_dcdc_overview}
+\end{figure}
+
+\textbf{DC-DC変換の種類：}
+
+\begin{enumerate}
+\item \textbf{非絶縁型チョッパ回路}（昇圧・降圧・昇降圧）- 第5回（本章）
+\item \textbf{絶縁型チョッパ回路}（昇圧・降圧）- 第6回
+\item \textbf{リニアレギュレータ}（降圧）- 第7回
+\end{enumerate}
+
+本章では、最も基本的な非絶縁型チョッパ回路について学習します。チョッパ回路は、スイッチング素子を用いて電圧を高速にオン・オフすることで、平均電圧を制御する回路です。
+
+\subsection{チョッパ回路の利点}
+
+チョッパ回路には、以下のような利点があります：
+
+\begin{itemize}
+\item \textbf{高効率}：スイッチング素子が理想的にはオンまたはオフのいずれかの状態にあるため、損失が少ない
+\item \textbf{小型・軽量}：高周波スイッチングにより、リアクタンス素子（コイル、コンデンサ）を小型化できる
+\item \textbf{柔軟な電圧制御}：デューティ比を変化させることで、出力電圧を広範囲に制御できる
+\end{itemize}
+
+\section{定常状態におけるコイルの振る舞い（復習）}
+
+DC-DC変換回路を理解するためには、第4章で学習したコイルの定常状態における振る舞いを理解することが重要です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-04.pdf}}
+\caption{定常状態におけるコイルの振る舞い（前回の復習）}
+\label{fig:ch05_inductor_review}
+\end{figure}
+
+\textbf{コイルの基本特性：}
+
+コイルに印加される電圧$v_L(t)$と電流$i_L(t)$の関係は：
+
+\begin{equation}
+v_L(t) = L \frac{di_L(t)}{dt}
+\end{equation}
+
+これより、電流の変化は：
+
+\begin{equation}
+\frac{di_L(t)}{dt} = \frac{v_L(t)}{L}
+\end{equation}
+
+したがって、電流の変化は電圧に比例します。
+
+\textbf{定常状態の条件：}
+
+\begin{itemize}
+\item スイッチングに応じてプラスとマイナスに変動する
+\item \textcolor{red}{1周期の積分の値は0になる}（電圧-秒バランス）
+\end{itemize}
+
+電流については：
+
+\begin{itemize}
+\item スイッチングに応じて増減しているが
+\item \textcolor{red}{1周期あたりの増減量は等しい}
+\end{itemize}
+
+\subsection{定常状態の数学的表現}
+
+定常状態では、1周期$T$におけるコイル電圧の積分がゼロになります：
+
+\begin{equation}
+\int_0^T v_L(t)dt = 0
+\end{equation}
+
+これは、コイルに蓄えられる磁気エネルギーが周期的に増減し、1周期後には元の状態に戻ることを意味します。
+
+この条件を用いることで、DC-DC変換回路の出力電圧を求めることができます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-05.pdf}}
+\caption{定常状態について}
+\label{fig:ch05_steady_state}
+\end{figure}
+
+図に示すように、実際の回路シミュレーションでも、定常状態に達すると同じ波形が繰り返されることが確認できます。
+
+\section{降圧チョッパー回路（Buck Converter）}
+
+\subsection{降圧チョッパー回路とは}
+
+降圧チョッパー回路（Buck Converter）は、入力電圧$V_{\text{in}}$より低い出力電圧$V_{\text{out}}$を得るための回路です。「降圧」という名前の通り、電圧を下げる（降ろす）ことができます。
+
+\textbf{回路の特徴：}
+
+\begin{itemize}
+\item 入力電圧 $V_{\text{in}} > $ 出力電圧 $V_{\text{out}}$
+\item スイッチング素子（MOSFET）とダイオードを用いる
+\item コイル（L）とコンデンサ（C）でフィルタを構成
+\item デューティ比$D$により出力電圧を制御：$V_{\text{out}} = D \cdot V_{\text{in}}$
+\end{itemize}
+
+\subsection{降圧チョッパー回路の基本構成}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-06.pdf}}
+\caption{降圧チョッパー回路}
+\label{fig:ch05_buck_converter}
+\end{figure}
+
+降圧チョッパー回路は、以下の素子で構成されます：
+
+\begin{itemize}
+\item \textbf{制御スイッチ}（SW）：MOSFETなどのスイッチング素子
+\item \textbf{ダイオード}（D）：フリーホイーリングダイオード（還流ダイオード）
+\item \textbf{コイル}（L）：電流を平滑化するインダクタ
+\item \textbf{負荷抵抗}（R）：出力負荷
+\end{itemize}
+
+後の章で学習するコンデンサ（C）を出力に並列接続することで、出力電圧の平滑化も行います。
+
+\subsection{降圧チョッパー回路の動作原理}
+
+降圧チョッパー回路は、スイッチのオン・オフにより動作が切り替わります。以下、それぞれの状態について説明します。
+
+\subsubsection{等価回路を作る}
+
+DC-DC変換回路の動作を理解するためには、スイッチのオン時とオフ時の等価回路を作成することが重要です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-10.pdf}}
+\caption{スイッチのオンオフ時にコイルにかかる電圧}
+\label{fig:ch05_switch_voltage}
+\end{figure}
+
+\textbf{【オン時（$0 \le t < DT$）】}
+
+スイッチがオンの期間、電流は以下の経路を流れます：
+
+\begin{center}
+入力電源 $\rightarrow$ スイッチ $\rightarrow$ コイル $\rightarrow$ 負荷 $\rightarrow$ GND
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-07.pdf}}
+\caption{降圧チョッパー回路：スイッチON時の等価回路}
+\label{fig:ch05_buck_on}
+\end{figure}
+
+この時、キルヒホッフの電圧則（KVL）より：
+
+\begin{equation}
+V_{\text{in}} = v_L + v_R
+\end{equation}
+
+コイルにかかる電圧は：
+
+\begin{equation}
+v_L = V_{\text{in}} - v_R
+\end{equation}
+
+$v_R \ll V_{\text{in}}$の場合、近似的に：
+
+\begin{equation}
+v_L \approx V_{\text{in}} \quad (\text{正の電圧})
+\end{equation}
+
+したがって、オン時にはコイルにエネルギーが蓄積され、電流$i_L$が増加します。
+
+\textbf{【オフ時（$DT \le t < T$）】}
+
+スイッチがオフの期間、コイルに蓄えられた磁気エネルギーにより、電流は以下の経路を流れます：
+
+\begin{center}
+GND $\rightarrow$ ダイオード $\rightarrow$ コイル $\rightarrow$ 負荷 $\rightarrow$ GND
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-08.pdf}}
+\caption{降圧チョッパー回路：スイッチOFF時の等価回路}
+\label{fig:ch05_buck_off}
+\end{figure}
+
+この時、キルヒホッフの電圧則（KVL）より：
+
+\begin{equation}
+0 = v_D + v_L + v_R
+\end{equation}
+
+ダイオードの順方向電圧降下を無視すると（$v_D \approx 0$）：
+
+\begin{equation}
+v_L = -v_R
+\end{equation}
+
+したがって、オフ時にはコイルに負の電圧が印加され、電流$i_L$が減少します。
+
+\subsection{定常状態における波形}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-09.pdf}}
+\caption{降圧チョッパー回路：過渡状態}
+\label{fig:ch05_buck_transient}
+\end{figure}
+
+回路をスタートさせると、最初は過渡状態を経て、やがて定常状態に達します。図は回路シミュレーション結果を示しています。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-15.pdf}}
+\caption{スイッチのオンオフ時の各素子の過渡応答}
+\label{fig:ch05_buck_element_transient}
+\end{figure}
+
+過渡状態では、コイル電圧$v_L$、コイル電流$i_L$、負荷電圧$v_R$がそれぞれ変化していきます。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-20.pdf}}
+\caption{定常状態における降圧チョッパー回路の各波形}
+\label{fig:ch05_buck_steady_waveforms}
+\end{figure}
+
+定常状態では、以下のような波形となります：
+
+\begin{itemize}
+\item \textbf{スイッチ電圧$v_{\text{sw}}$}：オン時は0V、オフ時は$V_{\text{in}}$
+\item \textbf{コイル電圧$v_L$}：オン時は正、オフ時は負で、1周期の積分は0
+\item \textbf{コイル電流$i_L$}：オン時は増加、オフ時は減少（三角波）
+\item \textbf{負荷電圧$v_R$}：コイル電流に比例して変動（リプルを含む）
+\end{itemize}
+
+\textbf{重要な観察：}
+
+図中の注釈にあるように、以下の点を理解することが重要です：
+
+\begin{itemize}
+\item \textcolor{red}{電流の振動（リプル）の振幅は？}
+\item \textcolor{red}{平均電圧は？}
+\end{itemize}
+
+これらを求めるために、次節で定常状態の条件を用いて出力電圧を導出します。
+
+\subsection{出力電圧とデューティ比の関係}
+
+定常状態における出力電圧を求めるために、\textcolor{blue}{コイル電圧の電圧-秒バランス}を利用します。
+
+定常状態では、1周期$T$におけるコイル電圧の積分がゼロになります：
+
+\begin{equation}
+\int_0^T v_L(t)dt = 0
+\end{equation}
+
+これを、オン期間（$0 \sim DT$）とオフ期間（$DT \sim T$）に分けて計算すると：
+
+\begin{equation}
+\int_0^{DT} v_L(t)dt + \int_{DT}^{T} v_L(t)dt = 0
+\end{equation}
+
+オン時の電圧を$v_L^{\text{ON}}$、オフ時の電圧を$v_L^{\text{OFF}}$とすると：
+
+\begin{equation}
+v_L^{\text{ON}} \cdot DT + v_L^{\text{OFF}} \cdot (1-D)T = 0
+\end{equation}
+
+前述の等価回路解析（式(10)および式(13)）より、$v_R = V_{\text{out}}$として：
+\begin{align}
+v_L^{\text{ON}} &\approx V_{\text{in}} \\
+v_L^{\text{OFF}} &= -v_R = -V_{\text{out}}
+\end{align}
+
+これらを代入すると：
+
+\begin{equation}
+V_{\text{in}} \cdot DT - V_{\text{out}} \cdot (1-D)T = 0
+\end{equation}
+
+整理すると：
+
+\begin{equation}
+V_{\text{in}} \cdot D = V_{\text{out}} \cdot (1-D)
+\end{equation}
+
+したがって、出力電圧は：
+
+\begin{equation}
+\boxed{V_{\text{out}} = D \cdot V_{\text{in}}}
+\end{equation}
+
+ここで、$D$はデューティ比（$0 < D < 1$）です。
+
+\textbf{結論：}
+
+降圧チョッパー回路では、出力電圧は入力電圧にデューティ比を掛けた値となります。つまり、デューティ比を調整することで、$0$から$V_{\text{in}}$の範囲で出力電圧を制御できます。
+
+\subsection{電流リプルの計算}
+
+コイル電流の変動幅（リプル$\Delta i_L$）を求めます。
+
+オン期間において、コイル電圧は：
+
+\begin{equation}
+v_L = L \frac{di_L}{dt} \approx V_{\text{in}} - V_{\text{out}}
+\end{equation}
+
+したがって、電流の増加率は：
+
+\begin{equation}
+\frac{di_L}{dt} = \frac{V_{\text{in}} - V_{\text{out}}}{L}
+\end{equation}
+
+オン期間$DT$における電流の増加量は：
+
+\begin{equation}
+\Delta i_L^{\text{up}} = \frac{V_{\text{in}} - V_{\text{out}}}{L} \cdot DT
+\end{equation}
+
+$V_{\text{out}} = D \cdot V_{\text{in}}$を代入すると：
+
+\begin{equation}
+\Delta i_L^{\text{up}} = \frac{V_{\text{in}}(1-D)}{L} \cdot DT = \frac{V_{\text{in}}D(1-D)T}{L}
+\end{equation}
+
+電流リプル（ピーク・ピーク値）は、この増加量の2倍です：
+
+\begin{equation}
+\boxed{\Delta i_L = \frac{V_{\text{in}}D(1-D)T}{L}}
+\end{equation}
+
+\textbf{リプルを小さくする方法：}
+
+\begin{itemize}
+\item インダクタンス$L$を大きくする
+\item スイッチング周期$T$を小さくする（周波数を高くする）
+\end{itemize}
+
+\textbf{注意：} 数式上、$D(1-D)$は$D=0.5$で最大となるため、$D$を0.5から離すとリプルは減少します。しかし、デューティ比$D$は出力電圧$V_{\text{out}} = D \cdot V_{\text{in}}$を決定する重要なパラメータであるため、リプル低減のために$D$を変更することは適切ではありません。リプル低減には、$L$や$T$（スイッチング周波数）を調整すべきです。
+
+\section{昇圧チョッパー回路（Boost Converter）}
+
+\subsection{昇圧チョッパー回路とは}
+
+昇圧チョッパー回路（Boost Converter）は、入力電圧$V_{\text{in}}$より高い出力電圧$V_{\text{out}}$を得るための回路です。
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-25.pdf}}
+\caption{昇圧チョッパー回路}
+\label{fig:ch05_boost_converter}
+\end{figure}
+
+\textbf{昇圧の原理：}
+
+昇圧チョッパー回路は、以下の2つのステップでエネルギーを移送することで電圧を上げます：
+
+\begin{enumerate}
+\item \textbf{電源からコイルにエネルギーを蓄積}：スイッチON時
+\item \textbf{コイルからコンデンサにエネルギーを蓄積}：スイッチOFF時
+\end{enumerate}
+
+コイルに蓄えられた磁気エネルギーを利用して、入力電圧より高い電圧を出力に供給します。
+
+\subsection{昇圧チョッパー回路の基本構成}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-26.pdf}}
+\caption{昇圧チョッパー回路の回路構成}
+\label{fig:ch05_boost_circuit}
+\end{figure}
+
+昇圧チョッパー回路は、以下の素子で構成されます：
+
+\begin{itemize}
+\item \textbf{コイル}（L）：入力側に配置
+\item \textbf{制御スイッチ}（SW）：コイルとGND間に配置
+\item \textbf{ダイオード}（D）：コイルと出力の間に配置
+\item \textbf{コンデンサ}（C）：出力電圧を平滑化
+\item \textbf{負荷抵抗}（R）：出力負荷
+\end{itemize}
+
+降圧チョッパーと比較すると、コイルの位置とスイッチ・ダイオードの配置が異なります。
+
+\subsection{昇圧チョッパー回路の動作原理}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-30.pdf}}
+\caption{スイッチのオンオフ時にコイルにかかる電圧}
+\label{fig:ch05_boost_voltage}
+\end{figure}
+
+\textbf{【オン時（$0 \le t < DT$）】}
+
+スイッチがオンの期間、電流は以下の経路を流れます：
+
+\begin{center}
+入力電源 $\rightarrow$ コイル $\rightarrow$ スイッチ $\rightarrow$ GND
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-27.pdf}}
+\caption{昇圧チョッパー回路：スイッチON時の等価回路}
+\label{fig:ch05_boost_on}
+\end{figure}
+
+この時、キルヒホッフの電圧則（KVL）より：
+
+\begin{equation}
+V_0 - v_L = 0
+\end{equation}
+
+したがって、コイルにかかる電圧は：
+
+\begin{equation}
+v_L = V_0 \quad (\text{正の電圧})
+\end{equation}
+
+オン時には、入力電源からコイルにエネルギーが蓄積され、コイル電流が増加します。この時、ダイオードは逆バイアスとなり、出力側には電流が流れません。
+
+\textbf{【オフ時（$DT \le t < T$）】}
+
+スイッチがオフの期間、コイルに蓄えられた磁気エネルギーにより、電流は以下の経路を流れます：
+
+\begin{center}
+入力電源 $\rightarrow$ コイル $\rightarrow$ ダイオード $\rightarrow$ コンデンサ・負荷 $\rightarrow$ GND
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-28.pdf}}
+\caption{昇圧チョッパー回路：スイッチOFF時の等価回路}
+\label{fig:ch05_boost_off}
+\end{figure}
+
+この時、キルヒホッフの電圧則（KVL）より：
+
+\begin{equation}
+V_0 - v_L - v_C = 0
+\end{equation}
+
+したがって、コイルにかかる電圧は：
+
+\begin{equation}
+v_L = V_0 - v_C \quad (\text{負の電圧})
+\end{equation}
+
+ここで、$v_C$は出力電圧$V_{\text{out}}$に相当します。
+
+オフ時には、コイルに蓄えられたエネルギーが出力側に放出され、コイル電流が減少します。
+
+\subsection{出力電圧とデューティ比の関係}
+
+定常状態における出力電圧を求めるために、降圧チョッパーと同様に電圧-秒バランスを利用します。
+
+定常状態では：
+
+\begin{equation}
+\int_0^T v_L(t)dt = 0
+\end{equation}
+
+オン期間とオフ期間に分けて：
+
+\begin{equation}
+v_L^{\text{ON}} \cdot DT + v_L^{\text{OFF}} \cdot (1-D)T = 0
+\end{equation}
+
+前述の等価回路解析（式(26)および式(28)）より、$v_C = V_{\text{out}}$として：
+\begin{align}
+v_L^{\text{ON}} &= V_0 \\
+v_L^{\text{OFF}} &= V_0 - V_{\text{out}}
+\end{align}
+
+これらを代入すると：
+
+\begin{equation}
+V_0 \cdot DT + (V_0 - V_{\text{out}}) \cdot (1-D)T = 0
+\end{equation}
+
+展開すると：
+
+\begin{equation}
+V_0 \cdot DT + V_0 \cdot (1-D)T - V_{\text{out}} \cdot (1-D)T = 0
+\end{equation}
+
+\begin{equation}
+V_0 \cdot T = V_{\text{out}} \cdot (1-D)T
+\end{equation}
+
+したがって、出力電圧は：
+
+\begin{equation}
+\boxed{V_{\text{out}} = \frac{V_0}{1-D}}
+\end{equation}
+
+\textbf{結論：}
+
+昇圧チョッパー回路では、出力電圧は入力電圧を$(1-D)$で割った値となります。$D$が1に近づくほど、出力電圧は高くなります。
+
+例えば、$D = 0.5$の場合、$V_{\text{out}} = 2V_0$となり、入力電圧の2倍の出力が得られます。
+
+\subsection{定常状態における波形}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-31.pdf}}
+\caption{昇圧チョッパー回路：定常状態の波形}
+\label{fig:ch05_boost_waveforms}
+\end{figure}
+
+定常状態では、以下のような波形となります：
+
+\begin{itemize}
+\item \textbf{コイル電圧$v_L$}：オン時は$V_0$、オフ時は$V_0 - V_{\text{out}}$（負）
+\item \textbf{コイル電流$i_L$}：オン時は増加、オフ時は減少（三角波）
+\item \textbf{出力電圧$v_C$}：ほぼ一定（コンデンサによる平滑化）
+\end{itemize}
+
+\section{昇降圧チョッパー回路（Buck-Boost Converter）}
+
+\subsection{昇降圧チョッパー回路とは}
+
+昇降圧チョッパー回路（Buck-Boost Converter）は、入力電圧$V_{\text{in}}$より高い電圧も低い電圧も出力できる回路です。つまり、昇圧と降圧の両方の機能を持ちます。
+
+\textbf{回路の特徴：}
+
+\begin{itemize}
+\item 入力電圧に対して、出力電圧を昇圧または降圧できる
+\item 出力電圧の極性が反転する（負の電圧が出力される）
+\item デューティ比$D$により出力電圧を制御
+\end{itemize}
+
+\subsection{昇降圧チョッパー回路の基本構成}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-35.pdf}}
+\caption{昇降圧チョッパー回路の基本構成}
+\label{fig:ch05_buckboost_circuit}
+\end{figure}
+
+昇降圧チョッパー回路は、以下の素子で構成されます：
+
+\begin{itemize}
+\item \textbf{制御スイッチ}（SW）：入力電源とコイルの間に配置
+\item \textbf{コイル}（L）：エネルギー蓄積素子
+\item \textbf{ダイオード}（D）：コイルとGND間に配置
+\item \textbf{コンデンサ}（C）：出力電圧を平滑化
+\item \textbf{負荷抵抗}（R）：出力負荷
+\end{itemize}
+
+\textbf{回路の動作を確認する手順：}
+
+\begin{enumerate}
+\item 制御スイッチがオン時とオフ時の等価回路を作る
+\item オン時とオフ時のコイルにかかる電圧$v_L$を求める
+\item 定常状態の条件（オンとオフ時の電圧の積分が等しい）から負荷電圧を求める
+\end{enumerate}
+
+\subsection{昇降圧チョッパー回路の動作原理}
+
+\textbf{【オン時（$0 \le t < DT$）】}
+
+スイッチがオンの期間、電流は以下の経路を流れます：
+
+\begin{center}
+入力電源 $\rightarrow$ スイッチ $\rightarrow$ コイル $\rightarrow$ GND
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-36.pdf}}
+\caption{昇降圧チョッパー回路：スイッチON時の等価回路}
+\label{fig:ch05_buckboost_on}
+\end{figure}
+
+この時、コイルにかかる電圧は：
+
+\begin{equation}
+v_L = V_{\text{in}} \quad (\text{正の電圧})
+\end{equation}
+
+オン時には、入力電源からコイルにエネルギーが蓄積されます。
+
+\textbf{【オフ時（$DT \le t < T$）】}
+
+スイッチがオフの期間、コイルに蓄えられたエネルギーが出力側に放出されます：
+
+\begin{center}
+GND $\rightarrow$ ダイオード $\rightarrow$ コイル $\rightarrow$ GND（コンデンサ・負荷経由）
+\end{center}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-37.pdf}}
+\caption{昇降圧チョッパー回路：スイッチOFF時の等価回路}
+\label{fig:ch05_buckboost_off}
+\end{figure}
+
+この時、コイルにかかる電圧は：
+
+\begin{equation}
+v_L = -V_{\text{out}} \quad (\text{負の電圧})
+\end{equation}
+
+\subsection{出力電圧とデューティ比の関係}
+
+定常状態における電圧-秒バランスより：
+
+\begin{equation}
+v_L^{\text{ON}} \cdot DT + v_L^{\text{OFF}} \cdot (1-D)T = 0
+\end{equation}
+
+\begin{equation}
+V_{\text{in}} \cdot DT - V_{\text{out}} \cdot (1-D)T = 0
+\end{equation}
+
+したがって、出力電圧は：
+
+\begin{equation}
+\boxed{V_{\text{out}} = \frac{D}{1-D} \cdot V_{\text{in}}}
+\end{equation}
+
+\textbf{結論：}
+
+昇降圧チョッパー回路では：
+
+\begin{itemize}
+\item $D < 0.5$の場合：$V_{\text{out}} < V_{\text{in}}$（降圧動作）
+\item $D = 0.5$の場合：$V_{\text{out}} = V_{\text{in}}$
+\item $D > 0.5$の場合：$V_{\text{out}} > V_{\text{in}}$（昇圧動作）
+\end{itemize}
+
+ただし、出力電圧の極性は入力電圧と逆になります（負の電圧）。
+
+\subsection{定常状態における波形}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-40.pdf}}
+\caption{定常状態時の出力電圧とスイッチング電圧の関係}
+\label{fig:ch05_buckboost_waveforms}
+\end{figure}
+
+定常状態では、降圧チョッパーや昇圧チョッパーと同様に、コイル電圧は周期的にプラスとマイナスを繰り返し、コイル電流は三角波状に変動します。
+
+\section{3つのチョッパー回路の比較}
+
+\begin{table}[H]
+\centering
+\caption{3つのチョッパー回路の比較}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{回路名} & \textbf{出力電圧} & \textbf{電圧範囲} & \textbf{極性} \\
+\hline
+降圧チョッパー & $D \cdot V_{\text{in}}$ & $0 < V_{\text{out}} < V_{\text{in}}$ & 同じ \\
+\hline
+昇圧チョッパー & $\frac{V_{\text{in}}}{1-D}$ & $V_{\text{in}} < V_{\text{out}} < \infty$ & 同じ \\
+\hline
+昇降圧チョッパー & $\frac{D}{1-D} \cdot V_{\text{in}}$ & $0 < V_{\text{out}} < \infty$ & 反転 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{用途に応じた選択：}
+
+\begin{itemize}
+\item \textbf{降圧チョッパー}：バッテリー駆動機器、CPUの電源など
+\item \textbf{昇圧チョッパー}：LED駆動回路、フラッシュカメラの充電回路など
+\item \textbf{昇降圧チョッパー}：バッテリー電圧が変動する機器、極性反転が必要な回路など
+\end{itemize}
+
+\section{まとめ}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.95\textwidth]{chapters/chapter05/images/page-44.pdf}}
+\caption{まとめ}
+\label{fig:ch05_summary}
+\end{figure}
+
+本章では、DC-DC変換の基本である3つのチョッパー回路について学習しました。
+
+\textbf{主な学習内容：}
+
+\begin{itemize}
+\item 降圧・昇圧・昇降圧チョッパー回路について説明した
+\item 各回路の構成とそれぞれの役割について説明した
+\item 定常状態のスイッチのオンオフ時における各素子の電圧や電流波形について説明した
+\end{itemize}
+
+\subsection{重要なポイント}
+
+\begin{enumerate}
+\item \textbf{等価回路の作成}：スイッチのオン時とオフ時の等価回路を描くことで、回路の動作が理解できる
+\item \textbf{電圧-秒バランス}：定常状態では、コイル電圧の1周期の積分が0になる条件から、出力電圧を導出できる
+\item \textbf{デューティ比制御}：デューティ比$D$を調整することで、出力電圧を制御できる
+\item \textbf{連続電流モード}：本章では、コイル電流が常に正（連続）である連続電流モード（CCM: Continuous Conduction Mode）を扱った
+\end{enumerate}
+
+\subsection{設計上の考慮事項}
+
+実際のDC-DC変換回路を設計する際には、以下の点を考慮する必要があります：
+
+\begin{itemize}
+\item \textbf{インダクタンス$L$の選定}：電流リプルと応答速度のトレードオフ
+\item \textbf{キャパシタンス$C$の選定}：出力電圧リプルの低減
+\item \textbf{スイッチング周波数$f_{\text{sw}}$}：素子サイズと損失のトレードオフ
+\item \textbf{スイッチング素子の選定}：電圧・電流定格、オン抵抗、スイッチング速度
+\item \textbf{ダイオードの選定}：逆回復時間、順方向電圧降下
+\end{itemize}
+
+\subsection{次回の予告}
+
+次回（第6章）では、以下の内容について学習します：
+
+\begin{itemize}
+\item 絶縁型DC-DCコンバータ（フライバックコンバータ、フォワードコンバータ）
+\item トランスを用いた昇圧・降圧
+\item 入出力の絶縁による安全性向上
+\end{itemize}
