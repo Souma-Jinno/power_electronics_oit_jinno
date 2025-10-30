@@ -10,8 +10,8 @@
 *.xbb
 *.bak
 
-# Images (generated from slides)
-**/images/
+# Images (generated from slides in lecture_notes)
+lecture_notes/**/images/
 
 # Keynote slides (keep only PDFs)
 *.key
@@ -19,6 +19,7 @@
 # リモートに保存しないフォルダ
 revise_no_share/
 slides/
+LTspice/Usage/
 
 # lecture_notesフォルダ内のスライドPDFも除外
 lecture_notes/*.key.pdf
