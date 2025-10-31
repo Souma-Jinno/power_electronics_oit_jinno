@@ -7,14 +7,30 @@
 ```
 power_electronics_oit_jinno/
 ├── README.md                    # このファイル
-└── lecture_notes/               # 講義テキスト（LaTeX形式）※Git管理対象
-    ├── main.tex                # メインファイル
-    ├── main.pdf                # コンパイル済みPDF
-    └── chapters/               # 各章のTeXファイル
-        ├── chapter01/          # 第1章：パワーエレクトロニクスの概要
-        ├── chapter02/          # 第2章：半導体の物理
-        ├── chapter03/          # 第3章：パワー半導体の動作原理
-        └── chapter04/          # 第4章：LCR回路の復習
+├── lecture_notes/               # 講義テキスト（LaTeX形式）
+│   ├── main.tex                # メインファイル
+│   ├── main.pdf                # コンパイル済みPDF（約190ページ）
+│   └── chapters/               # 各章のTeXファイル
+│       ├── chapter01/          # 第1章：パワーエレクトロニクスの概要
+│       ├── chapter02/          # 第2章：半導体の物理
+│       ├── chapter03/          # 第3章：パワー半導体の動作原理
+│       ├── chapter04/          # 第4章：LCR回路の復習
+│       └── chapter05/          # 第5章：直流-直流変換（１）
+└── LTspice/                    # LTspiceシミュレーションファイル
+    ├── tutorials/              # LTspice使い方ガイド
+    │   ├── 01_installation/    # インストール方法
+    │   ├── 02_getting_started/ # 基本的な使い方
+    │   ├── 03_s_parameters/    # Sパラメータ解析
+    │   └── tips/               # 便利な小技集
+    └── Lecture5/               # 第5回講義のシミュレーション
+        ├── Fig3.1_back/        # 降圧チョッパー（基本）
+        ├── back_withC/         # 降圧チョッパー（コンデンサ付き）
+        ├── Fig.3.20_boost/     # 昇圧チョッパー
+        ├── Fig.3.25(a)_back_boost_back/  # 昇降圧（降圧動作）
+        ├── Fig.3.25(b)_back_boost_boost/ # 昇降圧（昇圧動作）
+        ├── ensyu_back/         # 演習1：負荷変動
+        ├── ensyu_back2/        # 演習2：周波数の影響
+        └── ensyu_back3/        # 演習3：インダクタンスの影響
 ```
 
 **注意**: `slides/`フォルダと`revise_no_share/`フォルダは`.gitignore`により管理対象外です。
@@ -45,6 +61,42 @@ power_electronics_oit_jinno/
 - スイッチング時のコイルとコンデンサの振る舞い
 - エネルギー蓄積と平滑化の原理
 - RLC共振回路
+
+### 第5章：直流-直流変換（１）
+- 降圧チョッパー（Buck Converter）の動作原理と出力電圧導出
+- 昇圧チョッパー（Boost Converter）の動作原理と出力電圧導出
+- 昇降圧チョッパー（Buck-Boost Converter）の動作原理と出力電圧導出
+- コイル電流リプルの計算と低減方法
+- 連続導通モード（CCM）と不連続導通モード（DCM）
+- LTspiceによるシミュレーション実習
+
+## LTspiceシミュレーション
+
+本リポジトリには、DC-DCコンバータ回路のLTspiceシミュレーションファイルが含まれています。
+
+### LTspice使い方ガイド
+
+初めてLTspiceを使う方は、[LTspice/tutorials/](LTspice/tutorials/)を参照してください：
+- **インストール方法**: Windows、Mac、Linuxでの導入手順
+- **基本的な使い方**: 回路図作成、シミュレーション実行、波形表示
+- **Sパラメータ解析**: 周波数特性の測定方法
+- **便利な小技**: 表記法、カラー設定など
+
+### シミュレーションファイル
+
+各章のシミュレーションファイルには、詳細なREADME.mdが付属しています：
+
+**第5章: DC-DCコンバータ**
+- [LTspice/Lecture5/](LTspice/Lecture5/) - 降圧・昇圧・昇降圧チョッパー回路
+  - 基本回路のシミュレーション（理論値との比較）
+  - パラメータスイープによる特性解析
+  - 演習問題（負荷変動、周波数の影響、インダクタンスの影響）
+
+各フォルダ内のREADME.mdには、以下の情報が記載されています：
+- 回路パラメータと理論計算
+- 動作原理の詳細説明
+- 観察項目と期待される結果
+- 実験課題と発展課題
 
 ## ライセンス
 
