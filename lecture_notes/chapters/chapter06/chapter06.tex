@@ -1,0 +1,900 @@
+\chapter{直流-直流変換（２）}
+
+\section{はじめに}
+
+本章では、絶縁型チョッパー回路（isolated chopper circuit）について学習する。第5章では非絶縁型のチョッパー回路（降圧、昇圧、昇降圧）について学んだが、本章では変圧器を用いた絶縁型チョッパー回路の動作原理と特徴について詳しく解説する。
+
+\subsection{本章の学習目標}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-02.png}
+\caption{本章の学習目標}
+\end{figure}
+
+本章の学習目標は以下の3つである：
+\begin{enumerate}
+\item 絶縁型チョッパー回路の動作原理を理解する
+\item 変圧器の物理を理解する
+\item 励磁電流と負荷電流について理解する
+\end{enumerate}
+
+\subsection{DC-DC変換の分類}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{page-03.png}
+\caption{DC-DC変換の3つの方式}
+\end{figure}
+
+DC-DC変換は、直流電圧の昇圧（step-up）や降圧（step-down）を実現する技術である。DC-DCコンバータは大きく分けて以下の3種類に分類される：
+
+\begin{enumerate}
+\item \textbf{非絶縁型チョッパー回路}（buck/boost/buck-boost）：第5章で学習
+\item \textbf{絶縁型チョッパー回路}（buck/boost）：\textbf{本章（第6章）で学習}
+\item リニアレギュレータ（buck のみ）：第7章で学習
+\end{enumerate}
+
+絶縁型チョッパー回路は、変圧器を用いることで入力と出力を電気的に絶縁する方式である。
+
+\section{非絶縁型と絶縁型の違い}
+
+\subsection{回路構成の比較}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-04.png}
+\caption{非絶縁型と絶縁型の回路構成の違い}
+\end{figure}
+
+図\ref{fig:isolated_comparison}に、非絶縁型降圧チョッパーと絶縁型降圧チョッパー（フォワードコンバータ）の回路構成を示す。
+
+\textbf{非絶縁型降圧チョッパー回路：}
+\begin{itemize}
+\item 構成要素：入力電圧源$V_0$、スイッチ、ダイオード、インダクタ$L$、負荷抵抗$R$
+\item 入力と出力が直接電気的に接続されている
+\end{itemize}
+
+\textbf{絶縁型降圧チョッパー回路（フォワードコンバータ）：}
+\begin{itemize}
+\item 構成要素：入力電圧源$V_0$、スイッチ、\textbf{変圧器（トランス）}、ダイオード、インダクタ$L$、負荷抵抗$R$
+\item \textbf{変圧器により1次側と2次側が電気的に絶縁されている}
+\end{itemize}
+
+\textbf{重要なポイント：}変圧器は1次側と2次側を電気的に絶縁しながら、磁気的にエネルギーを伝達する。
+
+\section{絶縁型の利点}
+
+\subsection{安全性の向上}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-05.png}
+\caption{絶縁による安全性の向上}
+\end{figure}
+
+絶縁型コンバータの主な利点は以下の2つである：
+
+\textbf{1. 安全性（Safety）}
+
+非絶縁型の場合：
+\begin{itemize}
+\item アースとの間に100Vなどの電位差が存在する可能性がある
+\item 感電の危険性が高い
+\end{itemize}
+
+絶縁型の場合：
+\begin{itemize}
+\item 2次側で新しいアース基準を設定できる（図中の点AとB）
+\item 2次側回路の任意の点をアースに接続できる
+\item 感電のリスクを大幅に低減
+\end{itemize}
+
+\textbf{2. ノイズ対策（Noise Countermeasures）}
+
+\begin{itemize}
+\item 電気的な絶縁により、ノイズの伝搬を遮断できる
+\item 1次側のノイズが2次側に直接伝わらない
+\item システム全体のノイズ耐性が向上
+\end{itemize}
+
+これらの利点により、絶縁型コンバータは以下のような用途で広く使用されている：
+\begin{itemize}
+\item 医療機器（患者の安全確保）
+\item 通信機器（ノイズ対策）
+\item 産業機器（安全規格の要求）
+\end{itemize}
+
+\section{変圧器の基礎物理}
+
+\subsection{変圧器のパラメータ間の関係}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-06.png}
+\caption{変圧器の基本関係式}
+\end{figure}
+
+変圧器の動作を理解するためには、電圧、磁束、インダクタンス、電流の関係を理解する必要がある。
+
+\textbf{基本関係式：}
+
+\begin{align}
+V &= \frac{d\Phi}{dt} = L\frac{dI}{dt}
+\end{align}
+
+ここで、
+\begin{itemize}
+\item $V$：コイル電圧（誘導起電力）
+\item $\Phi$：磁束（magnetic flux）
+\item $\Phi = BS$（$B$：磁束密度、$S$：断面積）
+\item $L$：インダクタンス
+\item $I$：電流
+\end{itemize}
+
+\textbf{重要な概念：}磁束の向きと電流の向きは\textbf{右ねじの関係}に従う。
+
+\begin{itemize}
+\item 電流は高電位から低電位に流れる
+\item 磁束の向きと電流の向きは右ねじの法則で決まる
+\item 右手の親指を電流の方向に向けたとき、残りの指が巻く方向が磁束の向き
+\end{itemize}
+
+\subsection{ファラデーの電磁誘導の法則}
+
+変圧器の動作原理は、ファラデーの電磁誘導の法則に基づいている。
+
+\textbf{ファラデーの法則（微分形）：}
+
+\begin{equation}
+\nabla \times \boldsymbol{E}(\boldsymbol{r}, t) = -\frac{\partial \boldsymbol{B}(\boldsymbol{r}, t)}{\partial t}
+\end{equation}
+
+この式は、「磁場の時間変化に対して逆向きの電場が発生する」ことを表している。
+
+\textbf{積分形：}
+
+両辺を面積分することで、以下の回路方程式が導出される：
+
+\begin{equation}
+\oint_C \boldsymbol{E} \cdot d\boldsymbol{r} = -\frac{d}{dt}\int_S \boldsymbol{B} \cdot \boldsymbol{n}dS
+\end{equation}
+
+これより、回路方程式：
+
+\begin{align}
+V &= \phi_1 - \phi_2 = -\frac{d\Phi}{dt} \\
+\Phi &= LI \\
+\therefore V &= L\frac{dI}{dt}
+\end{align}
+
+が得られる。
+
+\subsection{閉回路での電圧}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-08.png}
+\caption{閉回路での電圧の関係}
+\end{figure}
+
+完全導体（perfect conductor）の仮定の下では、導体内部の電場は0である。
+
+閉回路の積分方程式：
+
+\begin{equation}
+\oint_{C_1} \boldsymbol{E} \cdot d\boldsymbol{r} + \oint_{C_2} \boldsymbol{E} \cdot d\boldsymbol{r} = -\frac{d}{dt}\int_S \boldsymbol{B} \cdot \boldsymbol{n}dS
+\end{equation}
+
+これより、
+
+\begin{align}
+\phi_1 - \phi_2 &= -\frac{d\Phi}{dt} \\
+V &= -\frac{d\Phi}{dt} = L\frac{dI}{dt}
+\end{align}
+
+\textbf{重要な注意点：}
+\begin{itemize}
+\item 電場の回転の向きと電位差の向きに注意
+\item 電流の向きは磁束を打ち消す向き
+\item 座標系の定義により、$\Phi = -LI$となる場合がある（符号に注意）
+\end{itemize}
+
+\subsection{変圧器鉄心内の磁束}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-09.png}
+\caption{変圧器鉄心内の磁束の向き}
+\end{figure}
+
+\textbf{仮定：}磁束の漏れはないとする（理想変圧器）。
+
+\textbf{問い：}電流の向きと磁束の向きの関係は？
+
+1次側に電圧$V_1$を印加し、電流$I_1$が流れると、鉄心内に磁束$\Phi$が発生する。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-10.png}
+\caption{磁束の向きの決定}
+\end{figure}
+
+\textbf{答え：}同じ電流の向きに対して、両方の巻線で磁束は反対向きに流れる。磁束の向きは、各巻線に右ねじの法則を適用して決まる。
+
+\subsection{2次側の誘導電圧の向き}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-11.png}
+\caption{2次側の誘導起電力の向き}
+\end{figure}
+
+\textbf{問い：}2次側に誘導される起電力の向きはどちら向きか？
+
+回路には以下が示されている：
+\begin{itemize}
+\item 1次側：$I_1$、$V_1$、巻数$n_1$
+\item 2次側：$V_2$、巻数$n_2$（2つの2次巻線）
+\item 鉄心を貫く磁束$\Phi$
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-12.png}
+\caption{2次側電圧の極性}
+\end{figure}
+
+\textbf{答え：}
+\begin{itemize}
+\item 1次側で磁束が一方向に流れると、2つの2次巻線には逆極性の電圧が誘導される
+\item 誘導電圧の向きは、巻線の巻き方向と磁束の向きで決まる
+\item 図では、上側の2次巻線と下側の2次巻線で電圧の極性が反対になっている
+\end{itemize}
+
+\subsection{2次側負荷電流の向き}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-13.png}
+\caption{負荷電流の向き}
+\end{figure}
+
+\textbf{問い：}負荷電流の向きはどちら向きか？
+
+回路構成：
+\begin{itemize}
+\item 2次巻線に負荷抵抗が接続されている
+\item 電流$I_2$が負荷を流れる
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-14.png}
+\caption{負荷電流が作る磁束}
+\end{figure}
+
+\textbf{答え：}
+\begin{itemize}
+\item \textbf{負荷電流が作る磁束を考える必要がある！}
+\item 負荷電流の向きは、レンツの法則に従って1次側の磁束を打ち消す向き
+\item 負荷による磁束$\Phi_2$も考慮しなければならない
+\end{itemize}
+
+\section{励磁電流と負荷電流}
+
+\subsection{励磁電流の定義}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-15.png}
+\caption{励磁電流}
+\end{figure}
+
+\textbf{励磁電流（Excitation Current）：}変圧器の鉄心を磁化させるための電流
+
+回路図：
+\begin{itemize}
+\item 1次コイル：$V_1$、$I_1 = I_m$（励磁電流）
+\item 鉄心を貫く磁束$\Phi$
+\end{itemize}
+
+\textbf{基本関係式：}
+
+\begin{equation}
+V_1 = \frac{d\Phi}{dt} = L\frac{dI_m}{dt}
+\end{equation}
+
+ここで、$I_m$は鉄心内の磁束を生み出す電流である。
+
+\textbf{概念：}コイルに電圧を印加すると電流が流れ、鉄心内に一様に磁束が貫いている状態が作られる。
+
+\subsection{励磁電流と負荷電流の流れるメカニズム}
+
+励磁電流と負荷電流がどのように流れるかを、段階的に理解する。
+
+\textbf{ステップ①：励磁電流の発生}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-16.png}
+\caption{ステップ①：励磁電流の流れ}
+\end{figure}
+
+1次コイルに電圧を印加すると、励磁電流$I_m$が流れる。
+
+\textbf{ステップ②：2次側への誘導}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-17.png}
+\caption{ステップ①②：2次側への誘導}
+\end{figure}
+
+\begin{enumerate}
+\item 1次側に励磁電流$I_m$が流れる
+\item 2次側に起電力が誘導され、負荷電流$I_2$が流れる
+\end{enumerate}
+
+回路には以下が示されている：
+\begin{itemize}
+\item 1次側：$I_1$、$V_1$
+\item 2次側：$I_2$、$V_2$、負荷
+\end{itemize}
+
+\textbf{ステップ③：2次側電流による磁束}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{page-18.png}
+\caption{ステップ①②③：2次側電流が作る磁束}
+\end{figure}
+
+\begin{enumerate}
+\item 1次側に励磁電流$I_m$が流れる（磁束$\Phi_m$を生成）
+\item 2次側に負荷電流$I_2$が流れる
+\item \textbf{2次側の負荷電流が鉄心内に独自の磁束$\Phi_2$を作る}
+\end{enumerate}
+
+\textbf{ステップ④：完全なメカニズム}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-19.png}
+\caption{ステップ①②③④：完全なメカニズム}
+\end{figure}
+
+図にはすべての磁束成分が示されている：$\Phi_m$、$\Phi_\ell$、$\Phi_2$
+
+\textbf{重要な関係式：}
+
+\begin{align}
+I_1 &= I_m + I_\ell \\
+I_\ell &= I_2 \\
+n_1 I_\ell &= n_2 I_2 \quad \text{（コイルが同じ形状の場合）} \\
+\Phi_\ell &= \Phi_2
+\end{align}
+
+\textbf{4段階のプロセス：}
+
+\begin{enumerate}
+\item 1次コイルに電圧を印加 → 励磁電流$I_m$が流れる
+\item 2次側に起電力が誘導 → 負荷電流$I_2$が流れる
+\item 2次側の負荷電流が鉄心内に磁束$\Phi_2$を作る
+\item 鉄心内の磁束は電圧源により固定されるため、$\Phi_2$を打ち消すための\textbf{負荷電流$I_\ell$}が1次側に流れる
+\end{enumerate}
+
+\textbf{結論：}1次側電流$I_1$は、\textbf{励磁電流$I_m$}と\textbf{負荷電流$I_\ell$}の和である。
+
+\subsection{励磁電流の計算例}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-20.png}
+\caption{励磁電流の計算例}
+\end{figure}
+
+\textbf{例題回路：}
+\begin{itemize}
+\item 方形波電圧源$v_1(t)$：$\pm 10$V、周期1.0 μs
+\item インダクタ$L = 1$ mH
+\item 初期条件：$I_1(0) = 0$
+\end{itemize}
+
+\textbf{支配方程式：}
+
+\begin{equation}
+v_1(t) = L\frac{dI_1(t)}{dt}
+\end{equation}
+
+\textbf{結果：}電流$I_1(t)$は、電圧が正の期間に線形に増加し、三角波形となる。ピーク値は10 mA（立ち上がり時間1.0 μs）。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-21.png}
+\caption{励磁電流の波形}
+\end{figure}
+
+波形図には、$v_1(t)$（方形波、$\pm 10$V）と$I_1(t)$（三角波、0～10 mA）が示されている。
+
+\subsection{励磁電流と負荷電流の計算例}
+
+\textbf{回路構成（スライド22）：}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-22.png}
+\caption{励磁電流と負荷電流の計算例（回路構成）}
+\end{figure}
+
+\begin{itemize}
+\item 1次側：$I_1(t)$、$v_1(t)$、巻数$n_1$、$L = 1$ mH
+\item 2次側：$I_2(t)$、$v_2(t)$、巻数$n_2$、$L = 1$ mH、負荷$500\,\Omega$
+\item 巻数比：$n_1 = n_2$
+\end{itemize}
+
+\textbf{段階的な結果（スライド22～26）：}
+
+スライド22：$v_1(t)$の方形波入力を表示
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{page-23.png}
+\caption{$v_2(t)$の追加}
+\end{figure}
+
+スライド23：$v_2(t)$の出力を追加（$v_1$に追従）
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{page-24.png}
+\caption{$I_2(t)$の追加}
+\end{figure}
+
+スライド24：$I_2(t)$の2次側電流を追加（20 mAの方形波）
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{page-26.png}
+\caption{$I_1(t)$の追加（完全な波形）}
+\end{figure}
+
+スライド26：$I_1(t)$の1次側電流を追加：
+\begin{itemize}
+\item 小さいグラフ：$I_1(t)$（励磁電流のみ、三角波、10 mA）
+\item 大きいグラフ：$I_1(t) = $励磁電流$+$負荷電流
+\item 合計$I_1(t)$の範囲：$-20$～$+30$ mA
+\end{itemize}
+
+\textbf{重要な観察：}
+\begin{itemize}
+\item 励磁電流成分：三角波（磁束を維持するため）
+\item 負荷電流成分：方形波（2次側負荷電流に対応）
+\item 1次側電流は両者の重ね合わせ
+\end{itemize}
+
+\section{回路シミュレーションにおける変圧器の扱い}
+
+\subsection{変圧器の表現方法}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-27.png}
+\caption{変圧器の回路記号への変換}
+\end{figure}
+
+\textbf{問い：}回路図でドット（極性マーク）をどこに打てば良いか？
+
+2つの構成が示されている：
+\begin{itemize}
+\item 上：磁束が一方向に流れる
+\item 下：磁束が反対方向に流れる
+\end{itemize}
+
+両方とも、物理的な変圧器から複数端子を持つ回路記号への変換を示している。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-28.png}
+\caption{回路記号の規則}
+\end{figure}
+
+\textbf{答え：}同じ位相であれば同じ向きにドットを打つ。
+
+回路図には以下が示されている：
+\begin{itemize}
+\item 電圧源V1と結合インダクタL1、L2、L3
+\item 3つの出力負荷：R1 = 10$\Omega$、R2 = 10$\Omega$、R3（抵抗値記載）
+\item 結合文：K1 L1 L2 L3 1.0
+\item シミュレーション：.tran 0.03m
+\end{itemize}
+
+\textbf{波形：}3つの正弦波出力V(n001)、V(n002)、V(n003)が0°、120°、240°の位相関係を示す（0 μs～30 μs）
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-29.png}
+\caption{方形波励磁}
+\end{figure}
+
+\textbf{変更した回路：}
+\begin{itemize}
+\item パルス電源：PULSE(0 10 0 10n 10n 10u 20u)
+\item シミュレーション：.tran 0.05m
+\end{itemize}
+
+\textbf{波形：}パルス励磁による方形波出力を示し、変圧器の適切な結合を表示（0 μs～50 μs）
+
+\subsection{スイッチを追加した場合の動作}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-30.png}
+\caption{スイッチング素子を含む回路}
+\end{figure}
+
+\textbf{スイッチング素子を含む回路：}
+\begin{itemize}
+\item 10V直流電源
+\item スイッチ$v_{\text{sw}}$
+\item 変圧器（500$\Omega$負荷付き）
+\item 1次側：$I_1(t)$、$v_1(t)$
+\item 2次側：$I_2(t)$、$v_2(t)$
+\end{itemize}
+
+\textbf{問い：}スイッチを使うとどうなるか？
+
+初期波形（スイッチ解析前）：
+\begin{itemize}
+\item $v_1(t)$：平坦
+\item $I_1(t)$：平坦
+\item $v_2(t)$：平坦
+\item $I_2(t)$：平坦
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-31.png}
+\caption{スイッチング時のシミュレーション結果}
+\end{figure}
+
+\textbf{完全な波形：}
+\begin{itemize}
+\item v(vsw)：スイッチ電圧（紫、0～10Vパルス）
+\item -I(L1)：1次側電流（緑、ピーク約30 mAの三角波）
+\item V(n003)：2次側電圧（赤、オーバーシュート/リンギングを示す）
+\item I(L2)：2次側電流（青、パルス応答）
+\end{itemize}
+
+\textbf{時間スケール：}0 μs～24 μs
+
+\textbf{観察される現象：}
+\begin{itemize}
+\item スイッチON時：1次側に電流が流れ、磁束が増加
+\item スイッチOFF時：磁束の変化により2次側に高電圧が誘導（オーバーシュート）
+\item 励磁電流と負荷電流の相互作用が見られる
+\end{itemize}
+
+\section{フォワードコンバータ（絶縁型降圧）}
+
+\subsection{フォワードコンバータの回路構成}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-32.png}
+\caption{フォワードコンバータの回路トポロジー}
+\end{figure}
+
+2つのバージョンが示されている：
+
+\textbf{非絶縁型降圧チョッパー：}
+\begin{itemize}
+\item 回路要素：$V_0$（入力）、スイッチ$v_{\text{sw}}$、ダイオード、インダクタ$L$、負荷抵抗$R$、出力$v_R$
+\item 入力と出力が直接電気的に接続
+\end{itemize}
+
+\textbf{絶縁型降圧チョッパー（フォワードコンバータ）：}
+\begin{itemize}
+\item 回路要素：$V_0$（入力）、スイッチ$v_{\text{sw}}$、\textbf{変圧器}、ダイオード、インダクタ$L$、負荷抵抗$R$、出力$v_R$
+\item 1次側と2次側が電気的に絶縁
+\end{itemize}
+
+\subsection{フォワードコンバータの完全な回路}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-33.png}
+\caption{フォワードコンバータの完全な回路}
+\end{figure}
+
+\textbf{励磁電流用の追加要素：}
+\begin{itemize}
+\item 1次側にダイオードを追加：励磁電流を流すための経路（励磁電流を流すための回路）
+\item 完全な回路：入力$V_0$ → スイッチ$v_{\text{sw}}$ → 変圧器 → 整流ダイオード → $L$ → $R$（負荷） → 出力$v_R$
+\end{itemize}
+
+\textbf{解析手順（回路の動作を確認する手順）：}
+
+\begin{enumerate}
+\item スイッチON時とOFF時の等価回路を作る（制御スイッチがオン時とオフ時の等価回路を作る）
+\item ON時とOFF時のインダクタ電圧$v_L$を求める（オン時とオフ時のコイルにかかる電圧$v_L$を求める）
+\item 定常状態の条件から負荷電圧を求める（定常状態の条件（オンとオフ時の電圧の積分が等しい）から負荷電圧を求める）
+\end{enumerate}
+
+\subsection{ON時とOFF時の電流経路}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-34.png}
+\caption{ON時とOFF時の電流経路}
+\end{figure}
+
+2つの回路状態が示されている：
+
+\textbf{ON状態（オン時）：}
+\begin{itemize}
+\item 電流経路（青矢印）：$V_0$ → スイッチ → 変圧器1次側 → 変圧器2次側 → ダイオード → $L$ → $R$ → グランド
+\item 電流が回路全体を流れる
+\end{itemize}
+
+\textbf{OFF状態（オフ時）：}
+\begin{itemize}
+\item 電流経路（青矢印）：1次側と2次側で別々の経路
+\item 1次側：追加されたダイオードを通る還流経路
+\item 2次側：$L$ → $R$ → ダイオード（還流）を通って電流が継続
+\end{itemize}
+
+\subsection{フォワードコンバータのシミュレーション例}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-35.png}
+\caption{フォワードコンバータのシミュレーション例}
+\end{figure}
+
+\textbf{回路パラメータ：}
+\begin{itemize}
+\item 入力：100V
+\item デューティ比$D = 0.3$
+\item スイッチング周波数$f_{\text{sw}} = 20$ kHz
+\item 巻数比：$n_1:n_2:n_3 = 10:1:10$
+\item 励磁インダクタンス（1次側）：10 mH
+\item 漏れインダクタンス（2次側）：0.1 mH
+\item 出力インダクタ：1.0 mH
+\item 出力コンデンサ：500 μF
+\item 負荷：5.0 $\Omega$
+\item 参考：教科書P88
+\end{itemize}
+
+\textbf{波形：}
+\begin{itemize}
+\item $v_L$：インダクタ電圧（赤、矩形パルス$+2$V～$-4$V）
+\item $i_L$：インダクタ電流（青、三角波リプル 540～660 mA）
+\item $v_R$：出力電圧（緑、約3Vでわずかなリプル 2.9950～2.9964V）
+\end{itemize}
+
+\textbf{時間スケール：}0 μs～140 μs
+
+\textbf{観察される特性：}
+\begin{itemize}
+\item 出力電圧は入力電圧より低い（降圧動作）
+\item インダクタ電流は連続モード（CCM）で動作
+\item 出力コンデンサにより電圧リプルが小さい
+\end{itemize}
+
+\section{フライバックコンバータ（絶縁型昇降圧）}
+
+\subsection{フライバックコンバータの回路構成}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-36.png}
+\caption{フライバックコンバータの回路トポロジー}
+\end{figure}
+
+2つのバージョンが示されている：
+
+\textbf{非絶縁型昇降圧チョッパー：}
+\begin{itemize}
+\item 入力コンデンサ、スイッチ$v_{\text{sw}}$、インダクタ$L$（$i_L$、$v_L$マーク付き）、ダイオード、コンデンサ$C$、抵抗$R$、出力$v_C$
+\end{itemize}
+
+\textbf{絶縁型昇降圧チョッパー（フライバックコンバータ）：}
+\begin{itemize}
+\item 入力コンデンサ、スイッチ$v_{\text{sw}}$、\textbf{1次側にインダクタンスを持つ変圧器}、2次側にダイオード、コンデンサ$C$、抵抗$R$、出力$v_C$
+\item \textbf{重要な注意：}極性の向きに注意（極性の向きに注意）
+\end{itemize}
+
+\subsection{フライバックコンバータの解析手順}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-37.png}
+\caption{フライバックコンバータの解析手順}
+\end{figure}
+
+\textbf{回路図：}
+\begin{itemize}
+\item 入力コンデンサ、スイッチ$v_{\text{sw}}$、変圧器（$L$）、2次側にダイオード、コンデンサ$C$、抵抗$R$、出力$v_C$
+\end{itemize}
+
+\textbf{解析手順（回路の動作を確認する手順）：}
+
+\begin{enumerate}
+\item スイッチON時とOFF時の等価回路を作る（制御スイッチがオン時とオフ時の等価回路を作る）
+\item ON時とOFF時のインダクタ電圧$v_L$を求める（オン時とオフ時のコイルにかかる電圧$v_L$を求める）
+\item 定常状態の条件から負荷電圧を求める（定常状態の条件（オンとオフ時の電圧の積分が等しい）から負荷電圧を求める）
+\end{enumerate}
+
+\subsection{ON時とOFF時の電流経路（フライバック）}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-38.png}
+\caption{フライバックコンバータのON時とOFF時の電流経路}
+\end{figure}
+
+2つの回路状態が示されている：
+
+\textbf{ON状態（オン時）：}
+\begin{itemize}
+\item 電流経路（青矢印）：入力 → スイッチ → 1次側インダクタ$L$ → グランド
+\item 変圧器インダクタンスにエネルギーが蓄積される
+\item 2次側ダイオードが逆バイアス（2次側に電流は流れない）
+\end{itemize}
+
+\textbf{OFF状態（オフ時）：}
+\begin{itemize}
+\item 電流経路（青矢印）：エネルギーが2次側に転送される
+\item 2次側：変圧器 → ダイオード → コンデンサ$C$と抵抗$R$ → グランド
+\item 1次側スイッチは開く
+\end{itemize}
+
+\textbf{強調された主要な利点（黄色ボックス）：}
+「絶縁化することで入力と向きを揃えることができる！」（By using isolation, input and polarity can be reversed!）
+
+\subsection{定常状態の波形}
+
+\textbf{降圧モード（ステップダウン）定常状態}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-39.png}
+\caption{降圧モードの定常状態波形}
+\end{figure}
+
+\textbf{回路パラメータ：}
+\begin{itemize}
+\item $V_0 = 12$V（入力）
+\item $D = 0.2941$（デューティ比）
+\item $f_{\text{sw}} = 20$ kHz
+\item $L = 700$ μH
+\item $C = 500$ μF
+\item $R = 5.0\,\Omega$
+\item 参考：教科書P76に絶縁を追加
+\end{itemize}
+
+\textbf{波形：}
+\begin{itemize}
+\item $v_{L2}$、$v_{L1}$：ON/OFF遷移時の1次側と2次側電圧
+\item $i_{L1}$：1次側電流（オレンジ、三角波 0.6～1.8A）
+\item $i_{L2}$：2次側電流（青、パルス $-0.6$～$-1.2$A）
+\item $v_C$：出力電圧（緑、約5Vでリプル 4.989～5.022V）
+\end{itemize}
+
+\textbf{時間スケール：}0 μs～160 μs
+
+\textbf{昇圧モード（ステップアップ）定常状態}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{page-40.png}
+\caption{昇圧モードの定常状態波形}
+\end{figure}
+
+\textbf{回路パラメータ：}
+\begin{itemize}
+\item $V_0 = 5.0$V（入力）
+\item $D = 0.7059$（デューティ比）
+\item $f_{\text{sw}} = 20$ kHz
+\item $L = 700$ μH
+\item $C = 500$ μF
+\item $R = 28.8\,\Omega$
+\item 参考：教科書P76に絶縁を追加
+\end{itemize}
+
+\textbf{波形：}
+\begin{itemize}
+\item $v_{L2}$、$v_{L1}$：ON/OFF期間を示す電圧（$-14$V～$+14$Vの範囲）
+\item $i_{L1}$：1次側電流（オレンジ、三角波 0～1.8A）
+\item $i_{L2}$：2次側電流（青、パルス $-0.5$～$-1.8$A）
+\item $v_C$：出力電圧（緑、約12Vでリプル 11.991～12.024V）
+\end{itemize}
+
+\textbf{時間スケール：}0 μs～160 μs
+
+\section{まとめ}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{page-41.png}
+\caption{本章のまとめ}
+\end{figure}
+
+本章では、以下の3つの主要なトピックを扱った：
+
+\begin{enumerate}
+\item \textbf{絶縁型チョッパー回路の原理について説明した}
+
+絶縁型チョッパー回路は、変圧器を用いることで入力と出力を電気的に絶縁しながらエネルギーを伝達する。これにより、安全性の向上とノイズ対策が実現される。
+
+\item \textbf{変圧器の物理と励磁電流、負荷電流の違いを説明した}
+
+変圧器の動作は、ファラデーの電磁誘導の法則に基づいている。1次側電流は以下の2つの成分から構成される：
+\begin{itemize}
+\item 励磁電流$I_m$：鉄心を磁化させるための電流
+\item 負荷電流$I_\ell$：2次側の負荷電流が作る磁束を打ち消すための電流
+\end{itemize}
+
+重要な関係式：
+\begin{align}
+I_1 &= I_m + I_\ell \\
+n_1 I_\ell &= n_2 I_2
+\end{align}
+
+\item \textbf{各回路の構成とそれぞれの役割について説明した}
+
+\textbf{フォワードコンバータ（絶縁型降圧）：}
+\begin{itemize}
+\item 入力電圧より低い出力電圧を得る
+\item 1次側にダイオードを追加して励磁電流の経路を確保
+\item ON時に1次側から2次側へエネルギー転送
+\end{itemize}
+
+\textbf{フライバックコンバータ（絶縁型昇降圧）：}
+\begin{itemize}
+\item 入力電圧より高いまたは低い出力電圧を得る
+\item ON時に1次側インダクタにエネルギー蓄積
+\item OFF時に2次側へエネルギー転送
+\item 極性を揃えることができる（絶縁の利点）
+\end{itemize}
+
+\item \textbf{定常状態のスイッチのオンオフ時における各素子の電圧や電流波形について説明した}
+
+各コンバータにおいて、スイッチのON/OFF時の等価回路を作成し、インダクタ電圧と電流の波形を導出した。定常状態では、インダクタ電圧の時間積分がON時とOFF時で等しいという条件（電圧-秒バランス）から、出力電圧が決定される。
+
+シミュレーション結果により、理論解析の妥当性を確認した。
+\end{enumerate}
+
+\subsection{本章で学んだ重要な概念}
+
+\textbf{1. 絶縁の重要性}
+\begin{itemize}
+\item 安全性の向上（感電防止）
+\item ノイズ対策（電気的絶縁）
+\item 医療機器、通信機器、産業機器で必須
+\end{itemize}
+
+\textbf{2. 変圧器の物理}
+\begin{itemize}
+\item ファラデーの電磁誘導の法則：$V = d\Phi/dt = L(dI/dt)$
+\item 磁束と電流の右ねじの関係
+\item 励磁電流と負荷電流の分離
+\end{itemize}
+
+\textbf{3. 回路トポロジー}
+\begin{itemize}
+\item フォワードコンバータ：絶縁型降圧
+\item フライバックコンバータ：絶縁型昇降圧
+\item それぞれの動作原理と特徴
+\end{itemize}
+
+\textbf{4. 解析手法}
+\begin{itemize}
+\item ON/OFF時の等価回路作成
+\item インダクタ電圧の導出
+\item 電圧-秒バランスによる出力電圧の決定
+\item シミュレーションによる検証
+\end{itemize}
+
+これらの知識は、実際のDC-DCコンバータの設計において不可欠である。
