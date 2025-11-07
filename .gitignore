@@ -10,8 +10,8 @@
 *.xbb
 *.bak
 
-# Images (generated from slides in lecture_notes)
-lecture_notes/**/images/
+# Images (PNG files generated from slides, but track PDFs for LaTeX)
+lecture_notes/**/images/*.png
 
 # Keynote slides (keep only PDFs)
 *.key
