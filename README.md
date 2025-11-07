@@ -9,28 +9,34 @@ power_electronics_oit_jinno/
 ├── README.md                    # このファイル
 ├── lecture_notes/               # 講義テキスト（LaTeX形式）
 │   ├── main.tex                # メインファイル
-│   ├── main.pdf                # コンパイル済みPDF（約190ページ）
+│   ├── main.pdf                # コンパイル済みPDF（約222ページ）
 │   └── chapters/               # 各章のTeXファイル
 │       ├── chapter01/          # 第1章：パワーエレクトロニクスの概要
 │       ├── chapter02/          # 第2章：半導体の物理
 │       ├── chapter03/          # 第3章：パワー半導体の動作原理
 │       ├── chapter04/          # 第4章：LCR回路の復習
-│       └── chapter05/          # 第5章：直流-直流変換（１）
+│       ├── chapter05/          # 第5章：直流-直流変換（１）
+│       └── chapter06/          # 第6章：直流-直流変換（２）
 └── LTspice/                    # LTspiceシミュレーションファイル
     ├── tutorials/              # LTspice使い方ガイド
     │   ├── 01_installation/    # インストール方法
     │   ├── 02_getting_started/ # 基本的な使い方
     │   ├── 03_s_parameters/    # Sパラメータ解析
     │   └── tips/               # 便利な小技集
-    └── Lecture5/               # 第5回講義のシミュレーション
-        ├── Fig3.1_back/        # 降圧チョッパー（基本）
-        ├── back_withC/         # 降圧チョッパー（コンデンサ付き）
-        ├── Fig.3.20_boost/     # 昇圧チョッパー
-        ├── Fig.3.25(a)_back_boost_back/  # 昇降圧（降圧動作）
-        ├── Fig.3.25(b)_back_boost_boost/ # 昇降圧（昇圧動作）
-        ├── ensyu_back/         # 演習1：負荷変動
-        ├── ensyu_back2/        # 演習2：周波数の影響
-        └── ensyu_back3/        # 演習3：インダクタンスの影響
+    ├── Lecture5/               # 第5回講義のシミュレーション
+    │   ├── Fig3.1_back/        # 降圧チョッパー（基本）
+    │   ├── back_withC/         # 降圧チョッパー（コンデンサ付き）
+    │   ├── Fig.3.20_boost/     # 昇圧チョッパー
+    │   ├── Fig.3.25(a)_back_boost_back/  # 昇降圧（降圧動作）
+    │   ├── Fig.3.25(b)_back_boost_boost/ # 昇降圧（昇圧動作）
+    │   ├── ensyu_back/         # 演習1：負荷変動
+    │   ├── ensyu_back2/        # 演習2：周波数の影響
+    │   └── ensyu_back3/        # 演習3：インダクタンスの影響
+    └── Lecture6/               # 第6回講義のシミュレーション
+        ├── exitation_current_switch/  # スイッチング時の励磁電流
+        ├── foward_converter/   # フォワードコンバータ（絶縁型降圧）
+        ├── flyback_converter_back/    # フライバック（降圧動作）
+        └── flyback_converter_boost/   # フライバック（昇圧動作）
 ```
 
 **注意**: `slides/`フォルダと`revise_no_share/`フォルダは`.gitignore`により管理対象外です。
@@ -82,6 +88,15 @@ power_electronics_oit_jinno/
 - 連続導通モード（CCM）と不連続導通モード（DCM）
 - LTspiceによるシミュレーション実習
 
+### 第6章：直流-直流変換（２）
+- 絶縁型DC-DCコンバータの必要性と利点
+- 変圧器の基礎物理（ファラデーの電磁誘導の法則、磁束の概念）
+- 励磁電流と負荷電流の違い（I₁ = I_m + I_ℓ）
+- フォワードコンバータ（絶縁型降圧）の動作原理と出力電圧導出
+- フライバックコンバータ（絶縁型昇降圧）の動作原理と出力電圧導出
+- リセット巻線の役割と励磁電流のリセット
+- LTspiceによる絶縁型コンバータのシミュレーション実習
+
 ## LTspiceシミュレーション
 
 本リポジトリには、DC-DCコンバータ回路のLTspiceシミュレーションファイルが含まれています。
@@ -98,11 +113,19 @@ power_electronics_oit_jinno/
 
 各章のシミュレーションファイルには、詳細なREADME.mdが付属しています：
 
-**第5章: DC-DCコンバータ**
+**第5章: 非絶縁型DC-DCコンバータ**
 - [LTspice/Lecture5/](LTspice/Lecture5/) - 降圧・昇圧・昇降圧チョッパー回路
   - 基本回路のシミュレーション（理論値との比較）
   - パラメータスイープによる特性解析
   - 演習問題（負荷変動、周波数の影響、インダクタンスの影響）
+
+**第6章: 絶縁型DC-DCコンバータ**
+- [LTspice/Lecture6/](LTspice/Lecture6/) - フォワード・フライバックコンバータ
+  - スイッチング時の励磁電流の観察
+  - フォワードコンバータ（絶縁型降圧）のシミュレーション
+  - フライバックコンバータ（降圧動作・昇圧動作）のシミュレーション
+  - 変圧器の結合係数と励磁電流の影響
+  - リセット巻線の役割と必要性
 
 各フォルダ内のREADME.mdには、以下の情報が記載されています：
 - 回路パラメータと理論計算
