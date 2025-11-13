@@ -1,0 +1,978 @@
+\chapter{直流-直流変換(3)}
+\label{chap:dc_dc_conversion_3}
+
+%-----------------------------------------------------------------------------
+\section{はじめに}
+%-----------------------------------------------------------------------------
+
+本章では、DC-DC変換の第3の方式である\textbf{リニアレギュレータ}について学ぶ。
+これまでに学んだチョッパ回路(第5章)と絶縁型コンバータ(第6章)とは異なる動作原理を持つ降圧回路である。
+
+\subsection{本章の学習目標}
+
+本章では以下の3つの目標を設定する：
+\begin{enumerate}
+  \item リニアレギュレータの動作原理を理解する
+  \item 半導体素子(特にバイポーラトランジスタ)の使い方を理解する
+  \item オペアンプの動作とフィードバック制御を理解する
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-02.pdf}
+  \caption{第7章の学習目標}
+  \label{fig:ch07_objectives}
+\end{figure}
+
+%-----------------------------------------------------------------------------
+\section{リニアレギュレータとは}
+%-----------------------------------------------------------------------------
+
+\subsection{DC-DC変換の分類}
+
+これまでの講義で学んだDC-DC変換方式を振り返ると、以下のように分類できる：
+
+\begin{itemize}
+  \item \textbf{第5回：非絶縁型チョッパ回路}
+  \begin{itemize}
+    \item 降圧チョッパー(Buck Converter)
+    \item 昇圧チョッパー(Boost Converter)
+    \item 昇降圧チョッパー(Buck-Boost Converter)
+  \end{itemize}
+
+  \item \textbf{第6回：絶縁型チョッパ回路}
+  \begin{itemize}
+    \item フォワードコンバータ(絶縁型降圧)
+    \item フライバックコンバータ(絶縁型昇降圧)
+  \end{itemize}
+
+  \item \textbf{第7回：リニアレギュレータ}
+  \begin{itemize}
+    \item 降圧のみ
+  \end{itemize}
+\end{itemize}
+
+リニアレギュレータは昇圧機能を持たず、\textbf{降圧のみ}の回路である。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-03.pdf}
+  \caption{DC-DC変換の分類}
+  \label{fig:ch07_classification}
+\end{figure}
+
+\subsection{リニアレギュレータの特徴}
+
+リニアレギュレータはチョッパ回路と比較して、以下のような特徴を持つ：
+
+\subsubsection{チョッパ回路との比較}
+
+\begin{itemize}
+  \item \textbf{チョッパ回路}：
+  \begin{itemize}
+    \item 電圧を不連続に変化させて平均化する
+    \item スイッチングによりノイズが大きい
+    \item 効率が高い(典型的に80\%以上)
+  \end{itemize}
+
+  \item \textbf{リニアレギュレータ}：
+  \begin{itemize}
+    \item 電圧が連続に変化する
+    \item ノイズが小さい
+    \item \textbf{デメリット}：熱に変換されるため効率が悪い
+  \end{itemize}
+\end{itemize}
+
+リニアレギュレータは\textbf{アナログ回路や高精度な電源}が必要な用途で使用される。
+一方、高効率が求められる用途ではチョッパ回路が選択される。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-04.pdf}
+  \caption{リニアレギュレータの特徴とチョッパ回路との比較}
+  \label{fig:ch07_characteristics}
+\end{figure}
+
+%-----------------------------------------------------------------------------
+\section{リニアレギュレータの基本原理}
+%-----------------------------------------------------------------------------
+
+\subsection{可変抵抗を用いた電力変換}
+
+リニアレギュレータの基本原理を理解するために、まず\textbf{可変抵抗を用いた電力変換}を復習する(第1回の内容)。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{page-05.pdf}
+  \caption{可変抵抗を用いた電力変換}
+  \label{fig:ch07_variable_resistor}
+\end{figure}
+
+図\ref{fig:ch07_variable_resistor}の回路において、可変抵抗$R_x$を変えることで負荷$R_L$にかかる電圧を変化させることができる。
+これがリニアレギュレータの基本原理である。
+
+\subsubsection{キルヒホッフの電圧則(KVL)の応用}
+
+可変抵抗$R_x$と負荷抵抗$R_L$に流れる電流を$I$とすると、KVLより：
+\begin{equation}
+  V_0 = R_x I + R_L I = (R_x + R_L)I
+\end{equation}
+
+負荷電圧$V_{out}$は：
+\begin{equation}
+  V_{out} = R_L I
+\end{equation}
+
+式(7.1)より：
+\begin{equation}
+  I = \frac{V_0}{R_x + R_L}
+\end{equation}
+
+これを式(7.2)に代入すると：
+\begin{equation}
+  V_{out} = \frac{R_L}{R_x + R_L} V_0
+\end{equation}
+
+\subsubsection{計算例}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{page-06.pdf}
+  \caption{可変抵抗の計算例}
+  \label{fig:ch07_calc_example}
+\end{figure}
+
+以下の条件で、必要な可変抵抗$R_x$の値を求める：
+\begin{itemize}
+  \item 電源電圧：$V_0 = 12$ V
+  \item 負荷抵抗：$R_L = 10$ $\Omega$
+  \item 出力電圧：$V_{out} = 5$ V
+\end{itemize}
+
+\textbf{解答：}
+
+負荷に流れる電流は：
+\begin{equation}
+  I = \frac{V_{out}}{R_L} = \frac{5}{10} = 0.5 \text{ A}
+\end{equation}
+
+KVLより：
+\begin{equation}
+  V_0 = R_x I + V_{out}
+\end{equation}
+
+これを$R_x$について解くと：
+\begin{equation}
+  R_x = \frac{V_0 - V_{out}}{I} = \frac{12 - 5}{0.5} = 14 \text{ } \Omega
+\end{equation}
+
+したがって、$R_x = 14$ $\Omega$が必要である。
+
+\subsection{基準電圧源とバイポーラトランジスタ}
+
+可変抵抗を用いた方式では、抵抗値を手動で調整する必要がある。
+実際のリニアレギュレータでは、\textbf{バイポーラトランジスタ(BJT)}を可変抵抗の代わりに使用し、自動的に電圧を調整する。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{page-09.pdf}
+  \caption{リニアレギュレータの基本構成}
+  \label{fig:ch07_basic_circuit}
+\end{figure}
+
+図\ref{fig:ch07_basic_circuit}に示すように、リニアレギュレータは以下の要素で構成される：
+\begin{itemize}
+  \item \textbf{基準電圧源}($V_{ref}$)：一定の電圧を供給
+  \item \textbf{バイポーラトランジスタ(BJT)}：スイッチ(可変抵抗)として動作
+  \item \textbf{負荷}($R_L$)
+\end{itemize}
+
+\subsection{動作原理と電圧関係式}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{page-10.pdf}
+  \caption{リニアレギュレータの動作原理}
+  \label{fig:ch07_operation}
+\end{figure}
+
+図\ref{fig:ch07_operation}の回路において、KVLを基準電圧源$V_{ref}$、ベース-エミッタ間電圧$V_{BE}$、出力電圧$V_{out}$について適用すると：
+\begin{equation}
+  V_{ref} - V_{BE} - V_{out} = 0
+\end{equation}
+
+したがって、出力電圧は：
+\begin{equation}
+  V_{out} = V_{ref} - V_{BE}
+\end{equation}
+
+$V_{ref}$と$V_{BE}$がほぼ一定であれば、$V_{out}$も一定に保たれる。
+これがリニアレギュレータの基本動作原理である。
+
+%-----------------------------------------------------------------------------
+\section{実際のリニアレギュレータ}
+%-----------------------------------------------------------------------------
+
+\subsection{3端子レギュレータ}
+
+実際の電子回路で広く使用されているのが\textbf{3端子レギュレータ}である。
+3つの端子(入力、グランド、出力)を持ち、内部に必要な回路が全て組み込まれている。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-07.pdf}
+  \caption{3端子レギュレータ(NJM7800FAシリーズ)}
+  \label{fig:ch07_3terminal}
+\end{figure}
+
+\subsection{NJM7800FAの仕様と応用}
+
+図\ref{fig:ch07_3terminal}に示すNJM7800FAシリーズは代表的な3端子レギュレータである。
+主な仕様は以下の通り：
+
+\begin{itemize}
+  \item \textbf{出力電圧}：12 V(固定)
+  \item \textbf{最大出力電流}：1.5 A
+  \item \textbf{最大入力電圧}：35 V
+  \item \textbf{出力極性}：正電源
+  \item \textbf{出力タイプ}：定電圧
+\end{itemize}
+
+\subsubsection{ピン配置}
+\begin{enumerate}
+  \item \textbf{IN}：入力端子
+  \item \textbf{GND}：グランド端子
+  \item \textbf{OUT}：出力端子
+\end{enumerate}
+
+\subsubsection{応用回路例}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{page-08.pdf}
+  \caption{NJM7800FAを用いた実用回路}
+  \label{fig:ch07_practical_circuit}
+\end{figure}
+
+図\ref{fig:ch07_practical_circuit}に、NJM7800FAを用いた実用回路を示す。
+この回路では、30 Vの入力電圧を12 Vに降圧し、10 $\Omega$の負荷に供給する。
+
+NJM7800FAは\textbf{必ず12 Vを出力}するように設計されており、入力電圧が変動しても出力電圧は12 Vに維持される。
+
+%-----------------------------------------------------------------------------
+\section{半導体素子の理解}
+%-----------------------------------------------------------------------------
+
+リニアレギュレータで使用されるバイポーラトランジスタ(BJT)について、第3章で学んだ内容を復習し、より深く理解する。
+
+\subsection{バイポーラトランジスタ(BJT)の構造}
+
+バイポーラトランジスタは、\textbf{n-p-n}または\textbf{p-n-p}の3層構造を持つ半導体素子である。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-11.pdf}
+  \caption{npn型バイポーラトランジスタの構造}
+  \label{fig:ch07_bjt_structure}
+\end{figure}
+
+\subsubsection{端子}
+
+npn型トランジスタは3つの端子を持つ：
+\begin{itemize}
+  \item \textbf{E(エミッタ)}：Emitter
+  \item \textbf{B(ベース)}：Base
+  \item \textbf{C(コレクタ)}：Collector
+\end{itemize}
+
+\subsection{動作原理とバンド図}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-12.pdf}
+  \caption{バイポーラトランジスタのバンド図と動作原理}
+  \label{fig:ch07_bjt_band}
+\end{figure}
+
+図\ref{fig:ch07_bjt_band}に、npn型トランジスタのバンド図を示す。
+トランジスタには2つのpn接合があり、それぞれに\textbf{ポテンシャル障壁}が存在する。
+
+\subsubsection{ベース-エミッタ間電圧}
+
+ベース-エミッタ間に電圧$V_{BE}$を印加すると、ポテンシャル障壁を超えて電流が流れる。
+この電圧を\textbf{ベース-エミッタ飽和電圧}$V_{BE(sat)}$と呼ぶ。
+
+代表的なトランジスタ2N2222の場合：
+\begin{itemize}
+  \item $V_{BE(sat)}$：0.6 V $\sim$ 2.0 V(典型値：約0.7 V)
+\end{itemize}
+
+\subsection{活性領域と飽和領域}
+
+バイポーラトランジスタには、動作領域が複数存在する：
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-13.pdf}
+  \caption{活性領域と飽和領域}
+  \label{fig:ch07_bjt_regions}
+\end{figure}
+
+\begin{itemize}
+  \item \textbf{活性領域(Active Region)}：
+  \begin{itemize}
+    \item コレクタ-エミッタ間に電圧降下が大きい
+    \item 増幅器として動作
+    \item \textbf{リニアレギュレータでは活性領域を使用}
+  \end{itemize}
+
+  \item \textbf{飽和領域(Saturation Region)}：
+  \begin{itemize}
+    \item コレクタ-エミッタ間の電圧降下が小さい
+    \item スイッチとして動作
+    \item チョッパ回路では飽和領域を使用
+  \end{itemize}
+\end{itemize}
+
+リニアレギュレータでは、トランジスタを\textbf{活性領域で動作}させることで、電圧降下を大きくし、降圧を実現する。
+一方、チョッパ回路では、トランジスタを\textbf{飽和領域で動作}させることで、電圧降下を小さくし、損失を低減する。
+
+\subsection{スイッチ特性と電流関係}
+
+\subsubsection{電流関係}
+
+トランジスタの各端子に流れる電流の関係は：
+\begin{equation}
+  I_B + I_E = I_C
+\end{equation}
+
+ただし、ベース電流$I_B$はコレクタ電流$I_C$に比べて非常に小さい($I_B \ll I_C$)ため、近似的に：
+\begin{equation}
+  I_E \approx I_C
+\end{equation}
+
+\subsubsection{電流増幅率}
+
+\textbf{電流増幅率}$h_{FE}$(または$\beta$)は、ベース電流とコレクタ電流の比で定義される：
+\begin{equation}
+  h_{FE} = \frac{I_C}{I_B}
+\end{equation}
+
+典型的な値は$h_{FE} = 100$程度である。
+つまり、わずかなベース電流で大きなコレクタ電流を制御できる。
+
+\subsection{回路記号と構造の関係}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-14.pdf}
+  \caption{半導体素子の回路記号と構造の関係(1)}
+  \label{fig:ch07_symbols_1}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-15.pdf}
+  \caption{半導体素子の回路記号と構造の関係(2)}
+  \label{fig:ch07_symbols_2}
+\end{figure}
+
+半導体素子の回路記号は、内部構造を反映している。
+以下に主要な素子の関係を示す：
+
+\begin{itemize}
+  \item \textbf{ダイオード}：p-n構造
+  \begin{itemize}
+    \item 矢印の向きがp型からn型を示す
+  \end{itemize}
+
+  \item \textbf{npnトランジスタ}：n-p-n構造
+  \begin{itemize}
+    \item エミッタの矢印がn型からp型を示す
+  \end{itemize}
+
+  \item \textbf{pnpトランジスタ}：p-n-p構造
+  \begin{itemize}
+    \item エミッタの矢印がp型からn型を示す
+  \end{itemize}
+
+  \item \textbf{nチャネルMOSFET}：n-p-n構造(反転層)
+  \begin{itemize}
+    \item ボディからソースへの矢印
+  \end{itemize}
+
+  \item \textbf{pチャネルMOSFET}：p-n-p構造(反転層)
+  \begin{itemize}
+    \item ソースからボディへの矢印
+  \end{itemize}
+\end{itemize}
+
+回路記号の矢印の向きを覚えることで、内部構造を理解しやすくなる。
+
+%-----------------------------------------------------------------------------
+\section{リニアレギュレータの設計と計算}
+%-----------------------------------------------------------------------------
+
+\subsection{基本回路の計算例}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-16.pdf}
+  \caption{リニアレギュレータの計算例(問題)}
+  \label{fig:ch07_calc_problem}
+\end{figure}
+
+図\ref{fig:ch07_calc_problem}の回路について、以下の条件で各電流と効率を求める：
+
+\textbf{与えられた条件：}
+\begin{itemize}
+  \item 入力電圧：$V_0 = 10$ V
+  \item 基準電圧：$V_{ref} = 6.0$ V
+  \item ベース-エミッタ間電圧：$V_{BE} = 1.0$ V
+  \item 負荷抵抗：$R_L = 10$ $\Omega$
+  \item 電流増幅率：$h_{FE} = \frac{I_C}{I_B} = 100$
+\end{itemize}
+
+\textbf{求める値：}
+\begin{enumerate}
+  \item 出力電圧$V_{out}$
+  \item 出力電流$I_{out}$
+  \item コレクタ電流$I_C$
+  \item ベース電流$I_B$
+  \item 効率$\eta$
+\end{enumerate}
+
+\subsubsection{解答}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-17.pdf}
+  \caption{リニアレギュレータの計算例(解答1)}
+  \label{fig:ch07_calc_solution1}
+\end{figure}
+
+\textbf{(1) 出力電圧$V_{out}$}
+
+KVLより：
+\begin{equation}
+  V_{ref} - V_{BE} - V_{out} = 0
+\end{equation}
+
+したがって：
+\begin{equation}
+  V_{out} = V_{ref} - V_{BE} = 6.0 - 1.0 = 5.0 \text{ V}
+\end{equation}
+
+\textbf{(2) 出力電流$I_{out}$}
+
+オームの法則より：
+\begin{equation}
+  I_{out} = \frac{V_{out}}{R_L} = \frac{5.0}{10} = 0.5 \text{ A}
+\end{equation}
+
+\textbf{(3) コレクタ電流$I_C$}
+
+エミッタ電流とコレクタ電流はほぼ等しく、出力電流とも等しいため：
+\begin{equation}
+  I_C \approx I_{out} = 0.5 \text{ A}
+\end{equation}
+
+\textbf{(4) ベース電流$I_B$}
+
+電流増幅率の関係式より：
+\begin{equation}
+  I_B = \frac{I_C}{h_{FE}} = \frac{0.5}{100} = 0.005 \text{ A} = 5 \text{ mA}
+\end{equation}
+
+\subsection{効率の評価}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-18.pdf}
+  \caption{リニアレギュレータの計算例(解答2)と効率}
+  \label{fig:ch07_calc_solution2}
+\end{figure}
+
+\textbf{(5) 効率$\eta$}
+
+効率は、出力電力と入力電力の比で定義される：
+\begin{equation}
+  \eta = \frac{P_{out}}{P_{in}} = \frac{V_{out} \times I_{out}}{V_0 \times I_C}
+\end{equation}
+
+値を代入すると：
+\begin{equation}
+  \eta = \frac{5.0 \times 0.5}{10 \times 0.5} = \frac{2.5}{5.0} = 0.5 = 50\%
+\end{equation}
+
+\subsection{効率の考察}
+
+この例では効率が\textbf{50\%}であり、入力電力の半分が熱として失われている。
+これは、リニアレギュレータの大きな欠点である。
+
+入力電圧が10 V、出力電圧が5 Vの場合、差分の5 Vがトランジスタで降下し、熱として消費される。
+一般に、リニアレギュレータの効率は：
+\begin{equation}
+  \eta = \frac{V_{out}}{V_{in}}
+\end{equation}
+
+入力電圧と出力電圧の差が大きいほど、効率は低下する。
+
+%-----------------------------------------------------------------------------
+\section{基準電圧の生成}
+%-----------------------------------------------------------------------------
+
+リニアレギュレータの動作には\textbf{基準電圧源}$V_{ref}$が必要である。
+この基準電圧は、\textbf{ツェナーダイオード}を用いて生成できる。
+
+\subsection{ツェナーダイオードの原理}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-19.pdf}
+  \caption{ツェナーダイオードの原理}
+  \label{fig:ch07_zener_principle}
+\end{figure}
+
+\textbf{ツェナーダイオード}は、逆バイアス時に特定の電圧で電流を流すダイオードである。
+
+\subsubsection{通常のダイオードとの違い}
+
+\begin{itemize}
+  \item \textbf{通常のダイオード}：
+  \begin{itemize}
+    \item 順方向バイアス：電流が流れる
+    \item 逆方向バイアス：電流がほとんど流れない(ブレークダウン電圧まで)
+  \end{itemize}
+
+  \item \textbf{ツェナーダイオード}：
+  \begin{itemize}
+    \item 順方向バイアス：通常のダイオードと同じ
+    \item 逆方向バイアス：ツェナー電圧$V_Z$で電流が流れ始める
+    \item \textbf{ツェナー電圧$V_Z$は一定}に保たれる
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{ブレークダウンメカニズム}
+
+ツェナーダイオードでは、逆バイアス時に以下のメカニズムで電流が流れる：
+\begin{itemize}
+  \item \textbf{ツェナーブレークダウン}：低電圧領域(数V程度)で発生
+  \item \textbf{アバランシェブレークダウン}：高電圧領域(十数V以上)で発生
+\end{itemize}
+
+いずれの場合も、\textbf{一定の電圧を維持したまま電流を流す}ことができる。
+
+\subsection{任意の基準電圧の作成}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-20.pdf}
+  \caption{ツェナーダイオードの電圧-電流特性と基準電圧の生成}
+  \label{fig:ch07_zener_iv}
+\end{figure}
+
+図\ref{fig:ch07_zener_iv}に示すように、ツェナーダイオードは逆バイアス時に\textbf{ツェナー電圧$V_Z$}で急激に電流が増加する。
+この領域では、電流が変化しても電圧はほぼ一定に保たれる。
+
+\subsubsection{ツェナーダイオードの選定}
+
+市販のツェナーダイオード(例：1N4370シリーズ)は、様々なツェナー電圧が用意されている：
+\begin{itemize}
+  \item 2.4 V, 2.7 V, 3.0 V, 3.3 V, 3.6 V, 3.9 V, 4.3 V, 4.7 V, 5.1 V, 5.6 V, 6.2 V, 6.8 V, 7.5 V, 8.2 V, 9.1 V, 10 V, 11 V, 12 V, ...
+\end{itemize}
+
+必要な基準電圧に応じて、適切なツェナーダイオードを選択する。
+
+\subsection{ツェナーダイオードを用いたリニアレギュレータ}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-21.pdf}
+  \caption{ツェナーダイオードを用いたリニアレギュレータ回路}
+  \label{fig:ch07_zener_regulator}
+\end{figure}
+
+図\ref{fig:ch07_zener_regulator}に、ツェナーダイオード(1N750, ツェナー電圧4.7 V)を用いたリニアレギュレータ回路を示す。
+
+\textbf{回路構成：}
+\begin{itemize}
+  \item 入力電圧：$V_0$ = 12 V
+  \item 抵抗：400 $\Omega$
+  \item ツェナーダイオード：1N750 ($V_Z$ = 4.7 V)
+  \item バイポーラトランジスタ：npn型
+  \item 負荷抵抗：$R_L$ = 10 $\Omega$
+\end{itemize}
+
+\subsection{負荷変動特性}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-22.pdf}
+  \caption{負荷変動時のシミュレーション結果}
+  \label{fig:ch07_load_variation}
+\end{figure}
+
+図\ref{fig:ch07_load_variation}に、負荷抵抗を10 $\Omega$ $\rightarrow$ 50 $\Omega$ $\rightarrow$ 100 $\Omega$と変化させたときのシミュレーション結果を示す。
+
+\textbf{観察結果：}
+\begin{itemize}
+  \item 出力電圧$V_{out}$の変動：約0.2 V
+  \item ツェナー電圧$V_Z$の変動：約0.02 V
+  \item ベース-エミッタ間電圧$V_{BE}$の変動：約0.18 V
+\end{itemize}
+
+ツェナー電圧はほぼ一定に保たれているが、$V_{BE}$が変動するため、出力電圧にもわずかな変動が生じる。
+より高精度な電圧制御には、次節で説明する\textbf{オペアンプを用いたフィードバック制御}が必要である。
+
+%-----------------------------------------------------------------------------
+\section{オペアンプとフィードバック制御}
+%-----------------------------------------------------------------------------
+
+より高精度なリニアレギュレータを実現するために、\textbf{オペアンプ(オペレーショナルアンプ、演算増幅器)}を用いる。
+
+\subsection{オペアンプの基本特性}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-23.pdf}
+  \caption{オペアンプの基本特性}
+  \label{fig:ch07_opamp_basics}
+\end{figure}
+
+\subsubsection{回路記号}
+
+オペアンプは以下の5つの端子を持つ：
+\begin{itemize}
+  \item $V_{in+}$：非反転入力端子
+  \item $V_{in-}$：反転入力端子
+  \item $V_{out}$：出力端子
+  \item $V_{S+}$：正電源端子
+  \item $V_{S-}$：負電源端子
+\end{itemize}
+
+\subsubsection{基本式}
+
+オペアンプの出力電圧は、2つの入力電圧の差を増幅したものである：
+\begin{equation}
+  V_{out} = A_v \times (V_{in+} - V_{in-})
+\end{equation}
+
+ここで、$A_v$は\textbf{電圧増幅度}(Open-loop gain)であり、非常に大きな値を持つ：
+\begin{equation}
+  A_v = 10^5 \sim 10^7
+\end{equation}
+
+\subsubsection{出力電圧の制限}
+
+出力電圧は電源電圧によって制限される：
+\begin{equation}
+  V_{S-} \leq V_{out} \leq V_{S+}
+\end{equation}
+
+増幅度が非常に大きいため、わずかな入力電圧差で出力が飽和する。
+
+\subsubsection{等価回路}
+
+オペアンプの等価回路は、以下の要素で表される：
+\begin{itemize}
+  \item \textbf{入力抵抗}$R_{in}$：$10^6 \sim 10^9$ $\Omega$程度(非常に大きい)
+  \item \textbf{出力抵抗}$R_{out}$：$10^2$ $\Omega$程度(比較的小さい)
+  \item \textbf{電圧制御電圧源}：$A_v \times (V_{in+} - V_{in-})$
+\end{itemize}
+
+入力抵抗が非常に大きいため、入力端子にはほとんど電流が流れない。
+
+\subsection{比較器(コンパレータ)}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-24.pdf}
+  \caption{比較器(コンパレータ)としてのオペアンプ}
+  \label{fig:ch07_comparator}
+\end{figure}
+
+オペアンプは\textbf{比較器(コンパレータ)}として使用できる。
+2つの入力電圧を比較し、大小関係に応じて出力が切り替わる。
+
+\subsubsection{動作原理}
+
+\begin{itemize}
+  \item $V_{in+} < V_{in-}$の場合：$V_{out} = V_{S-}$(最小値)
+  \item $V_{in+} > V_{in-}$の場合：$V_{out} = V_{S+}$(最大値)
+\end{itemize}
+
+増幅度$A_v$が非常に大きいため、わずかな電圧差で出力が飽和する。
+
+\subsubsection{応用例：三角波と直流の比較}
+
+図\ref{fig:ch07_comparator}の例では、三角波($V_{in+}$)と直流電圧($V_{in-}$)を比較している。
+三角波が直流電圧より高いときは$V_{S+}$、低いときは$V_{S-}$を出力する。
+
+この比較器は、\textbf{パワーエレクトロニクスで頻繁に使用}され、PWM(パルス幅変調)信号の生成などに応用される。
+
+\subsection{デューティー比の制御}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-25.pdf}
+  \caption{オペアンプを用いたデューティー比の制御}
+  \label{fig:ch07_duty_control}
+\end{figure}
+
+比較器を用いて、\textbf{PWM信号のデューティー比}を制御できる。
+
+図\ref{fig:ch07_duty_control}に示すように、三角波と直流電圧を比較することで、直流電圧の大きさに応じてパルス幅が変化する。
+
+\begin{itemize}
+  \item 直流電圧が大きい：パルス幅が広い(デューティー比が大きい)
+  \item 直流電圧が小さい：パルス幅が狭い(デューティー比が小さい)
+\end{itemize}
+
+この手法は、チョッパ回路のスイッチング制御に応用される。
+
+\subsection{フィードバック制御の原理}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-26.pdf}
+  \caption{オペアンプのフィードバック制御(例1 - 回路図)}
+  \label{fig:ch07_feedback_1}
+\end{figure}
+
+オペアンプを用いた最も重要な応用が\textbf{フィードバック制御}である。
+
+\subsubsection{基本フィードバック回路}
+
+図\ref{fig:ch07_feedback_1}に示す回路では：
+\begin{itemize}
+  \item 非反転入力$V_{in+}$に5 Vの基準電圧を印加
+  \item 出力$V_{out}$を反転入力$V_{in-}$にフィードバック
+\end{itemize}
+
+\subsubsection{動作原理}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-27.pdf}
+  \caption{オペアンプのフィードバック制御(例1 - 動作説明)}
+  \label{fig:ch07_feedback_1_operation}
+\end{figure}
+
+オペアンプの出力電圧は：
+\begin{equation}
+  V_{out} = A_v \times (V_{in+} - V_{in-})
+\end{equation}
+
+もし$V_{out} < V_{in+}$の場合：
+\begin{itemize}
+  \item $(V_{in+} - V_{in-}) > 0$
+  \item $V_{out}$が増加する
+  \item $V_{in-}$が増加する(フィードバック)
+  \item $(V_{in+} - V_{in-})$が減少する
+\end{itemize}
+
+この過程が繰り返され、最終的に$V_{in+} = V_{in-}$となり、$V_{out} = 5$ Vに収束する。
+
+\subsection{仮想短絡}
+
+フィードバック制御時、オペアンプの入力端子間の電圧差はほぼ0になる：
+\begin{equation}
+  V_{in+} \approx V_{in-}
+\end{equation}
+
+この状態を\textbf{仮想短絡(Virtual Short)}と呼ぶ。
+実際には短絡されていないが、電圧差がほぼ0であるため、あたかも短絡しているかのように扱える。
+
+仮想短絡は、オペアンプ回路の解析で非常に重要な概念である。
+
+%-----------------------------------------------------------------------------
+\section{オペアンプを用いたリニアレギュレータ}
+%-----------------------------------------------------------------------------
+
+\subsection{抵抗分圧による電圧設定}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-28.pdf}
+  \caption{抵抗分圧を用いたフィードバック制御(例2)}
+  \label{fig:ch07_feedback_2}
+\end{figure}
+
+出力電圧を基準電圧と異なる値に設定するには、\textbf{抵抗分圧}を用いる。
+
+図\ref{fig:ch07_feedback_2}の回路では：
+\begin{itemize}
+  \item 1 k$\Omega$と2 k$\Omega$の抵抗で出力電圧を分圧
+  \item 分圧された電圧$V_{fb}$を反転入力にフィードバック
+  \item 非反転入力に5.0 Vの基準電圧を印加
+\end{itemize}
+
+\subsubsection{電圧の計算}
+
+仮想短絡より：
+\begin{equation}
+  V_{fb} = V_{in+} = 5.0 \text{ V}
+\end{equation}
+
+分圧回路に流れる電流は：
+\begin{equation}
+  I = \frac{V_{fb}}{2 \text{ k}\Omega} = \frac{5.0}{2000} = 2.5 \text{ mA}
+\end{equation}
+
+出力電圧は：
+\begin{equation}
+  V_{out} = (1 \text{ k}\Omega + 2 \text{ k}\Omega) \times I = 3000 \times 0.0025 = 7.5 \text{ V}
+\end{equation}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-29.pdf}
+  \caption{抵抗分圧を用いたフィードバック制御(計算)}
+  \label{fig:ch07_feedback_2_calc}
+\end{figure}
+
+このように、抵抗比を変えることで、\textbf{任意の出力電圧}を設定できる。
+
+一般に、図\ref{fig:ch07_feedback_2}の回路では：
+\begin{equation}
+  V_{out} = V_{ref} \times \frac{R_1 + R_2}{R_2}
+\end{equation}
+
+\subsection{半導体スイッチとの統合}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-30.pdf}
+  \caption{オペアンプとトランジスタを用いた実用的なリニアレギュレータ}
+  \label{fig:ch07_practical_opamp_regulator}
+\end{figure}
+
+図\ref{fig:ch07_practical_opamp_regulator}に、オペアンプとバイポーラトランジスタを組み合わせた\textbf{実用的なリニアレギュレータ}を示す。
+
+\textbf{回路構成：}
+\begin{itemize}
+  \item 入力電圧：15 V
+  \item 基準電圧：5 V
+  \item オペアンプ
+  \item npn型トランジスタ
+  \item フィードバック抵抗：1 k$\Omega$ + 2 k$\Omega$
+  \item 負荷抵抗：10 $\Omega$
+\end{itemize}
+
+\subsubsection{動作原理}
+
+\begin{enumerate}
+  \item 出力電圧が目標値(7.5 V)より低い場合：
+  \begin{itemize}
+    \item $V_{fb} < V_{ref}$ (5 V)
+    \item オペアンプの出力が増加
+    \item トランジスタのベース電流が増加
+    \item コレクタ-エミッタ間抵抗が減少
+    \item 出力電圧が増加
+  \end{itemize}
+
+  \item 出力電圧が目標値より高い場合：
+  \begin{itemize}
+    \item $V_{fb} > V_{ref}$
+    \item オペアンプの出力が減少
+    \item トランジスタのベース電流が減少
+    \item コレクタ-エミッタ間抵抗が増加
+    \item 出力電圧が減少
+  \end{itemize}
+\end{enumerate}
+
+このフィードバック制御により、負荷や入力電圧が変動しても、出力電圧は目標値に維持される。
+
+\subsection{過渡応答特性}
+
+図\ref{fig:ch07_practical_opamp_regulator}のシミュレーション結果は、スイッチをオンにした後の過渡応答を示している。
+
+\textbf{観察項目：}
+\begin{itemize}
+  \item 出力電圧$V_{out}$の立ち上がり時間
+  \item オペアンプ出力(ベース電圧)の変化
+  \item 各電流の時間変化
+  \item 定常状態への収束時間
+\end{itemize}
+
+実際の設計では、応答速度、オーバーシュート、安定性などを考慮する必要がある。
+
+%-----------------------------------------------------------------------------
+\section{まとめ}
+%-----------------------------------------------------------------------------
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{page-31.pdf}
+  \caption{第7章のまとめ}
+  \label{fig:ch07_summary}
+\end{figure}
+
+本章では、\textbf{リニアレギュレータ}について学んだ。
+主要なポイントを以下にまとめる：
+
+\subsection{リニアレギュレータの原理}
+
+\begin{itemize}
+  \item 可変抵抗(トランジスタ)を用いて連続的に電圧を降圧
+  \item 基準電圧源とバイポーラトランジスタで構成
+  \item 出力電圧：$V_{out} = V_{ref} - V_{BE}$
+\end{itemize}
+
+\subsection{特徴}
+
+\begin{itemize}
+  \item \textbf{利点}：
+  \begin{itemize}
+    \item ノイズが小さい(連続的な電圧変化)
+    \item 回路構成が比較的簡単
+    \item 高精度な電圧制御が可能
+  \end{itemize}
+
+  \item \textbf{欠点}：
+  \begin{itemize}
+    \item 効率が低い($\eta = V_{out}/V_{in}$)
+    \item 熱損失が大きい
+    \item 降圧のみ(昇圧不可)
+  \end{itemize}
+\end{itemize}
+
+\subsection{主要構成要素}
+
+\begin{enumerate}
+  \item \textbf{基準電圧源}：
+  \begin{itemize}
+    \item ツェナーダイオードで生成
+    \item 安定した基準電圧を供給
+  \end{itemize}
+
+  \item \textbf{バイポーラトランジスタ(BJT)}：
+  \begin{itemize}
+    \item 活性領域で動作(可変抵抗として)
+    \item コレクタ-エミッタ間で電圧降下
+  \end{itemize}
+
+  \item \textbf{オペアンプ}：
+  \begin{itemize}
+    \item フィードバック制御で高精度化
+    \item 仮想短絡により入力電圧を等しくする
+    \item 抵抗分圧で任意の出力電圧を設定
+  \end{itemize}
+\end{enumerate}
+
+\subsection{応用}
+
+リニアレギュレータは以下の用途に適している：
+\begin{itemize}
+  \item アナログ回路の電源
+  \item 低ノイズが要求される用途
+  \item 入出力電圧差が小さい場合
+  \item 高精度な電圧制御が必要な場合
+\end{itemize}
+
+一方、高効率が求められる大電力用途では、チョッパ回路や絶縁型コンバータが適している。
+
+\subsection{今後の学習}
+
+次章以降では、DC-ACインバータやAC-DC整流器など、さらに高度なパワーエレクトロニクス回路について学ぶ。
